@@ -1,13 +1,10 @@
 #include "pch.h"
 #include "RenderFramework.h"
+#include "Scene.h"
 
-RenderFramework::RenderFramework()
-{
-}
+RenderFramework::RenderFramework() {}
 
-RenderFramework::~RenderFramework()
-{
-}
+RenderFramework::~RenderFramework() {}
 
 void RenderFramework::Init(HWND hwnd)
 {
@@ -18,41 +15,54 @@ void RenderFramework::Init(HWND hwnd)
 	CreateDeviceAndSwapChain();
 	CreateRenderTargetView();
 	SetViewport();
-
-	CreateGeometry();
-	CreateVS();
-	CreateInputLayout();
-	CreatePS();
 }
 
-void RenderFramework::Update()
+int RenderFramework::Run()
 {
+	MSG msg = {};
+
+	while (msg.message != WM_QUIT)
+	{
+		if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			RenderBegin();
+
+			if (currentScene)
+			{
+				currentScene->Update();
+				currentScene->Render();
+			}
+			
+			RenderEnd();
+		}
+	}
+
+	return (int)msg.wParam;
 }
 
-void RenderFramework::Render()
+void RenderFramework::LoadScene(Scene* newScene)
 {
-	RenderBegin();
+	if (currentScene) delete currentScene;
+	currentScene = newScene;
+	currentScene->Init();
+}
 
-	uint32 stride = sizeof(Vertex);
-	uint32 offset = 0;
+ComPtr<ID3D11Device> RenderFramework::_device = nullptr;
+ComPtr<ID3D11DeviceContext> RenderFramework::_deviceContext = nullptr;
 
-	// IA
-	_deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
-	_deviceContext->IASetInputLayout(_inputLayout.Get());
-	_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+ID3D11Device* RenderFramework::GetDevice()
+{
+	return _device.Get();
+}
 
-	// VS
-	_deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
-
-	// RS
-
-	// PS
-	_deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
-
-	// OM
-	_deviceContext->Draw(_vertices.size(), 0);
-
-	RenderEnd();
+ID3D11DeviceContext* RenderFramework::GetDeviceContext()
+{
+	return _deviceContext.Get();
 }
 
 void RenderFramework::RenderBegin()
@@ -127,74 +137,4 @@ void RenderFramework::SetViewport()
 	_viewport.Height = static_cast<float>(_height);
 	_viewport.MinDepth = 0.f;
 	_viewport.MaxDepth = 1.f;
-}
-
-void RenderFramework::CreateGeometry()
-{
-	_vertices.resize(3);
-
-	_vertices[0].position = Vec3(-0.5f, -.5f, 0);
-	_vertices[0].color = Color(1.f, 0.f, 0.f, 1.f);
-	_vertices[1].position = Vec3(0, 0.5f, 0);
-	_vertices[1].color = Color(0.f, 1.f, 0.f, 1.f);
-	_vertices[2].position = Vec3(0.5f, -0.5f, 0);
-	_vertices[2].color = Color(0.f, 0.f, 1.f, 1.f);
-
-
-	D3D11_BUFFER_DESC desc;
-	ZeroMemory(&desc, sizeof(desc));
-	desc.Usage = D3D11_USAGE_IMMUTABLE;
-	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	desc.ByteWidth = (uint32)(sizeof(Vertex) * _vertices.size());
-
-	D3D11_SUBRESOURCE_DATA data;
-	ZeroMemory(&data, sizeof(data));
-	data.pSysMem = _vertices.data();
-
-	_device->CreateBuffer(&desc, &data, _vertexBuffer.GetAddressOf());
-}
-
-void RenderFramework::CreateInputLayout()
-{
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
-	};
-
-	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-	_device->CreateInputLayout(layout, count, _vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), _inputLayout.GetAddressOf());
-}
-
-void RenderFramework::CreateVS()
-{
-	LoadShaderFromFile(L"Triangle.hlsl", "VS", "vs_5_0", _vsBlob);
-	HRESULT hr = _device->CreateVertexShader(_vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), nullptr, _vertexShader.GetAddressOf());
-	assert(SUCCEEDED(hr));
-}
-
-void RenderFramework::CreatePS()
-{
-	LoadShaderFromFile(L"Triangle.hlsl", "PS", "ps_5_0", _psBlob);
-	HRESULT hr = _device->CreatePixelShader(_psBlob->GetBufferPointer(), _psBlob->GetBufferSize(), nullptr, _pixelShader.GetAddressOf());
-	assert(SUCCEEDED(hr));
-}
-
-void RenderFramework::LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob)
-{
-	const uint32 compileFlag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
-
-	HRESULT hr = ::D3DCompileFromFile(
-		path.c_str(),
-		nullptr,
-		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		name.c_str(),
-		version.c_str(),
-		compileFlag,
-		0,
-		blob.GetAddressOf(),
-		nullptr
-	);
-
-	assert(SUCCEEDED(hr));
 }

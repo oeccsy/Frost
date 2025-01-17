@@ -2,6 +2,8 @@
 #include "framework.h"
 #include "ProceduralAnimation.h"
 #include "RenderFramework.h"
+#include "Scene.h"
+#include "TriangleScene.h"
 
 #define MAX_LOADSTRING 100
 
@@ -28,25 +30,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     RenderFramework framework;
     framework.Init(hWnd);
 
-    MSG msg = {};
+    Scene* triangleScene = new TriangleScene();
+    framework.LoadScene(triangleScene);
 
-    // 기본 메시지 루프:
-    while (msg.message != WM_QUIT)
-    {
-        if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-        else
-        {
-            // 프레임워크 실행
-            framework.Update();
-            framework.Render();
-        }
-    }
-
-    return (int)msg.wParam;
+    return framework.Run();
 }
 
 

@@ -25,6 +25,12 @@
     <Filter Include="소스 파일\98. Shaders">
       <UniqueIdentifier>{04b6ba35-2154-4021-b2c3-2fca12f5380c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\02. Base">
+      <UniqueIdentifier>{2131e115-c751-47fa-b2b3-f4fdbc55707c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Triangle">
+      <UniqueIdentifier>{6435c67b-2576-4ff1-9dd6-8ba7349fc0e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -54,6 +60,18 @@
     <ClInclude Include="ProceduralAnimation.h">
       <Filter>소스 파일\01. Main</Filter>
     </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\02. Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\02. Base</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleScene.h">
+      <Filter>소스 파일\03. Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>소스 파일\03. Triangle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -64,6 +82,18 @@
     </ClCompile>
     <ClCompile Include="RenderFramework.cpp">
       <Filter>소스 파일\01. Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\02. Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\02. Base</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleScene.cpp">
+      <Filter>소스 파일\03. Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>소스 파일\03. Triangle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
