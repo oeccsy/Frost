@@ -141,6 +141,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Frost.h" />
+    <ClInclude Include="FrostScene.h" />
     <ClInclude Include="TriangleScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="RenderFramework.h" />
@@ -155,6 +157,8 @@
     <ClInclude Include="Values.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Frost.cpp" />
+    <ClCompile Include="FrostScene.cpp" />
     <ClCompile Include="TriangleScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="RenderFramework.cpp" />
@@ -181,6 +185,13 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Point.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

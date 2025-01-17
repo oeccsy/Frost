@@ -4,6 +4,7 @@
 #include "RenderFramework.h"
 #include "Scene.h"
 #include "TriangleScene.h"
+#include "FrostScene.h"
 
 #define MAX_LOADSTRING 100
 
@@ -31,7 +32,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     framework.Init(hWnd);
 
     Scene* triangleScene = new TriangleScene();
-    framework.LoadScene(triangleScene);
+    Scene* frostScene = new FrostScene();
+    framework.LoadScene(frostScene);
 
     return framework.Run();
 }

@@ -31,6 +31,9 @@
     <Filter Include="소스 파일\03. Triangle">
       <UniqueIdentifier>{6435c67b-2576-4ff1-9dd6-8ba7349fc0e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04. Frost">
+      <UniqueIdentifier>{c50a45e6-e957-47c9-aab7-5c8785003b59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -72,6 +75,12 @@
     <ClInclude Include="Triangle.h">
       <Filter>소스 파일\03. Triangle</Filter>
     </ClInclude>
+    <ClInclude Include="FrostScene.h">
+      <Filter>소스 파일\04. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="Frost.h">
+      <Filter>소스 파일\04. Frost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -95,6 +104,12 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>소스 파일\03. Triangle</Filter>
     </ClCompile>
+    <ClCompile Include="FrostScene.cpp">
+      <Filter>소스 파일\04. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Frost.cpp">
+      <Filter>소스 파일\04. Frost</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProceduralAnimation.rc">
@@ -111,6 +126,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Triangle.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Point.hlsl">
       <Filter>소스 파일\98. Shaders</Filter>
     </FxCompile>
   </ItemGroup>
