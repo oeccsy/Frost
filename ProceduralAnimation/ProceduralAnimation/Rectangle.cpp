@@ -10,6 +10,7 @@ Rectangle::Rectangle()
     CreatePS();
     CreateInputLayout();
     CreateSRV();
+    CreateContantBuffer();
 }
 
 Rectangle::~Rectangle()
@@ -18,7 +19,16 @@ Rectangle::~Rectangle()
 
 void Rectangle::Update()
 {
+    _transformData.offset.x += 0.003f;
+    _transformData.offset.y += 0.003f;
 
+    D3D11_MAPPED_SUBRESOURCE subResource;
+    ZeroMemory(&subResource, sizeof(subResource));
+
+    auto deviceContext = RenderFramework::GetDeviceContext();
+    deviceContext->Map(_constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
+    ::memcpy(subResource.pData, &_transformData, sizeof(_transformData));
+    deviceContext->Unmap(_constantBuffer.Get(), 0);
 }
 
 void Rectangle::Render()
@@ -36,6 +46,7 @@ void Rectangle::Render()
 
     // VS
     deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
+    deviceContext->VSSetConstantBuffers(0, 1, _constantBuffer.GetAddressOf());
 
     // RS
 
@@ -155,4 +166,18 @@ void Rectangle::CreateSRV()
         hr = CreateShaderResourceView(device, img.GetImages(), img.GetImageCount(), md, _shaderResourceView_stars.GetAddressOf());
         assert(SUCCEEDED(hr));
     }
+}
+
+void Rectangle::CreateContantBuffer()
+{
+    D3D11_BUFFER_DESC desc;
+    ZeroMemory(&desc, sizeof(desc));
+    desc.Usage = D3D11_USAGE_DYNAMIC; // CPU Write + GPU Read
+    desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    desc.ByteWidth = sizeof(TransformData);
+    desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE; 
+
+    auto device = RenderFramework::GetDevice();
+    HRESULT hr = device->CreateBuffer(&desc, nullptr, _constantBuffer.GetAddressOf());
+    assert(SUCCEEDED(hr));
 }

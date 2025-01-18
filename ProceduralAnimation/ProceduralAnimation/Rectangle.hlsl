@@ -1,3 +1,8 @@
+cbuffer TransformData : register(b0)
+{
+    float4 offset;
+}
+     
 struct VS_INPUT
 {
     float4 position : POSITION;
@@ -15,7 +20,7 @@ struct VS_OUTPUT
 VS_OUTPUT VS(VS_INPUT input)
 {
     VS_OUTPUT output;
-    output.position = input.position;
+    output.position = input.position + offset;
     output.uv = input.uv;
     output.color = input.color;
     

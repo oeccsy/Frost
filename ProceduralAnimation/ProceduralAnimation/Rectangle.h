@@ -15,8 +15,12 @@ protected:
 	void CreatePS() override;
 	void CreateInputLayout() override;
 	void CreateSRV();
+	void CreateContantBuffer();
 
 private:
 	ComPtr<ID3D11ShaderResourceView> _shaderResourceView_smile = nullptr;
 	ComPtr<ID3D11ShaderResourceView> _shaderResourceView_stars = nullptr;
+	
+	TransformData _transformData;
+	ComPtr<ID3D11Buffer> _constantBuffer;
 };
