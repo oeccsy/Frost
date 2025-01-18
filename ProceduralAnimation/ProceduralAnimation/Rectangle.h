@@ -14,4 +14,9 @@ protected:
 	void CreateVS() override;
 	void CreatePS() override;
 	void CreateInputLayout() override;
+	void CreateSRV();
+
+private:
+	ComPtr<ID3D11ShaderResourceView> _shaderResourceView_smile = nullptr;
+	ComPtr<ID3D11ShaderResourceView> _shaderResourceView_stars = nullptr;
 };

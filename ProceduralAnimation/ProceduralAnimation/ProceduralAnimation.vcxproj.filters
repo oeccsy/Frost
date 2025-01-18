@@ -146,5 +146,8 @@
     <FxCompile Include="Cube.hlsl">
       <Filter>소스 파일\98. Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Rectangle.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
