@@ -81,6 +81,12 @@
     <ClInclude Include="Frost.h">
       <Filter>소스 파일\04. Frost</Filter>
     </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>소스 파일\04. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>소스 파일\03. Triangle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -110,6 +116,12 @@
     <ClCompile Include="Frost.cpp">
       <Filter>소스 파일\04. Frost</Filter>
     </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>소스 파일\04. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>소스 파일\03. Triangle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProceduralAnimation.rc">
@@ -129,6 +141,9 @@
       <Filter>소스 파일\98. Shaders</Filter>
     </FxCompile>
     <FxCompile Include="Point.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Cube.hlsl">
       <Filter>소스 파일\98. Shaders</Filter>
     </FxCompile>
   </ItemGroup>

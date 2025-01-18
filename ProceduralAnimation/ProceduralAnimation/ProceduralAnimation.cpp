@@ -33,7 +33,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Scene* triangleScene = new TriangleScene();
     Scene* frostScene = new FrostScene();
-    framework.LoadScene(frostScene);
+    framework.LoadScene(triangleScene);
 
     return framework.Run();
 }

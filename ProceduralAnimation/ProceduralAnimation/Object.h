@@ -20,7 +20,9 @@ protected:
 protected:
 	// Geometry
 	vector<Vertex> _vertices;
+	vector<uint32> _indices;
 	ComPtr<ID3D11Buffer> _vertexBuffer = nullptr;
+	ComPtr<ID3D11Buffer> _indexBuffer = nullptr;
 	ComPtr<ID3D11InputLayout> _inputLayout = nullptr;
 
 	// VS
