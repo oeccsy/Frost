@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "TriangleScene.h"
 #include "FrostScene.h"
+#include "App.h"
 
 #define MAX_LOADSTRING 100
 
@@ -28,14 +29,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 2) 윈도우 창 생성:
     if (!InitInstance(hInstance, nCmdShow)) return FALSE;
 
-    RenderFramework framework;
-    framework.Init(hWnd);
+    App app;
+    app.Init(hWnd);
 
     Scene* triangleScene = new TriangleScene();
     Scene* frostScene = new FrostScene();
-    framework.LoadScene(triangleScene);
+    app.LoadScene(triangleScene);
 
-    return framework.Run();
+    return app.Run();
 }
 
 

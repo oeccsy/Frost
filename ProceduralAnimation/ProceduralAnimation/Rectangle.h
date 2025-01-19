@@ -6,8 +6,8 @@ class Rectangle : public Object
 public:
 	Rectangle();
 	~Rectangle() override;
-	void Update() override;
-	void Render() override;
+	//void Update();
+	//void Render();
 
 protected:
 	void CreateGeometry() override;

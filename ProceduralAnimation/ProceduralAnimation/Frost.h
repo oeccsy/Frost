@@ -6,8 +6,8 @@ class Frost : public Object
 public:
 	Frost();
 	~Frost() override;
-	void Update() override;
-	void Render() override;
+	//void Update() override;
+	//void Render() override;
 
 protected:
 	void CreateGeometry() override;

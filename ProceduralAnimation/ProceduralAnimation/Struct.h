@@ -10,6 +10,7 @@ struct Vertex
 
 struct TransformData
 {
-	Vec3 offset;
-	float dummy; // 상수 버퍼의 16byte 정렬을 위한 변수
+	Matrix matWorld = DirectX::XMMatrixIdentity();
+	Matrix matView = DirectX::XMMatrixIdentity();
+	Matrix matProjection = DirectX::XMMatrixIdentity();
 };

@@ -7,9 +7,8 @@ class Scene
 public:
 	virtual ~Scene() {}
 	virtual void Init() = 0;
-	void Update();
-	void Render();
+	vector<shared_ptr<Object>>& GetObjects() { return objects; }
 
 protected:
-	vector<Object*> objects;
+	vector<shared_ptr<Object>> objects;
 };

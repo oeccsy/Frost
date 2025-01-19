@@ -12,5 +12,5 @@ TriangleScene::~TriangleScene() {}
 void TriangleScene::Init()
 {
 	//objects.push_back(new Triangle());
-	objects.push_back(new class Rectangle());
+	objects.push_back(make_shared<class Rectangle>());
 }

@@ -17,47 +17,52 @@ Rectangle::~Rectangle()
 {
 }
 
-void Rectangle::Update()
-{
-    _transformData.offset.x += 0.003f;
-    _transformData.offset.y += 0.003f;
-
-    D3D11_MAPPED_SUBRESOURCE subResource;
-    ZeroMemory(&subResource, sizeof(subResource));
-
-    auto deviceContext = RenderFramework::GetDeviceContext();
-    deviceContext->Map(_constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-    ::memcpy(subResource.pData, &_transformData, sizeof(_transformData));
-    deviceContext->Unmap(_constantBuffer.Get(), 0);
-}
-
-void Rectangle::Render()
-{
-    uint32 stride = sizeof(Vertex);
-    uint32 offset = 0;
-
-    auto deviceContext = RenderFramework::GetDeviceContext();
-
-    // IA
-    deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
-    deviceContext->IASetIndexBuffer(_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-    deviceContext->IASetInputLayout(_inputLayout.Get());
-    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-    // VS
-    deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
-    deviceContext->VSSetConstantBuffers(0, 1, _constantBuffer.GetAddressOf());
-
-    // RS
-
-    // PS
-    deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
-    deviceContext->PSSetShaderResources(0, 1, _shaderResourceView_smile.GetAddressOf());
-    deviceContext->PSSetShaderResources(1, 1, _shaderResourceView_stars.GetAddressOf());
-
-    // OM
-    deviceContext->DrawIndexed(_indices.size(), 0, 0);
-}
+//void Rectangle::Update()
+//{
+//    // SRT
+//    Matrix s = XMMatrixScalingFromVector(_localScale);
+//    Matrix r = XMMatrixRotationRollPitchYawFromVector(_localRotation) * XMMatrixRotationZ(XMConvertToRadians(45.0f));
+//    Matrix t = XMMatrixTranslationFromVector(_localPosition);
+//
+//    Matrix matWorld = s * r * t;
+//    _transformData.matWorld = matWorld;
+//
+//    D3D11_MAPPED_SUBRESOURCE subResource;
+//    ZeroMemory(&subResource, sizeof(subResource));
+//
+//    auto deviceContext = RenderFramework::GetDeviceContext();
+//    deviceContext->Map(_constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
+//    ::memcpy(subResource.pData, &_transformData, sizeof(_transformData));
+//    deviceContext->Unmap(_constantBuffer.Get(), 0);
+//}
+//
+//void Rectangle::Render()
+//{
+//    uint32 stride = sizeof(Vertex);
+//    uint32 offset = 0;
+//
+//    auto deviceContext = RenderFramework::GetDeviceContext();
+//
+//    // IA
+//    deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
+//    deviceContext->IASetIndexBuffer(_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+//    deviceContext->IASetInputLayout(_inputLayout.Get());
+//    deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//
+//    // VS
+//    deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
+//    deviceContext->VSSetConstantBuffers(0, 1, _constantBuffer.GetAddressOf());
+//
+//    // RS
+//
+//    // PS
+//    deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
+//    deviceContext->PSSetShaderResources(0, 1, _shaderResourceView_smile.GetAddressOf());
+//    deviceContext->PSSetShaderResources(1, 1, _shaderResourceView_stars.GetAddressOf());
+//
+//    // OM
+//    deviceContext->DrawIndexed(_indices.size(), 0, 0);
+//}
 
 void Rectangle::CreateGeometry()
 {
@@ -89,7 +94,7 @@ void Rectangle::CreateGeometry()
         ZeroMemory(&data, sizeof(data));
         data.pSysMem = _vertices.data();
 
-        auto device = RenderFramework::GetDevice();
+        auto device = Graphics::GetDevice();
         HRESULT hr = device->CreateBuffer(&desc, &data, _vertexBuffer.GetAddressOf());
         assert(SUCCEEDED(hr));
     }
@@ -105,7 +110,7 @@ void Rectangle::CreateGeometry()
         ZeroMemory(&data, sizeof(data));
         data.pSysMem = _indices.data();
 
-        auto device = RenderFramework::GetDevice();
+        auto device = Graphics::GetDevice();
         HRESULT hr = device->CreateBuffer(&desc, &data, _indexBuffer.GetAddressOf());
         assert(SUCCEEDED(hr));
     }
@@ -113,18 +118,18 @@ void Rectangle::CreateGeometry()
 
 void Rectangle::CreateVS()
 {
-    LoadShaderFromFile(L"Rectangle.hlsl", "VS", "vs_5_0", _vsBlob);
+    LoadShaderFromFile(L"Triangle.hlsl", "VS", "vs_5_0", _vsBlob);
 
-    auto device = RenderFramework::GetDevice();
+    auto device = Graphics::GetDevice();
     HRESULT hr = device->CreateVertexShader(_vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), nullptr, _vertexShader.GetAddressOf());
     assert(SUCCEEDED(hr));
 }
 
 void Rectangle::CreatePS()
 {
-    LoadShaderFromFile(L"Rectangle.hlsl", "PS", "ps_5_0", _psBlob);
+    LoadShaderFromFile(L"Triangle.hlsl", "PS", "ps_5_0", _psBlob);
 
-    auto device = RenderFramework::GetDevice();
+    auto device = Graphics::GetDevice();
     HRESULT hr = device->CreatePixelShader(_psBlob->GetBufferPointer(), _psBlob->GetBufferSize(), nullptr, _pixelShader.GetAddressOf());
     assert(SUCCEEDED(hr));
 }
@@ -139,7 +144,7 @@ void Rectangle::CreateInputLayout()
     };
 
     const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-    auto device = RenderFramework::GetDevice();
+    auto device = Graphics::GetDevice();
     device->CreateInputLayout(layout, count, _vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), _inputLayout.GetAddressOf());
 }
 
@@ -151,8 +156,8 @@ void Rectangle::CreateSRV()
         HRESULT hr = LoadFromWICFile(L"Smile.png", WIC_FLAGS_NONE, &md, img);
         assert(SUCCEEDED(hr));
 
-        auto device = RenderFramework::GetDevice();
-        hr = CreateShaderResourceView(device, img.GetImages(), img.GetImageCount(), md, _shaderResourceView_smile.GetAddressOf());
+        auto device = Graphics::GetDevice();
+        hr = CreateShaderResourceView(device.Get(), img.GetImages(), img.GetImageCount(), md, _shaderResourceView_smile.GetAddressOf());
         assert(SUCCEEDED(hr));
     }
 
@@ -162,8 +167,8 @@ void Rectangle::CreateSRV()
         HRESULT hr = LoadFromWICFile(L"Stars.png", WIC_FLAGS_NONE, &md, img);
         assert(SUCCEEDED(hr));
 
-        auto device = RenderFramework::GetDevice();
-        hr = CreateShaderResourceView(device, img.GetImages(), img.GetImageCount(), md, _shaderResourceView_stars.GetAddressOf());
+        auto device = Graphics::GetDevice();
+        hr = CreateShaderResourceView(device.Get(), img.GetImages(), img.GetImageCount(), md, _shaderResourceView_stars.GetAddressOf());
         assert(SUCCEEDED(hr));
     }
 }
@@ -177,7 +182,7 @@ void Rectangle::CreateContantBuffer()
     desc.ByteWidth = sizeof(TransformData);
     desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE; 
 
-    auto device = RenderFramework::GetDevice();
+    auto device = Graphics::GetDevice();
     HRESULT hr = device->CreateBuffer(&desc, nullptr, _constantBuffer.GetAddressOf());
     assert(SUCCEEDED(hr));
 }

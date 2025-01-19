@@ -10,5 +10,5 @@ FrostScene::~FrostScene() {}
 
 void FrostScene::Init()
 {
-	objects.push_back(new Frost());
+	objects.push_back(make_shared<Frost>());
 }

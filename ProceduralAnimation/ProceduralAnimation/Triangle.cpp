@@ -15,34 +15,29 @@ Triangle::~Triangle()
 {
 }
 
-void Triangle::Update()
-{
-
-}
-
-void Triangle::Render()
-{
-	uint32 stride = sizeof(Vertex);
-	uint32 offset = 0;
-
-	auto deviceContext = RenderFramework::GetDeviceContext();
-
-	// IA
-	deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
-	deviceContext->IASetInputLayout(_inputLayout.Get());
-	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	// VS
-	deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
-
-	// RS
-
-	// PS
-	deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
-
-	// OM
-	deviceContext->Draw(_vertices.size(), 0);
-}
+//void Triangle::Render()
+//{
+//	uint32 stride = sizeof(Vertex);
+//	uint32 offset = 0;
+//
+//	auto deviceContext = RenderFramework::GetDeviceContext();
+//
+//	// IA
+//	deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
+//	deviceContext->IASetInputLayout(_inputLayout.Get());
+//	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+//
+//	// VS
+//	deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
+//
+//	// RS
+//
+//	// PS
+//	deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
+//
+//	// OM
+//	deviceContext->Draw(_vertices.size(), 0);
+//}
 
 void Triangle::CreateGeometry()
 {
@@ -66,7 +61,7 @@ void Triangle::CreateGeometry()
 	ZeroMemory(&data, sizeof(data));
 	data.pSysMem = _vertices.data();
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	device->CreateBuffer(&desc, &data, _vertexBuffer.GetAddressOf());
 }
 
@@ -74,7 +69,7 @@ void Triangle::CreateVS()
 {
 	LoadShaderFromFile(L"Triangle.hlsl", "VS", "vs_5_0", _vsBlob);
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	HRESULT hr = device->CreateVertexShader(_vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), nullptr, _vertexShader.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
@@ -83,7 +78,7 @@ void Triangle::CreatePS()
 {
 	LoadShaderFromFile(L"Triangle.hlsl", "PS", "ps_5_0", _psBlob);
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	HRESULT hr = device->CreatePixelShader(_psBlob->GetBufferPointer(), _psBlob->GetBufferSize(), nullptr, _pixelShader.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
@@ -98,6 +93,6 @@ void Triangle::CreateInputLayout()
 	};
 
 	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	device->CreateInputLayout(layout, count, _vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), _inputLayout.GetAddressOf());
 }

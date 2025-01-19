@@ -17,39 +17,39 @@ Frost::~Frost()
 {
 }
 
-void Frost::Update()
-{
-}
-
-void Frost::Render()
-{
-	uint32 stride = sizeof(Vertex);
-	uint32 offset = 0;
-
-	auto deviceContext = RenderFramework::GetDeviceContext();
-
-	// IA
-	deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
-	deviceContext->IASetInputLayout(_inputLayout.Get());
-	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
-
-	// VS
-	deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
-
-	// GS
-	deviceContext->GSSetShader(_geometryShader.Get(), nullptr, 0);
-
-	// RS
-
-	// PS
-	deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
-
-	// OM
-	deviceContext->Draw(_vertices.size(), 0);
-
-	// Cleanup
-	//deviceContext->GSSetShader(nullptr, nullptr, 0);
-}
+//void Frost::Update()
+//{
+//}
+//
+//void Frost::Render()
+//{
+//	uint32 stride = sizeof(Vertex);
+//	uint32 offset = 0;
+//
+//	auto deviceContext = RenderFramework::GetDeviceContext();
+//
+//	// IA
+//	deviceContext->IASetVertexBuffers(0, 1, _vertexBuffer.GetAddressOf(), &stride, &offset);
+//	deviceContext->IASetInputLayout(_inputLayout.Get());
+//	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+//
+//	// VS
+//	deviceContext->VSSetShader(_vertexShader.Get(), nullptr, 0);
+//
+//	// GS
+//	deviceContext->GSSetShader(_geometryShader.Get(), nullptr, 0);
+//
+//	// RS
+//
+//	// PS
+//	deviceContext->PSSetShader(_pixelShader.Get(), nullptr, 0);
+//
+//	// OM
+//	deviceContext->Draw(_vertices.size(), 0);
+//
+//	// Cleanup
+//	//deviceContext->GSSetShader(nullptr, nullptr, 0);
+//}
 
 void Frost::CreateGeometry()
 {
@@ -68,7 +68,7 @@ void Frost::CreateGeometry()
 	ZeroMemory(&data, sizeof(data));
 	data.pSysMem = _vertices.data();
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	device->CreateBuffer(&desc, &data, _vertexBuffer.GetAddressOf());
 }
 
@@ -76,7 +76,7 @@ void Frost::CreateVS()
 {
 	LoadShaderFromFile(L"Point.hlsl", "VS", "vs_5_0", _vsBlob);
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	HRESULT hr = device->CreateVertexShader(_vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), nullptr, _vertexShader.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
@@ -85,7 +85,7 @@ void Frost::CreateGS()
 {
 	LoadShaderFromFile(L"Point.hlsl", "GS", "gs_5_0", _gsBlob);
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	HRESULT hr = device->CreateGeometryShader(_gsBlob->GetBufferPointer(), _gsBlob->GetBufferSize(), nullptr, _geometryShader.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
@@ -94,7 +94,7 @@ void Frost::CreatePS()
 {
 	LoadShaderFromFile(L"Point.hlsl", "PS", "ps_5_0", _psBlob);
 
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	HRESULT hr = device->CreatePixelShader(_psBlob->GetBufferPointer(), _psBlob->GetBufferSize(), nullptr, _pixelShader.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
@@ -108,6 +108,6 @@ void Frost::CreateInputLayout()
 	};
 
 	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-	auto device = RenderFramework::GetDevice();
+	auto device = Graphics::GetDevice();
 	device->CreateInputLayout(layout, count, _vsBlob->GetBufferPointer(), _vsBlob->GetBufferSize(), _inputLayout.GetAddressOf());
 }

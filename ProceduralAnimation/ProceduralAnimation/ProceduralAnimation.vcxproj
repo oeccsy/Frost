@@ -140,11 +140,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="App.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Frost.h" />
     <ClInclude Include="FrostScene.h" />
+    <ClInclude Include="Geometry.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="IndexBuffer.h" />
+    <ClInclude Include="InputLayout.h" />
+    <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="TriangleScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="RenderFramework.h" />
@@ -157,12 +164,21 @@
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Values.h" />
+    <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="VertexData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="App.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Frost.cpp" />
     <ClCompile Include="FrostScene.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
+    <ClCompile Include="InputLayout.cpp" />
+    <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TriangleScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="RenderFramework.cpp" />
@@ -173,6 +189,8 @@
     <ClCompile Include="ProceduralAnimation.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="VertexBuffer.cpp" />
+    <ClCompile Include="VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProceduralAnimation.rc" />

@@ -6,8 +6,6 @@ class Triangle : public Object
 public:
 	Triangle();
 	~Triangle() override;
-	void Update() override;
-	void Render() override;
 
 protected:
 	void CreateGeometry() override;

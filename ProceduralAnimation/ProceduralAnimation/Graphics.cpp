@@ -1,14 +1,13 @@
 #include "pch.h"
-#include "RenderFramework.h"
-#include "Scene.h"
+#include "Graphics.h"
 
-RenderFramework::RenderFramework() {}
+ComPtr<ID3D11Device> Graphics::_device = nullptr;
+ComPtr<ID3D11DeviceContext> Graphics::_deviceContext = nullptr;
 
-RenderFramework::~RenderFramework() {}
-
-void RenderFramework::Init(HWND hwnd)
+Graphics::Graphics(HWND hwnd)
 {
 	_hwnd = hwnd;
+
 	_width = GWinSizeX;
 	_height = GWinSizeY;
 
@@ -17,74 +16,30 @@ void RenderFramework::Init(HWND hwnd)
 	SetViewport();
 }
 
-int RenderFramework::Run()
+Graphics::~Graphics()
 {
-	MSG msg = {};
-
-	while (msg.message != WM_QUIT)
-	{
-		if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else
-		{
-			RenderBegin();
-
-			if (currentScene)
-			{
-				//currentScene->Update();
-				//currentScene->Render();
-			}
-			
-			RenderEnd();
-		}
-	}
-
-	return (int)msg.wParam;
 }
 
-void RenderFramework::LoadScene(Scene* newScene)
-{
-	if (currentScene) delete currentScene;
-	currentScene = newScene;
-	currentScene->Init();
-}
-
-ComPtr<ID3D11Device> RenderFramework::_device = nullptr;
-ComPtr<ID3D11DeviceContext> RenderFramework::_deviceContext = nullptr;
-
-ID3D11Device* RenderFramework::GetDevice()
-{
-	return _device.Get();
-}
-
-ID3D11DeviceContext* RenderFramework::GetDeviceContext()
-{
-	return _deviceContext.Get();
-}
-
-void RenderFramework::RenderBegin()
+void Graphics::RenderBegin()
 {
 	_deviceContext->OMSetRenderTargets(1, _renderTargetView.GetAddressOf(), nullptr);
 	_deviceContext->ClearRenderTargetView(_renderTargetView.Get(), _clearColor);
 	_deviceContext->RSSetViewports(1, &_viewport);
 }
 
-void RenderFramework::RenderEnd()
+void Graphics::RenderEnd()
 {
 	HRESULT hr = _swapChain->Present(1, 0);
 	assert(SUCCEEDED(hr));
 }
 
-void RenderFramework::CreateDeviceAndSwapChain()
+void Graphics::CreateDeviceAndSwapChain()
 {
 	DXGI_SWAP_CHAIN_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
 	{
-		desc.BufferDesc.Width = _width;
-		desc.BufferDesc.Height = _height;
+		desc.BufferDesc.Width = GWinSizeX;
+		desc.BufferDesc.Height = GWinSizeY;
 		desc.BufferDesc.RefreshRate.Numerator = 60;
 		desc.BufferDesc.RefreshRate.Denominator = 1;
 		desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -117,7 +72,7 @@ void RenderFramework::CreateDeviceAndSwapChain()
 	assert(SUCCEEDED(hr));
 }
 
-void RenderFramework::CreateRenderTargetView()
+void Graphics::CreateRenderTargetView()
 {
 	HRESULT hr;
 
@@ -129,7 +84,7 @@ void RenderFramework::CreateRenderTargetView()
 	assert(SUCCEEDED(hr));
 }
 
-void RenderFramework::SetViewport()
+void Graphics::SetViewport()
 {
 	_viewport.TopLeftX = 0.f;
 	_viewport.TopLeftY = 0.f;
