@@ -2,7 +2,6 @@
 #include "Scene.h"
 #include "FrostScene.h"
 #include "Object.h"
-#include "Frost.h"
 
 FrostScene::FrostScene() {}
 
@@ -10,5 +9,5 @@ FrostScene::~FrostScene() {}
 
 void FrostScene::Init()
 {
-	objects.push_back(make_shared<Frost>());
+
 }

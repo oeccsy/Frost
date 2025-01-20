@@ -10,10 +10,10 @@ public:
 	//void Render();
 
 protected:
-	void CreateGeometry() override;
-	void CreateVS() override;
-	void CreatePS() override;
-	void CreateInputLayout() override;
+	void CreateGeometry();
+	void CreateVS();
+	void CreatePS();
+	void CreateInputLayout();
 	void CreateSRV();
 	void CreateContantBuffer();
 

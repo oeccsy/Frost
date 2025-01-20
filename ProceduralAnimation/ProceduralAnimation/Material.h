@@ -26,7 +26,7 @@ public:
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 		ComPtr<ID3D11Buffer> constantBuffer;
-		HRESULT hr = device->CreateBuffer(&desc, nullptr, constantBuffer.GetAddressOf());
+		HRESULT hr = Graphics::GetDevice()->CreateBuffer(&desc, nullptr, constantBuffer.GetAddressOf());
 		assert(SUCCEEDED(hr));
 
 		return constantBuffer;
@@ -37,6 +37,7 @@ private:
 
 private:
 	friend class Mesh;
+	friend class Pipeline;
 
 	// VS
 	ComPtr<ID3D11VertexShader> _vertexShader;

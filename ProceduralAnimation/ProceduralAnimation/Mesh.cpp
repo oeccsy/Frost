@@ -9,7 +9,7 @@ Mesh::~Mesh() {}
 void Mesh::CreateBuffers()
 {
 	auto device = Graphics::GetDevice();
-
+	
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(desc));

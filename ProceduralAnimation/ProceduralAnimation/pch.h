@@ -7,6 +7,7 @@
 
 // STL
 #include <iostream>
+#include <array>
 #include <vector>
 #include <list>
 #include <map>
@@ -40,9 +41,4 @@ using namespace Microsoft::WRL;
 // Engine
 #include "Graphics.h"
 #include "Pipeline.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "InputLayout.h"
-#include "Geometry.h"
 #include "VertexData.h"
-#include "Shader.h"
