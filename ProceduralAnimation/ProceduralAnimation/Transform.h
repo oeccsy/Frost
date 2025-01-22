@@ -20,15 +20,19 @@ public:
 	Vec3 GetWorldRotation() { return _worldRotation; }
 	Vec3 GetWorldScale() { return _worldScale; }
 
-	void SetLocalPosition(const Vec3& position) { _localPosition = position; CalculateMatrix(); }
-	void SetLocalRotation(const Vec3& rotation) { _localRotation = rotation; CalculateMatrix();	}
-	void SetLocalScale(const Vec3& scale) { _localScale = scale; CalculateMatrix();	}
+	void SetLocalPosition(const Vec3& position);
+	void SetLocalRotation(const Vec3& rotation);
+	void SetLocalScale(const Vec3& scale);
 	void SetWorldPosition(const Vec3& position);
 	void SetWorldRotation(const Vec3& rotation);
 	void SetWorldScale(const Vec3& scale);
 
-	void CalculateMatrix();
+public:
 	Matrix GetWorldMatrix() { return _world; }
+
+private:
+	void CalculateMatrix();
+	void DecomposeMatrix();
 
 public:
 	bool HasParent() { return _parent != nullptr; }

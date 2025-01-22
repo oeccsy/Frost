@@ -32,24 +32,28 @@ Vec3 Transform::GetForward()
 	return forward;
 }
 
-Vec3 Transform::GetWorldPosition()
+void Transform::SetLocalPosition(const Vec3& position)
 {
-	Vector posVec;
-	::XMMatrixDecompose(&posVec, nullptr, nullptr, _world);
+	_localPosition = position;
 
-	Vec3 pos;
-	::XMStoreFloat3(&pos, posVec);
-	return pos;
+	CalculateMatrix();
+	DecomposeMatrix();
 }
 
-Vec3 Transform::GetWorldRotation()
+void Transform::SetLocalRotation(const Vec3& rotation)
 {
-	return Vec3();
+	_localRotation = rotation;
+
+	CalculateMatrix();
+	DecomposeMatrix();
 }
 
-Vec3 Transform::GetWorldScale()
+void Transform::SetLocalScale(const Vec3& scale)
 {
-	return Vec3();
+	_localScale = scale;
+
+	CalculateMatrix();
+	DecomposeMatrix();
 }
 
 void Transform::SetWorldPosition(const Vec3& position)
@@ -105,7 +109,6 @@ void Transform::SetWorldScale(const Vec3& scale)
 	}
 }
 
-// root들 만을 대상으로 한다, 자식의 매트릭스까지 수행한다.
 void Transform::CalculateMatrix()
 {
 	// SRT
@@ -128,4 +131,40 @@ void Transform::CalculateMatrix()
 	{
 		child->CalculateMatrix();
 	}
+}
+
+Vec3 ConvertToEuler(Vec4 q)
+{
+	Vec3 angles;
+
+	// roll (x-axis)
+	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
+	double cosr_cosp = 1 - 2 * (q.x * q.x + q.y * q.y);
+	angles.x = std::atan2(sinr_cosp, cosr_cosp);
+
+	// pitch (y-axis)
+	double sinp = std::sqrt(1 + 2 * (q.w * q.y - q.x * q.z));
+	double cosp = std::sqrt(1 - 2 * (q.w * q.y - q.x * q.z));
+	angles.y = 2 * std::atan2(sinp, cosp) - XM_PI / 2;
+
+	// yaw (z-axis)
+	double siny_cosp = 2 * (q.w * q.z + q.x * q.y);
+	double cosy_cosp = 1 - 2 * (q.y * q.y + q.z * q.z);
+	angles.z = std::atan2(siny_cosp, cosy_cosp);
+
+	return angles;
+}
+
+void Transform::DecomposeMatrix()
+{
+	Vector worldPositionVector, worldRotationVector, worldScaleVector;
+	::XMMatrixDecompose(&worldPositionVector, &worldRotationVector, &worldScaleVector, _world);
+
+	::XMStoreFloat3(&_worldPosition, worldPositionVector);
+	
+	Vec4 quaternion;
+	::XMStoreFloat4(&quaternion, worldRotationVector);
+	_worldRotation = ConvertToEuler(quaternion);
+	
+	::XMStoreFloat3(&_worldPosition, worldScaleVector);
 }
