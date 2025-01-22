@@ -28,21 +28,20 @@ int App::Run()
 		}
 		else
 		{
-			_graphics->RenderBegin();
-
-			if (currentScene)
+			if (!currentScene) continue;
+			
+			auto& objects = currentScene->GetObjects();
+			
+			for (auto& object : objects)
 			{
-				auto& objects = currentScene->GetObjects();
-
-				for (auto& object : objects)
-				{
-					object->Update();
-				}
-
-				for (auto& object : objects)
-				{
-					object->Render(_pipeline);
-				}
+				object->Update();
+			}
+			
+			_graphics->RenderBegin();
+			
+			for (auto& object : objects)
+			{
+				object->Render(_pipeline);
 			}
 
 			_graphics->RenderEnd();

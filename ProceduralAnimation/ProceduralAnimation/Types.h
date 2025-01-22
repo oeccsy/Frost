@@ -17,3 +17,4 @@ using Vec4 = DirectX::XMFLOAT4;
 using Color = DirectX::XMFLOAT4;
 using Matrix = DirectX::XMMATRIX;
 using Vector = DirectX::XMVECTOR;
+using Quaternion = DirectX::XMVECTOR;
