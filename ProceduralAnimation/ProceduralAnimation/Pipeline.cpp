@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Pipeline.h"
-#include "Mesh.h";
-#include "Material.h";
+#include "Mesh.h"
+#include "Material.h"
 
 Pipeline::Pipeline() {}
 
@@ -44,5 +44,5 @@ void Pipeline::Render(shared_ptr<Mesh> mesh, shared_ptr<Material> material)
 
 	// OM
 	deviceContext->OMSetBlendState(material->_blendState.Get(), 0, 0xFFFFFFFF);
-	deviceContext->DrawIndexed(mesh->_indices.size(), 0, 0);
+	deviceContext->DrawIndexed(static_cast<UINT>(mesh->_indices.size()), 0, 0);
 }

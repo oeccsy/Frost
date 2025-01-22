@@ -32,10 +32,7 @@ void Object::Update()
 	//deviceContext->Unmap(_constantBuffer.Get(), 0);
 }
 
-void Object::LateUpdate()
-{
-	_transform->CalculateMatrix();
-}
+void Object::LateUpdate() {}
 
 void Object::Render(shared_ptr<Pipeline> pipeline)
 {
