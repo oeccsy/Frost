@@ -4,11 +4,11 @@ class Object;
 class Mesh;
 class Material;
 
-class Triangle : public Object
+class Cube : public Object
 {
 public:
-	Triangle();
-	~Triangle() override;
+	Cube();
+	~Cube() override;
 	void Update() override;
 
 protected:

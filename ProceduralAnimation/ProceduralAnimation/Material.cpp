@@ -26,21 +26,6 @@ void Material::CreatePS(const wstring& path, const string& name, const string& v
 	assert(SUCCEEDED(hr));
 }
 
-void Material::AddVSConstantBuffer(ComPtr<ID3D11Buffer>& constantBuffer)
-{
-	_vsConstantBuffers.push_back(constantBuffer);
-}
-
-void Material::AddGSConstantBuffer(ComPtr<ID3D11Buffer>& constantBuffer)
-{
-	_gsConstantBuffers.push_back(constantBuffer);
-}
-
-void Material::AddPSConstantBuffer(ComPtr<ID3D11Buffer>& constantBuffer)
-{
-	_psConstantBuffers.push_back(constantBuffer);
-}
-
 void Material::AddTexture(const wstring& path)
 {
 	TexMetadata md;

@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Triangle.h"
 #include "Cube.h"
+#include "Camera.h"
 
 TriangleScene::TriangleScene() {}
 
@@ -11,5 +12,7 @@ TriangleScene::~TriangleScene() {}
 
 void TriangleScene::Init()
 {
-	objects.push_back(make_shared<class Triangle>());
+	_camera = make_shared<Camera>();
+	Camera::SetCamera(_camera);
+	_objects.push_back(make_shared<Triangle>());
 }

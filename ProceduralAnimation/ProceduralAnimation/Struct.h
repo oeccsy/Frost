@@ -10,7 +10,7 @@ struct Vertex
 
 struct TransformData
 {
-	Matrix matWorld = DirectX::XMMatrixIdentity();
-	Matrix matView = DirectX::XMMatrixIdentity();
-	Matrix matProjection = DirectX::XMMatrixIdentity();
+	Matrix worldMatrix = DirectX::XMMatrixIdentity();
+	Matrix viewMatrix = DirectX::XMMatrixIdentity();
+	Matrix projMatrix = DirectX::XMMatrixIdentity();
 };

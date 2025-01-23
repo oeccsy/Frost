@@ -2,6 +2,7 @@
 #include "App.h"
 #include "Scene.h"
 #include "Object.h"
+#include "Camera.h"
 
 App::App() {}
 
@@ -12,7 +13,7 @@ void App::Init(HWND hwnd)
 	_hwnd = hwnd;
 
 	_graphics = make_shared<Graphics>(hwnd);
-	_pipeline = make_shared<Pipeline>();
+	_pipeline = make_shared<Renderer>();
 }
 
 int App::Run()
@@ -36,6 +37,10 @@ int App::Run()
 			{
 				object->Update();
 			}
+
+			if (!Camera::GetCamera()) continue;
+
+			Camera::GetCamera()->Update();
 			
 			_graphics->RenderBegin();
 			

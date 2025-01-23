@@ -84,7 +84,7 @@
     <ClInclude Include="App.h">
       <Filter>소스 파일\01. Main</Filter>
     </ClInclude>
-    <ClInclude Include="Pipeline.h">
+    <ClInclude Include="Renderer.h">
       <Filter>소스 파일\00. Engine</Filter>
     </ClInclude>
     <ClInclude Include="VertexData.h">
@@ -137,7 +137,7 @@
     <ClCompile Include="App.cpp">
       <Filter>소스 파일\01. Main</Filter>
     </ClCompile>
-    <ClCompile Include="Pipeline.cpp">
+    <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일\00. Engine</Filter>
     </ClCompile>
     <ClCompile Include="VertexData.cpp">

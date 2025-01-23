@@ -13,28 +13,11 @@ Object::Object()
 
 Object::~Object() {}
 
-void Object::Update()
-{
-	//// SRT
-	//Matrix s = XMMatrixScalingFromVector(_localScale);
-	//Matrix r = XMMatrixRotationRollPitchYawFromVector(_localRotation);
-	//Matrix t = XMMatrixTranslationFromVector(_localPosition);
-
-	//Matrix matWorld = s * r * t;
-	//_transformData.matWorld = matWorld;
-
-	//D3D11_MAPPED_SUBRESOURCE subResource;
-	//ZeroMemory(&subResource, sizeof(subResource));
-
-	//auto deviceContext = Graphics::GetDeviceContext();
-	//deviceContext->Map(_constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-	//::memcpy(subResource.pData, &_transformData, sizeof(_transformData));
-	//deviceContext->Unmap(_constantBuffer.Get(), 0);
-}
+void Object::Update() {}
 
 void Object::LateUpdate() {}
 
-void Object::Render(shared_ptr<Pipeline> pipeline)
+void Object::Render(shared_ptr<Renderer> renderer)
 {
-	pipeline->Render(_mesh, _material);
+	renderer->Render(_mesh, _material, _transform);
 }

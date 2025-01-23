@@ -16,11 +16,7 @@ Triangle::~Triangle() {}
 
 void Triangle::Update()
 {
-}
 
-void Triangle::Render(shared_ptr<Pipeline> pipeline)
-{
-	pipeline->Render(_mesh, _material);
 }
 
 void Triangle::CreateGeometry()
@@ -55,10 +51,4 @@ void Triangle::CreateShader()
 void Triangle::CreateInputLayout()
 {
 	_mesh->CreateInputLayout(_material);
-}
-
-void Triangle::CreateContantBuffer()
-{
-	auto constantBuffer = Material::CreateConstantBuffer<TransformData>();
-	_material->AddVSConstantBuffer(constantBuffer);
 }

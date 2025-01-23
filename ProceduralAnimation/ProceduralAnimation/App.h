@@ -11,12 +11,10 @@ public:
 	int Run();
 	void LoadScene(class Scene* newScene);
 
-	void CreateConsole();
-
 private:
 	HWND _hwnd;
 	class Scene* currentScene;
 
 	shared_ptr<Graphics> _graphics;
-	shared_ptr<Pipeline> _pipeline;
+	shared_ptr<Renderer> _pipeline;
 };

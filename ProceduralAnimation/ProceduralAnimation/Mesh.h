@@ -15,7 +15,7 @@ public:
 	void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { _topology = topology; }
 
 private:
-	friend class Pipeline;
+	friend class Renderer;
 	
 	// IA
 	vector<Vertex> _vertices;
