@@ -25,17 +25,14 @@
     <Filter Include="소스 파일\98. Shaders">
       <UniqueIdentifier>{04b6ba35-2154-4021-b2c3-2fca12f5380c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\02. Base">
-      <UniqueIdentifier>{2131e115-c751-47fa-b2b3-f4fdbc55707c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\03. Triangle">
-      <UniqueIdentifier>{6435c67b-2576-4ff1-9dd6-8ba7349fc0e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="소스 파일\04. Frost">
-      <UniqueIdentifier>{c50a45e6-e957-47c9-aab7-5c8785003b59}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\00. Engine">
       <UniqueIdentifier>{27f08900-94a0-4969-89eb-b2590b051d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Triangle">
+      <UniqueIdentifier>{6435c67b-2576-4ff1-9dd6-8ba7349fc0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Frost">
+      <UniqueIdentifier>{c50a45e6-e957-47c9-aab7-5c8785003b59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,17 +60,11 @@
     <ClInclude Include="ProceduralAnimation.h">
       <Filter>소스 파일\01. Main</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>소스 파일\02. Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>소스 파일\02. Base</Filter>
-    </ClInclude>
     <ClInclude Include="TriangleScene.h">
-      <Filter>소스 파일\03. Triangle</Filter>
+      <Filter>소스 파일\02. Triangle</Filter>
     </ClInclude>
     <ClInclude Include="FrostScene.h">
-      <Filter>소스 파일\04. Frost</Filter>
+      <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
     <ClInclude Include="Graphics.h">
       <Filter>소스 파일\00. Engine</Filter>
@@ -91,10 +82,10 @@
       <Filter>소스 파일\00. Engine</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>소스 파일\03. Triangle</Filter>
+      <Filter>소스 파일\02. Triangle</Filter>
     </ClInclude>
     <ClInclude Include="Triangle.h">
-      <Filter>소스 파일\03. Triangle</Filter>
+      <Filter>소스 파일\02. Triangle</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>소스 파일\00. Engine</Filter>
@@ -108,6 +99,15 @@
     <ClInclude Include="Mesh.h">
       <Filter>소스 파일\00. Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -116,17 +116,11 @@
     <ClCompile Include="ProceduralAnimation.cpp">
       <Filter>소스 파일\01. Main</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일\02. Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\02. Base</Filter>
-    </ClCompile>
     <ClCompile Include="TriangleScene.cpp">
-      <Filter>소스 파일\03. Triangle</Filter>
+      <Filter>소스 파일\02. Triangle</Filter>
     </ClCompile>
     <ClCompile Include="FrostScene.cpp">
-      <Filter>소스 파일\04. Frost</Filter>
+      <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
     <ClCompile Include="Graphics.cpp">
       <Filter>소스 파일\00. Engine</Filter>
@@ -144,10 +138,10 @@
       <Filter>소스 파일\00. Engine</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>소스 파일\03. Triangle</Filter>
+      <Filter>소스 파일\02. Triangle</Filter>
     </ClCompile>
     <ClCompile Include="Triangle.cpp">
-      <Filter>소스 파일\03. Triangle</Filter>
+      <Filter>소스 파일\02. Triangle</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>소스 파일\00. Engine</Filter>
@@ -159,6 +153,15 @@
       <Filter>소스 파일\00. Engine</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
       <Filter>소스 파일\00. Engine</Filter>
     </ClCompile>
   </ItemGroup>
