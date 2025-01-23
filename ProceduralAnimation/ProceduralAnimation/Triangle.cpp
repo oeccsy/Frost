@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "Object.h"
+#include "Triangle.h"
 #include "Mesh.h"
 #include "Material.h"
-#include "Triangle.h"
 
 
 Triangle::Triangle()
@@ -14,10 +14,7 @@ Triangle::Triangle()
 
 Triangle::~Triangle() {}
 
-void Triangle::Update()
-{
-
-}
+void Triangle::Update() {}
 
 void Triangle::CreateGeometry()
 {

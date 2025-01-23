@@ -32,10 +32,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     App app;
     app.Init(hWnd);
 
-    Scene* triangleScene = new TriangleScene();
-    app.LoadScene(triangleScene);
+    MSG msg = {};
 
-    return app.Run();
+    while (msg.message != WM_QUIT)
+    {
+        if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+        else
+        {
+            app.Run();
+        }
+    }
+
+    return (int)msg.wParam;
 }
 
 

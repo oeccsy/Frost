@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Object.h"
 #include "Camera.h"
+#include "TriangleScene.h"
 
 App::App() {}
 
@@ -13,52 +14,20 @@ void App::Init(HWND hwnd)
 	_hwnd = hwnd;
 
 	_graphics = make_shared<Graphics>(hwnd);
-	_pipeline = make_shared<Renderer>();
+	_renderer = make_shared<Renderer>();
+
+    _currentScene = make_shared<TriangleScene>();
+    _currentScene->Init();
 }
 
-int App::Run()
+void App::Run()
 {
-	MSG msg = {};
+    if (!_currentScene) return;
 
-	while (msg.message != WM_QUIT)
-	{
-		if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		else
-		{
-			if (!currentScene) continue;
-			
-			auto& objects = currentScene->GetObjects();
-			
-			for (auto& object : objects)
-			{
-				object->Update();
-			}
+    _currentScene->Update();
+    _currentScene->LateUpdate();
 
-			if (!Camera::GetCamera()) continue;
-
-			Camera::GetCamera()->Update();
-			
-			_graphics->RenderBegin();
-			
-			for (auto& object : objects)
-			{
-				object->Render(_pipeline);
-			}
-
-			_graphics->RenderEnd();
-		}
-	}
-
-	return (int)msg.wParam;
-}
-
-void App::LoadScene(Scene* newScene)
-{
-	if (currentScene) delete currentScene;
-	currentScene = newScene;
-	currentScene->Init();
+    _graphics->RenderBegin();
+    _currentScene->Render(_renderer);
+    _graphics->RenderEnd();
 }

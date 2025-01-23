@@ -1,17 +1,14 @@
 #include "pch.h"
-#include "Object.h"
 #include "Transform.h"
 #include "Camera.h"
 
-shared_ptr<Camera> Camera::_camera = nullptr;
+shared_ptr<Camera> Camera::_mainCamera = nullptr;
 
 Camera::Camera()
 {
 	_transform = make_shared<Transform>();
-	_transform->SetLocalPosition(Vec3(0, 0, -5));
 
 	_type = ProjectionType::Perspective;
-
 
 	_frustum.nearZ = 1.f;
 	_frustum.farZ = 100.f;
@@ -42,7 +39,7 @@ void Camera::SetFrustum(Frustum frustum)
 	CalculateProjMatrix();
 }
 
-void Camera::Update()
+void Camera::LateUpdate()
 {
 	CalculateViewMatrix();
 }

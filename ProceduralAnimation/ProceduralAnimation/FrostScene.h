@@ -9,6 +9,4 @@ class FrostScene : public Scene
 public:
 	FrostScene();
 	~FrostScene() override;
-
-	void Init() override;
 };

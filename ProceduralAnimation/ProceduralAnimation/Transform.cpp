@@ -161,7 +161,7 @@ void Transform::DecomposeMatrix()
 	::XMMatrixDecompose(&worldPositionVector, &worldRotationVector, &worldScaleVector, _world);
 
 	::XMStoreFloat3(&_worldPosition, worldPositionVector);
-	if (_worldPosition.x < -300.0f) 1 + 1;
+
 	Vec4 quaternion;
 	::XMStoreFloat4(&quaternion, worldRotationVector);
 	_worldRotation = ConvertToEuler(quaternion);

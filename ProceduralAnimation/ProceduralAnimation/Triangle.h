@@ -9,6 +9,8 @@ class Triangle : public Object
 public:
 	Triangle();
 	~Triangle() override;
+
+public:
 	void Update() override;
 
 protected:

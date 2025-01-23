@@ -6,8 +6,3 @@
 FrostScene::FrostScene() {}
 
 FrostScene::~FrostScene() {}
-
-void FrostScene::Init()
-{
-
-}

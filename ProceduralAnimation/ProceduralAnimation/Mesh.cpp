@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Mesh.h"
 #include "Material.h"
+#include "Mesh.h"
 
 Mesh::Mesh() {}
 

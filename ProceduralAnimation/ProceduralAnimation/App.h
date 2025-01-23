@@ -1,5 +1,7 @@
 #pragma once
 
+class Scene;
+
 class App
 {
 public:
@@ -8,13 +10,13 @@ public:
 
 public:
 	void Init(HWND hwnd);
-	int Run();
-	void LoadScene(class Scene* newScene);
+	void Run();
 
 private:
 	HWND _hwnd;
-	class Scene* currentScene;
 
 	shared_ptr<Graphics> _graphics;
-	shared_ptr<Renderer> _pipeline;
+	shared_ptr<Renderer> _renderer;
+
+	shared_ptr<Scene> _currentScene;
 };

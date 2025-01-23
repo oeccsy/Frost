@@ -15,7 +15,7 @@ public:
 
 private:
 	void CreateConstantBuffer();
-	void UpdateConstantBuffer(shared_ptr<Transform> transform);
+	void BindConstantBuffer(shared_ptr<Transform> transform);
 
 private:
 	shared_ptr<Camera> camera;

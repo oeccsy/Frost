@@ -1,9 +1,8 @@
 #include "pch.h"
 #include "Object.h"
+#include "Cube.h"
 #include "Mesh.h"
 #include "Material.h"
-#include "Cube.h"
-#include "Transform.h"
 
 
 Cube::Cube()
@@ -11,13 +10,11 @@ Cube::Cube()
 	CreateGeometry();
 	CreateShader();
 	CreateInputLayout();
-	_transform->SetLocalPosition(Vec3(0, 0, 30));
-	_transform->SetLocalRotation(Vec3(0.5f, 0.5f, 0.f));
 }
 
 Cube::~Cube() {}
 
-void Cube::Update() { }
+void Cube::Update() {}
 
 void Cube::CreateGeometry()
 {
@@ -42,7 +39,8 @@ void Cube::CreateGeometry()
 	vertices[7].color = Color(0.f, 0.f, 1.f, 1.f);
 
 	vector<uint32> indices;
-	indices.assign({
+	indices =
+	{
 		// Front face
 		0, 1, 2, 0, 2, 3,
 		// Back face
@@ -55,7 +53,7 @@ void Cube::CreateGeometry()
 		1, 5, 6, 1, 6, 2,
 		// Bottom face
 		4, 0, 3, 4, 3, 7,
-	});
+	};
 
 	_mesh->SetVertices(vertices);
 	_mesh->SetIndices(indices);

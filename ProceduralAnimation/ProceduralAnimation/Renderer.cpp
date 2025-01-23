@@ -14,7 +14,7 @@ Renderer::~Renderer() {}
 
 void Renderer::Render(shared_ptr<Mesh> mesh, shared_ptr<Material> material, shared_ptr<Transform> transform)
 {
-	UpdateConstantBuffer(transform);
+	BindConstantBuffer(transform);
 
 	uint32 stride = sizeof(Vertex);
 	uint32 offset = 0;
@@ -65,12 +65,12 @@ void Renderer::CreateConstantBuffer()
 	assert(SUCCEEDED(hr));
 }
 
-void Renderer::UpdateConstantBuffer(shared_ptr<Transform> transform)
+void Renderer::BindConstantBuffer(shared_ptr<Transform> transform)
 {
 	TransformData newData;
 	newData.worldMatrix = transform->GetWorldMatrix();
-	newData.viewMatrix = Camera::GetCamera()->GetViewMatrix();
-	newData.projMatrix = Camera::GetCamera()->GetProjMatrix();
+	newData.viewMatrix = Camera::GetMainCamera()->GetViewMatrix();
+	newData.projMatrix = Camera::GetMainCamera()->GetProjMatrix();
 
 	D3D11_MAPPED_SUBRESOURCE subResource;
 	ZeroMemory(&subResource, sizeof(subResource));

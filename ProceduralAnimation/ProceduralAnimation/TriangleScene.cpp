@@ -5,6 +5,7 @@
 #include "Triangle.h"
 #include "Cube.h"
 #include "Camera.h"
+#include "Transform.h"
 
 TriangleScene::TriangleScene() {}
 
@@ -13,6 +14,10 @@ TriangleScene::~TriangleScene() {}
 void TriangleScene::Init()
 {
 	_camera = make_shared<Camera>();
-	Camera::SetCamera(_camera);
-	_objects.push_back(make_shared<Triangle>());
+	Camera::SetMainCamera(_camera);
+	Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vec3(0, 0, -10));
+
+	shared_ptr<Cube> cube = make_shared<Cube>();
+	_objects.push_back(cube);
+	cube->GetTransform()->SetWorldRotation(Vec3(0.5f, 0.5f, 0.5f));
 }

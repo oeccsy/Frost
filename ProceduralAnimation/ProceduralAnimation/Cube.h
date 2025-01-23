@@ -1,14 +1,12 @@
 #pragma once
 
-class Object;
-class Mesh;
-class Material;
-
 class Cube : public Object
 {
 public:
 	Cube();
 	~Cube() override;
+
+public:
 	void Update() override;
 
 protected:

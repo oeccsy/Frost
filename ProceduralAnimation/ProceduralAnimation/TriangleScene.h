@@ -10,5 +10,6 @@ public:
 	TriangleScene();
 	~TriangleScene() override;
 
+public:
 	void Init() override;
 };
