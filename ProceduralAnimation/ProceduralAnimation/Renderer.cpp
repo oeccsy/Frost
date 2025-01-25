@@ -5,52 +5,27 @@
 #include "Transform.h"
 #include "Camera.h"
 
+ComPtr<ID3D11Buffer> Renderer::_constantBuffer = nullptr;
+
+ComPtr<ID3D11Buffer> Renderer::_vertexBuffer = nullptr;
+ComPtr<ID3D11Buffer> Renderer::_indexBuffer = nullptr;
+ComPtr<ID3D11InputLayout> Renderer::_inputLayout = nullptr;
+D3D11_PRIMITIVE_TOPOLOGY Renderer::_topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+
+ComPtr<ID3D11VertexShader> Renderer::_vertexShader = nullptr;
+ComPtr<ID3D11GeometryShader> Renderer::_geometryShader = nullptr;
+ComPtr<ID3D11RasterizerState> Renderer::_rasterizerState = nullptr;
+ComPtr<ID3D11PixelShader> Renderer::_pixelShader = nullptr;
+vector<ComPtr<ID3D11ShaderResourceView>> Renderer::_textures;
+ComPtr<ID3D11SamplerState> Renderer::_samplerState = nullptr;
+ComPtr<ID3D11BlendState> Renderer::_blendState = nullptr;
+
 Renderer::Renderer()
 {
 	CreateConstantBuffer();
 }
 
 Renderer::~Renderer() {}
-
-void Renderer::Render(shared_ptr<Mesh> mesh, shared_ptr<Material> material, shared_ptr<Transform> transform)
-{
-	BindConstantBuffer(transform);
-
-	uint32 stride = sizeof(Vertex);
-	uint32 offset = 0;
-
-	auto deviceContext = Graphics::GetDeviceContext();
-
-	// IA	
-	deviceContext->IASetVertexBuffers(0, 1, mesh->_vertexBuffer.GetAddressOf(), &stride, &offset);
-	deviceContext->IASetIndexBuffer(mesh->_indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	deviceContext->IASetInputLayout(mesh->_inputLayout.Get());
-	deviceContext->IASetPrimitiveTopology(mesh->_topology);
-
-	// VS
-	deviceContext->VSSetShader(material->_vertexShader.Get(), nullptr, 0);
-	deviceContext->VSSetConstantBuffers(0, 1, _constantBuffer.GetAddressOf());
-	
-	// GS
-	deviceContext->GSSetShader(material->_geometryShader.Get(), nullptr, 0);
-	
-	// RS
-	deviceContext->RSSetState(material->_rasterizerState.Get());
-
-	// PS
-	deviceContext->PSSetShader(material->_pixelShader.Get(), nullptr, 0);
-	UINT slot = 0;
-	for (const auto& shaderResourceView : material->_textures)
-	{
-		deviceContext->PSSetShaderResources(slot++, 1, shaderResourceView.GetAddressOf());
-	}
-
-	// OM
-	deviceContext->OMSetBlendState(material->_blendState.Get(), 0, 0xFFFFFFFF);
-
-
-	deviceContext->DrawIndexed(static_cast<UINT>(mesh->_indices.size()), 0, 0);
-}
 
 void Renderer::CreateConstantBuffer()
 {
@@ -65,18 +40,37 @@ void Renderer::CreateConstantBuffer()
 	assert(SUCCEEDED(hr));
 }
 
-void Renderer::BindConstantBuffer(shared_ptr<Transform> transform)
+void Renderer::Bind(shared_ptr<Mesh> mesh)
 {
-	TransformData newData;
-	newData.worldMatrix = transform->GetWorldMatrix();
-	newData.viewMatrix = Camera::GetMainCamera()->GetViewMatrix();
-	newData.projMatrix = Camera::GetMainCamera()->GetProjMatrix();
+	_vertexBuffer = mesh->_vertexBuffer;
+	_indexBuffer = mesh->_indexBuffer;
+	_inputLayout = mesh->_inputLayout;
+	_topology = mesh->_topology;
+}
+
+void Renderer::Bind(shared_ptr<Material> material)
+{
+	_vertexShader = material->_vertexShader;
+	_geometryShader = material->_geometryShader;
+	_rasterizerState = material->_rasterizerState;
+	_pixelShader = material->_pixelShader;
+	_textures = material->_textures;
+	_samplerState = material->_samplerState;
+	_blendState = material->_blendState;
+}
+
+void Renderer::Bind(shared_ptr<Transform> transform)
+{
+	TransformData transformData;
+	transformData.worldMatrix = transform->GetWorldMatrix();
+	transformData.viewMatrix = Camera::GetMainCamera()->GetViewMatrix();
+	transformData.projMatrix = Camera::GetMainCamera()->GetProjMatrix();
 
 	D3D11_MAPPED_SUBRESOURCE subResource;
 	ZeroMemory(&subResource, sizeof(subResource));
-	
+
 	auto deviceContext = Graphics::GetDeviceContext();
 	deviceContext->Map(_constantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-	::memcpy(subResource.pData, &newData, sizeof(newData));
+	::memcpy(subResource.pData, &transformData, sizeof(transformData));
 	deviceContext->Unmap(_constantBuffer.Get(), 0);
 }

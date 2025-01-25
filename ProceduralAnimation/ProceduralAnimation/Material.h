@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 class Material
 {
@@ -7,6 +6,7 @@ public:
 	Material();
 	virtual ~Material();
 
+public:
 	void CreateVS(const wstring& path, const string& name, const string& version);
 	void CreateGS(const wstring& path, const string& name, const string& version);
 	void CreatePS(const wstring& path, const string& name, const string& version);
@@ -16,8 +16,8 @@ private:
 	void LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob);
 
 private:
-	friend class Mesh;
 	friend class Renderer;
+	friend class Mesh;
 
 	// VS
 	ComPtr<ID3D11VertexShader> _vertexShader;
@@ -33,6 +33,7 @@ private:
 	// PS
 	ComPtr<ID3D11PixelShader> _pixelShader;
 	ComPtr<ID3DBlob> _psBlob;
+
 	vector<ComPtr<ID3D11ShaderResourceView>> _textures;
 	ComPtr<ID3D11SamplerState> _samplerState;
 

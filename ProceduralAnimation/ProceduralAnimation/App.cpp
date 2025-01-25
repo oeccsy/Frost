@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "TriangleScene.h"
 #include "Timer.h"
+#include "BasicRenderer.h"
 
 App::App() {}
 
@@ -15,7 +16,7 @@ void App::Init(HWND hwnd)
 	_hwnd = hwnd;
 
 	_graphics = make_shared<Graphics>(hwnd);
-	_renderer = make_shared<Renderer>();
+	_renderer = make_shared<BasicRenderer>();
 
     Timer::Init();
     

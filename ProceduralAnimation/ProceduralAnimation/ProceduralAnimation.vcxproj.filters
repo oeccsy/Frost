@@ -34,6 +34,9 @@
     <Filter Include="소스 파일\03. Frost">
       <UniqueIdentifier>{c50a45e6-e957-47c9-aab7-5c8785003b59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00. Engine\Renderer">
+      <UniqueIdentifier>{20839368-f8e2-4f8a-bb97-8fae9d277463}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -72,9 +75,6 @@
     <ClInclude Include="App.h">
       <Filter>소스 파일\01. Main</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>소스 파일\00. Engine</Filter>
-    </ClInclude>
     <ClInclude Include="VertexData.h">
       <Filter>소스 파일\00. Engine</Filter>
     </ClInclude>
@@ -108,6 +108,12 @@
     <ClInclude Include="Timer.h">
       <Filter>소스 파일\00. Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicRenderer.h">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -127,9 +133,6 @@
     </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>소스 파일\01. Main</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>소스 파일\00. Engine</Filter>
     </ClCompile>
     <ClCompile Include="VertexData.cpp">
       <Filter>소스 파일\00. Engine</Filter>
@@ -163,6 +166,12 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicRenderer.cpp">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
