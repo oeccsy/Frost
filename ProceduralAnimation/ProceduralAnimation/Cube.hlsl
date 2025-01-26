@@ -8,6 +8,7 @@ cbuffer TransformData : register(b0)
 struct VS_INPUT
 {
     float4 position : POSITION;
+    float3 normal : NORMAL;
     float2 uv : TEXCOORD;
     float4 color : COLOR;
 };
@@ -15,6 +16,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 position : SV_Position;
+    float3 normal : NORMAL;
     float2 uv : TEXCOORD;
     float4 color : COLOR;
 };

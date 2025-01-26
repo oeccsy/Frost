@@ -21,5 +21,4 @@ void TriangleScene::Init()
 
 	shared_ptr<Sphere> sphere = make_shared<Sphere>();
 	_objects.push_back(sphere);
-	sphere->GetTransform()->SetWorldRotation(Vec3(0.5f, 0.5f, 0.5f));
 }

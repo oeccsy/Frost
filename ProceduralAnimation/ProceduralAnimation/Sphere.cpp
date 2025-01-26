@@ -27,7 +27,7 @@ void Sphere::CreateGeometry()
 
 	vector<Vertex> vertices;
 
-	vertices.push_back(Vertex{ Vec3(0.0f, radius, 0.0f), Vec2(0.5f, 0.0f), Color(1.f, 0.f, 0.f, 1.f) });
+	vertices.push_back(Vertex{ Vec3(0.0f, radius, 0.0f), Vec3(0.0f, 1.0f, 0.0f), Vec2(0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f, 1.f) });
 
 	for (uint32 y = 1; y <= stackCount - 1; y++)
 	{
@@ -42,15 +42,17 @@ void Sphere::CreateGeometry()
 			vertex.position.y = radius * cosf(thetaY);
 			vertex.position.z = radius * sinf(thetaY) * sinf(thetaX);
 
+			vertex.normal = Vec3(vertex.position.x / radius, vertex.position.y / radius, vertex.position.z / radius);
+
 			vertex.uv = Vec2(du * x, dv * y);
 
-			vertex.color = Color(1.f - (float)y / stackCount, (float)y / stackCount, 0.f, 1.f);
+			vertex.color = Color(0.5f, 0.5f, 0.5f, 1.f);
 
 			vertices.push_back(vertex);
 		}
 	}
 
-	vertices.push_back(Vertex{ Vec3(0.0f, -radius, 0.0f), Vec2(0.5f, 1.0f), Color(0.f, 1.f, 0.f, 1.f) });
+	vertices.push_back(Vertex{ Vec3(0.0f, -radius, 0.0f), Vec3(0.0f, -1.0f, 0.0f), Vec2(0.5f, 1.0f), Color(0.5f, 0.5f, 0.5f, 1.f) });
 
 
 	vector<uint32> indices;
@@ -107,8 +109,8 @@ void Sphere::CreateGeometry()
 
 void Sphere::CreateShader()
 {
-	_material->CreateVS(L"Cube.hlsl", "VS", "vs_5_0");
-	_material->CreatePS(L"Cube.hlsl", "PS", "ps_5_0");
+	_material->CreateVS(L"Phong.hlsl", "VS", "vs_5_0");
+	_material->CreatePS(L"Phong.hlsl", "PS", "ps_5_0");
 }
 
 void Sphere::CreateInputLayout()
