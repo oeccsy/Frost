@@ -114,6 +114,9 @@
     <ClInclude Include="BasicRenderer.h">
       <Filter>소스 파일\00. Engine\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -172,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="BasicRenderer.cpp">
       <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scatter.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

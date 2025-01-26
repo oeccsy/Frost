@@ -6,6 +6,7 @@
 #include "Cube.h"
 #include "Camera.h"
 #include "Transform.h"
+#include "Component.h"
 
 TriangleScene::TriangleScene() {}
 
