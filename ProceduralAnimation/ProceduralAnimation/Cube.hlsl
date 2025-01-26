@@ -27,6 +27,7 @@ VS_OUTPUT VS(VS_INPUT input)
     output.position = mul(input.position, worldMatrix);
     output.position = mul(output.position, viewMatrix);
     output.position = mul(output.position, projMatrix);
+    output.normal = input.normal;
     output.uv = input.uv;
     output.color = input.color;
     

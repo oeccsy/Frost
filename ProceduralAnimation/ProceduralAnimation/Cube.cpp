@@ -3,7 +3,6 @@
 #include "Cube.h"
 #include "Mesh.h"
 #include "Material.h"
-#include "Component.h"
 
 
 Cube::Cube()
