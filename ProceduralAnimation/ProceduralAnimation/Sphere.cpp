@@ -17,9 +17,9 @@ void Sphere::Update() {}
 
 void Sphere::CreateGeometry()
 {
-	float radius = 3.f;
-	uint32 stackCount = 20;
-	uint32 sliceCount = 20;
+	float radius = 3.0f;
+	uint32 stackCount = 15;
+	uint32 sliceCount = 15;
 	float stackAngle = XM_PI / stackCount;
 	float sliceAngle = XM_2PI / sliceCount;
 	float du = 1.f / static_cast<float>(sliceCount);

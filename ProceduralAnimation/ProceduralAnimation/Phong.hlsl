@@ -41,15 +41,15 @@ float4 PS(VS_OUTPUT input) : SV_Target
     
     // diffuse
     float3 normal_vec = normalize(input.normal);
-    float3 light_col = float3(1.0f, 1.0f, 1.0f);
-    float3 light_vec = float3(2.0f, 2.0f, -2.0f);
+    float3 light_col = float3(0.9f, 0.9f, 0.9f);        // constant
+    float3 light_vec = float3(1.0f, 1.0f, -1.0f);       // constant
     
     float diffuse_str = max(dot(light_vec, normal_vec), 0.0f);
     float3 diffuse = diffuse_str * light_col;
     
     // specular
-    float3 camera_pos = float3(0.0f, 0.0f, -10.0f); // constant
-    float3 view_vec = normalize(float3(0.0f, 0.0f, 1.0f));
+    float3 camera_pos = float3(0.0f, 0.0f, -1.0f);     // constant
+    float3 view_vec = normalize(camera_pos);
     float3 reflect_vec = normalize(reflect(-light_vec, normal_vec));
     float specular_str = max(dot(view_vec, reflect_vec), 0.0f);
     specular_str = pow(specular_str, 256.0f);
