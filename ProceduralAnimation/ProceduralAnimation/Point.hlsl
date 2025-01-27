@@ -37,13 +37,14 @@ VS_OUTPUT VS(VS_INPUT input)
 [maxvertexcount(4)]
 void GS(point VS_OUTPUT input[1], inout TriangleStream<VS_OUTPUT> stream)
 {
-    float size = 0.05;
-    
     float4 center = input[0].position;
     float4 color = input[0].color;
+
+    float size = 0.5f / center.w;
+    float aspect = 800.f / 600.f;
     
     float x[4] = { size, -size, -size, size };
-    float y[4] = { size, size, -size, -size };
+    float y[4] = { size * aspect, size * aspect, -size * aspect, -size * aspect };
     VS_OUTPUT vertices[4];
     
     for (int i = 0; i < 4; i++)
