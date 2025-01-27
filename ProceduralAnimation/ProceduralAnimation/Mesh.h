@@ -9,6 +9,7 @@ public:
 public:
 	vector<Vertex>& GetVertices() { return _vertices; }
 	vector<uint32>& GetIndices() { return _indices; }
+	D3D11_PRIMITIVE_TOPOLOGY GetTopology() { return _topology; }
 
 	void SetVertices(vector<Vertex>& vertices) { _vertices = vertices; }
 	void SetIndices(vector<uint32>& indices) { _indices = indices; }

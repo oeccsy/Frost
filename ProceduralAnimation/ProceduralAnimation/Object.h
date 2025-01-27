@@ -16,6 +16,8 @@ public:
 	virtual void Render(shared_ptr<Renderer> renderer);
 
 public:
+	shared_ptr<Mesh> GetMesh() { return _mesh; }
+	shared_ptr<Material> GetMaterial() { return _material; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	vector<shared_ptr<Component>>& GetComponents() { return _components; }
 	void AddComponent(shared_ptr<Component> component);

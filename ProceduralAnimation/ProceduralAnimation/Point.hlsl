@@ -8,6 +8,7 @@ cbuffer TransformData : register(b0)
 struct VS_INPUT
 {
     float4 position : POSITION;
+    float3 normal : NORMAL;
     float2 uv : TEXCOORD;
     float4 color : COLOR;
 };
@@ -15,6 +16,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 position : SV_Position;
+    float3 normal : NORMAL;
     float2 uv : TEXCOORD;
     float4 color : COLOR;
 };
@@ -25,6 +27,7 @@ VS_OUTPUT VS(VS_INPUT input)
     output.position = mul(input.position, worldMatrix);
     output.position = mul(output.position, viewMatrix);
     output.position = mul(output.position, projMatrix);
+    output.normal = input.normal;
     output.uv = input.uv;
     output.color = input.color;
     
@@ -34,7 +37,7 @@ VS_OUTPUT VS(VS_INPUT input)
 [maxvertexcount(4)]
 void GS(point VS_OUTPUT input[1], inout TriangleStream<VS_OUTPUT> stream)
 {
-    float size = 0.1;
+    float size = 0.05;
     
     float4 center = input[0].position;
     float4 color = input[0].color;

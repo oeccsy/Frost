@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Camera.h"
 #include "TriangleScene.h"
+#include "FrostScene.h"
 #include "Timer.h"
 #include "BasicRenderer.h"
 
@@ -20,7 +21,7 @@ void App::Init(HWND hwnd)
 
     Timer::Init();
     
-    _currentScene = make_shared<TriangleScene>();
+    _currentScene = make_shared<FrostScene>();
     _currentScene->Init();
 }
 
