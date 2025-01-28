@@ -146,12 +146,13 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Frost.h" />
     <ClInclude Include="FrostScene.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="Scatter.h" />
+    <ClInclude Include="PointCloud.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Values.h" />
+    <ClInclude Include="VectorField.h" />
     <ClInclude Include="VertexData.h" />
   </ItemGroup>
   <ItemGroup>
@@ -174,12 +176,13 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Frost.cpp" />
     <ClCompile Include="FrostScene.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="Scatter.cpp" />
+    <ClCompile Include="PointCloud.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -192,6 +195,7 @@
     </ClCompile>
     <ClCompile Include="ProceduralAnimation.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="VectorField.cpp" />
     <ClCompile Include="VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>

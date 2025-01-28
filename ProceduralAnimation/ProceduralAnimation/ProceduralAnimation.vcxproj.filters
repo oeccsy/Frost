@@ -117,7 +117,13 @@
     <ClInclude Include="Sphere.h">
       <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
-    <ClInclude Include="Scatter.h">
+    <ClInclude Include="PointCloud.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="Frost.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorField.h">
       <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
   </ItemGroup>
@@ -179,10 +185,16 @@
     <ClCompile Include="BasicRenderer.cpp">
       <Filter>소스 파일\00. Engine\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Scatter.cpp">
+    <ClCompile Include="PointCloud.cpp">
       <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
     <ClCompile Include="Sphere.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Frost.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorField.cpp">
       <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
   </ItemGroup>
