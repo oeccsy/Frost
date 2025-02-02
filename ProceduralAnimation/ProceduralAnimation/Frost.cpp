@@ -9,7 +9,7 @@
 Frost::Frost()
 {
 	sphere = make_shared<Sphere>();
-	pointCloud = make_shared<PointCloud>(sphere->GetMesh());
+	pointCloud = make_shared<PointCloud>(sphere->GetMesh(), PointType::Scatter, 100);
 }
 
 Frost::~Frost() {}
@@ -27,7 +27,7 @@ void Frost::SelectStartPoints()
 	mt19937 gen(rd());
 	uniform_real_distribution<float> dis(0.0f, 1.0f);
 	
-	for (auto point : pointCloud->GetMesh()->GetVertices())
+	for (const auto& point : pointCloud->GetMesh()->GetVertices())
 	{
 		if (dis(gen) < 0.1f)
 		{

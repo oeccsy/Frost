@@ -5,18 +5,13 @@
 #include "Material.h"
 #include <random>
 
-PointCloud::PointCloud(shared_ptr<Mesh> mesh)
+PointCloud::PointCloud(shared_ptr<Mesh> mesh, PointType pointType, int pointCount)
 {
-	CreateGeometry(mesh);
-	CreateShader();
-	CreateInputLayout();
-}
-
-PointCloud::PointCloud(shared_ptr<Mesh> mesh, int pointCount)
-{
+	_baseMesh = mesh;
+	_pointType = pointType;
 	_pointCount = pointCount;
 
-	CreateGeometry(mesh, pointCount);
+	CreateGeometry();
 	CreateShader();
 	CreateInputLayout();
 }
@@ -25,54 +20,61 @@ PointCloud::~PointCloud() {}
 
 void PointCloud::Update() {}
 
-void PointCloud::CreateGeometry(shared_ptr<Mesh> mesh)
+void PointCloud::CreateGeometry()
 {
-	if (mesh->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
-
-	vector<Vertex> inputVertices = mesh->GetVertices();
-	vector<uint32> inputIndices = mesh->GetIndices();
-	vector<Vertex> scatterVertices;
-	vector<uint32> scatterIndices;
-
-	for (auto& vertex : inputVertices)
+	switch (_pointType)
 	{
-		
+	case PointType::MeshVertices:
+		CreateMeshVertices();
+		break;
+	case PointType::TriangleCenter:
+		CreateTriangleCenterPoints();
+		break;
+	case PointType::Scatter:
+		CreateScatterPoints();
+		break;
 	}
-	for (int i = 0; i < inputIndices.size() / 3; i++)
+}
+
+void PointCloud::CreateMeshVertices()
+{
+	vector<Vertex> baseVertices = _baseMesh->GetVertices();
+	vector<Vertex> shuffledVertices = baseVertices;
+
+	vector<Vertex> ownVertices;
+	vector<uint32> ownIndices;
+
+	random_device rd;
+	mt19937 gen(rd());
+	shuffle(shuffledVertices.begin(), shuffledVertices.end(), gen);
+
+	_pointCount = min(_pointCount, baseVertices.size());
+
+	for (int i = 0; i < _pointCount; i++)
 	{
-		int firstIndex = i * 3;
-		int a_index = inputIndices[firstIndex];
-		int b_index = inputIndices[firstIndex + 1];
-		int c_index = inputIndices[firstIndex + 2];
-
-		Vec3 a = inputVertices[a_index].position;
-		Vec3 b = inputVertices[b_index].position;
-		Vec3 c = inputVertices[c_index].position;
-
-		Vec3 p = GetRandomPosInTriangle(a, b, c);
-		scatterVertices.push_back(Vertex{ p, Vec3(0, 0, 0), Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
-		scatterIndices.push_back(i);
+		ownVertices.push_back(shuffledVertices[i]);
+		ownIndices.push_back(i);
 	}
 
-	_mesh->SetVertices(scatterVertices);
-	_mesh->SetIndices(scatterIndices);
+	_mesh->SetVertices(ownVertices);
+	_mesh->SetIndices(ownIndices);
 
 	_mesh->CreateBuffers();
 	_mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 }
 
-void PointCloud::CreateGeometry(shared_ptr<Mesh> mesh, int pointCount)
+void PointCloud::CreateTriangleCenterPoints()
 {
-	if (mesh->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
+	if (_baseMesh->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
 
-	vector<Vertex> inputVertices = mesh->GetVertices();
-	vector<uint32> inputIndices = mesh->GetIndices();
-	vector<Vertex> scatterVertices;
-	vector<uint32> scatterIndices;
+	vector<Vertex> baseVertices = _baseMesh->GetVertices();
+	vector<uint32> baseIndices = _baseMesh->GetIndices();
+	vector<Vertex> ownVertices;
+	vector<uint32> ownIndices;
 
 	vector<int> triangleFirstIndices;
 
-	for (int i = 0; i < inputIndices.size() / 3; i++)
+	for (int i = 0; i < baseIndices.size() / 3; i++)
 	{
 		triangleFirstIndices.push_back(i * 3);
 	}
@@ -81,16 +83,61 @@ void PointCloud::CreateGeometry(shared_ptr<Mesh> mesh, int pointCount)
 	mt19937 gen(rd());
 	shuffle(triangleFirstIndices.begin(), triangleFirstIndices.end(), gen);
 
-	for (int i = 0; i < pointCount; i++)
+	_pointCount = min(_pointCount, triangleFirstIndices.size());
+
+	for (int i = 0; i < _pointCount; i++)
 	{
 		int targetIndex = triangleFirstIndices[i];
-		int a_index = inputIndices[targetIndex];
-		int b_index = inputIndices[targetIndex + 1];
-		int c_index = inputIndices[targetIndex + 2];
+		int a_index = baseIndices[targetIndex];
+		int b_index = baseIndices[targetIndex + 1];
+		int c_index = baseIndices[targetIndex + 2];
 
-		Vec3 a = inputVertices[a_index].position;
-		Vec3 b = inputVertices[b_index].position;
-		Vec3 c = inputVertices[c_index].position;
+		Vec3 a = baseVertices[a_index].position;
+		Vec3 b = baseVertices[b_index].position;
+		Vec3 c = baseVertices[c_index].position;
+
+		Vec3 p = GetCenterPos(a, b, c);
+		ownVertices.push_back(Vertex{ p, Vec3(0, 0, 0), Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
+		ownIndices.push_back(i);
+	}
+
+	_mesh->SetVertices(ownVertices);
+	_mesh->SetIndices(ownIndices);
+
+	_mesh->CreateBuffers();
+	_mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+}
+
+void PointCloud::CreateScatterPoints()
+{
+	if (_baseMesh->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
+
+	vector<Vertex> baseVertices = _baseMesh->GetVertices();
+	vector<uint32> baseIndices = _baseMesh->GetIndices();
+	vector<Vertex> scatterVertices;
+	vector<uint32> scatterIndices;
+
+	vector<int> triangleFirstIndices;
+
+	for (int i = 0; i < baseIndices.size() / 3; i++)
+	{
+		triangleFirstIndices.push_back(i * 3);
+	}
+
+	random_device rd;
+	mt19937 gen(rd());
+	shuffle(triangleFirstIndices.begin(), triangleFirstIndices.end(), gen);
+
+	for (int i = 0; i < _pointCount; i++)
+	{
+		int targetIndex = triangleFirstIndices[i];
+		int a_index = baseIndices[targetIndex];
+		int b_index = baseIndices[targetIndex + 1];
+		int c_index = baseIndices[targetIndex + 2];
+
+		Vec3 a = baseVertices[a_index].position;
+		Vec3 b = baseVertices[b_index].position;
+		Vec3 c = baseVertices[c_index].position;
 
 		Vec3 p = GetRandomPosInTriangle(a, b, c);
 		scatterVertices.push_back(Vertex{ p, Vec3(0, 0, 0), Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
@@ -118,7 +165,7 @@ void PointCloud::CreateInputLayout()
 
 Vec3 PointCloud::GetCenterPos(Vec3 a, Vec3 b, Vec3 c)
 {
-	Vec3 p = Vec3(a.x + b.x + c.x, a.y + b.y + c.y, a.z + n * b.z + l * c.z);
+	Vec3 p = Vec3((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
 	return p;
 }
 
