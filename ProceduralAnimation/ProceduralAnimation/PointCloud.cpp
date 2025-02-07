@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include <random>
+#include <limits>
 
 PointCloud::PointCloud(shared_ptr<Mesh> mesh, PointType pointType, int pointCount)
 {
@@ -19,6 +20,34 @@ PointCloud::PointCloud(shared_ptr<Mesh> mesh, PointType pointType, int pointCoun
 PointCloud::~PointCloud() {}
 
 void PointCloud::Update() {}
+
+vector<Vertex>& PointCloud::GetPoints()
+{
+	return _points;
+}
+
+Vec3 PointCloud::GetNearPoint(Vec3 pos)
+{
+	float minDistSq = FLT_MAX;
+	Vec3 nearPointPos;
+
+	for (auto& point : _points)
+	{
+		Vector pointPosVec = ::XMLoadFloat3(&point.position);
+		Vector originPosVec = ::XMLoadFloat3(&pos);
+
+		Vector diff = ::XMVectorSubtract(pointPosVec, originPosVec);
+		float distSq = ::XMVectorGetX(::XMVector3LengthSq(diff));
+		
+		if (distSq < minDistSq)
+		{
+			minDistSq = distSq;
+			nearPointPos = point.position;
+		}
+	}
+
+	return nearPointPos;
+}
 
 void PointCloud::CreateGeometry()
 {
@@ -55,6 +84,8 @@ void PointCloud::CreateMeshVertices()
 		ownVertices.push_back(shuffledVertices[i]);
 		ownIndices.push_back(i);
 	}
+
+	_points = ownVertices;
 
 	_mesh->SetVertices(ownVertices);
 	_mesh->SetIndices(ownIndices);
@@ -95,11 +126,21 @@ void PointCloud::CreateTriangleCenterPoints()
 		Vec3 a = baseVertices[a_index].position;
 		Vec3 b = baseVertices[b_index].position;
 		Vec3 c = baseVertices[c_index].position;
-
 		Vec3 p = GetCenterPos(a, b, c);
-		ownVertices.push_back(Vertex{ p, Vec3(0, 0, 0), Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
+
+		Vector a_normal_vec = ::XMLoadFloat3(&baseVertices[a_index].normal);
+		Vector b_normal_vec = ::XMLoadFloat3(&baseVertices[b_index].normal);
+		Vector c_normal_vec = ::XMLoadFloat3(&baseVertices[c_index].normal);
+		Vector p_normal_vec = ::XMVector3Normalize(a_normal_vec + b_normal_vec + c_normal_vec);
+
+		Vec3 p_normal;
+		::XMStoreFloat3(&p_normal, p_normal_vec);
+
+		ownVertices.push_back(Vertex{ p, p_normal, Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
 		ownIndices.push_back(i);
 	}
+
+	_points = ownVertices;
 
 	_mesh->SetVertices(ownVertices);
 	_mesh->SetIndices(ownIndices);
@@ -114,8 +155,8 @@ void PointCloud::CreateScatterPoints()
 
 	vector<Vertex> baseVertices = _baseMesh->GetVertices();
 	vector<uint32> baseIndices = _baseMesh->GetIndices();
-	vector<Vertex> scatterVertices;
-	vector<uint32> scatterIndices;
+	vector<Vertex> ownVertices;
+	vector<uint32> ownIndices;
 
 	vector<int> triangleFirstIndices;
 
@@ -138,14 +179,24 @@ void PointCloud::CreateScatterPoints()
 		Vec3 a = baseVertices[a_index].position;
 		Vec3 b = baseVertices[b_index].position;
 		Vec3 c = baseVertices[c_index].position;
-
 		Vec3 p = GetRandomPosInTriangle(a, b, c);
-		scatterVertices.push_back(Vertex{ p, Vec3(0, 0, 0), Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
-		scatterIndices.push_back(i);
+
+		Vector a_normal_vec = ::XMLoadFloat3(&baseVertices[a_index].normal);
+		Vector b_normal_vec = ::XMLoadFloat3(&baseVertices[b_index].normal);
+		Vector c_normal_vec = ::XMLoadFloat3(&baseVertices[c_index].normal);
+		Vector p_normal_vec = ::XMVector3Normalize(a_normal_vec + b_normal_vec + c_normal_vec);
+
+		Vec3 p_normal;
+		::XMStoreFloat3(&p_normal, p_normal_vec);
+
+		ownVertices.push_back(Vertex{ p, p_normal, Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
+		ownIndices.push_back(i);
 	}
 
-	_mesh->SetVertices(scatterVertices);
-	_mesh->SetIndices(scatterIndices);
+	_points = ownVertices;
+
+	_mesh->SetVertices(ownVertices);
+	_mesh->SetIndices(ownIndices);
 
 	_mesh->CreateBuffers();
 	_mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
