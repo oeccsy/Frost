@@ -17,6 +17,7 @@ public:
 
 public:
 	void CreateBuffers();
+	void UpdateBuffers();
 	void CreateInputLayout(shared_ptr<Material> material);
 	
 private:
