@@ -4,6 +4,7 @@ class Mesh;
 class Material;
 class Transform;
 class Component;
+class Collider;
 
 class Object : public enable_shared_from_this<Object>
 {
@@ -19,6 +20,7 @@ public:
 	shared_ptr<Mesh> GetMesh() { return _mesh; }
 	shared_ptr<Material> GetMaterial() { return _material; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
+	shared_ptr<Collider> GetCollider() { return _collider; }
 	vector<shared_ptr<Component>>& GetComponents() { return _components; }
 	void AddComponent(shared_ptr<Component> component);
 
@@ -26,6 +28,7 @@ protected:
 	shared_ptr<Mesh> _mesh = make_shared<Mesh>();
 	shared_ptr<Material> _material = make_shared<Material>();
 	shared_ptr<Transform> _transform = make_shared<Transform>();
+	shared_ptr<Collider> _collider = nullptr;
 
 protected:
 	vector<shared_ptr<Component>> _components;

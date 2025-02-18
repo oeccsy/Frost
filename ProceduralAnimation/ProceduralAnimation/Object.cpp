@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Object.h"
 #include "Component.h"
+#include "Collider.h"
 
 Object::Object() {}
 
