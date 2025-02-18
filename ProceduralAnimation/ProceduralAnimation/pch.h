@@ -1,4 +1,5 @@
 #pragma once
+#define _XM_NO_INTRINSICS_
 
 // Base
 #include "Types.h"
