@@ -26,10 +26,10 @@ vector<Vertex>& PointCloud::GetPoints()
 	return _points;
 }
 
-Vec3 PointCloud::GetNearPoint(Vec3 pos)
+Vector3 PointCloud::GetNearPoint(Vector3 pos)
 {
 	float minDistSq = FLT_MAX;
-	Vec3 nearPointPos;
+	Vector3 nearPointPos;
 
 	for (auto& point : _points)
 	{
@@ -123,20 +123,20 @@ void PointCloud::CreateTriangleCenterPoints()
 		int b_index = baseIndices[targetIndex + 1];
 		int c_index = baseIndices[targetIndex + 2];
 
-		Vec3 a = baseVertices[a_index].position;
-		Vec3 b = baseVertices[b_index].position;
-		Vec3 c = baseVertices[c_index].position;
-		Vec3 p = GetCenterPos(a, b, c);
+		Vector3 a = baseVertices[a_index].position;
+		Vector3 b = baseVertices[b_index].position;
+		Vector3 c = baseVertices[c_index].position;
+		Vector3 p = GetCenterPos(a, b, c);
 
 		Vector a_normal_vec = ::XMLoadFloat3(&baseVertices[a_index].normal);
 		Vector b_normal_vec = ::XMLoadFloat3(&baseVertices[b_index].normal);
 		Vector c_normal_vec = ::XMLoadFloat3(&baseVertices[c_index].normal);
 		Vector p_normal_vec = ::XMVector3Normalize(a_normal_vec + b_normal_vec + c_normal_vec);
 
-		Vec3 p_normal;
+		Vector3 p_normal;
 		::XMStoreFloat3(&p_normal, p_normal_vec);
 
-		ownVertices.push_back(Vertex{ p, p_normal, Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
+		ownVertices.push_back(Vertex{ p, p_normal, Vector2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
 		ownIndices.push_back(i);
 	}
 
@@ -176,20 +176,20 @@ void PointCloud::CreateScatterPoints()
 		int b_index = baseIndices[targetIndex + 1];
 		int c_index = baseIndices[targetIndex + 2];
 
-		Vec3 a = baseVertices[a_index].position;
-		Vec3 b = baseVertices[b_index].position;
-		Vec3 c = baseVertices[c_index].position;
-		Vec3 p = GetRandomPosInTriangle(a, b, c);
+		Vector3 a = baseVertices[a_index].position;
+		Vector3 b = baseVertices[b_index].position;
+		Vector3 c = baseVertices[c_index].position;
+		Vector3 p = GetRandomPosInTriangle(a, b, c);
 
 		Vector a_normal_vec = ::XMLoadFloat3(&baseVertices[a_index].normal);
 		Vector b_normal_vec = ::XMLoadFloat3(&baseVertices[b_index].normal);
 		Vector c_normal_vec = ::XMLoadFloat3(&baseVertices[c_index].normal);
 		Vector p_normal_vec = ::XMVector3Normalize(a_normal_vec + b_normal_vec + c_normal_vec);
 
-		Vec3 p_normal;
+		Vector3 p_normal;
 		::XMStoreFloat3(&p_normal, p_normal_vec);
 
-		ownVertices.push_back(Vertex{ p, p_normal, Vec2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
+		ownVertices.push_back(Vertex{ p, p_normal, Vector2(0, 0), Color(1.f, 0.f, 0.f, 1.f) });
 		ownIndices.push_back(i);
 	}
 
@@ -214,13 +214,13 @@ void PointCloud::CreateInputLayout()
 	_mesh->CreateInputLayout(_material);
 }
 
-Vec3 PointCloud::GetCenterPos(Vec3 a, Vec3 b, Vec3 c)
+Vector3 PointCloud::GetCenterPos(Vector3 a, Vector3 b, Vector3 c)
 {
-	Vec3 p = Vec3((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
+	Vector3 p = Vector3((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
 	return p;
 }
 
-Vec3 PointCloud::GetRandomPosInTriangle(Vec3 a, Vec3 b, Vec3 c)
+Vector3 PointCloud::GetRandomPosInTriangle(Vector3 a, Vector3 b, Vector3 c)
 {
 	random_device rd;
 	mt19937 gen(rd());
@@ -234,6 +234,6 @@ Vec3 PointCloud::GetRandomPosInTriangle(Vec3 a, Vec3 b, Vec3 c)
 	float n = sqrt_r1 * r2;
 	float l = sqrt_r1 * (1 - r2);
 
-	Vec3 p = Vec3(m * a.x + n * b.x + l * c.x, m * a.y + n * b.y + l * c.y, m * a.z + n * b.z + l * c.z);
+	Vector3 p = Vector3(m * a.x + n * b.x + l * c.x, m * a.y + n * b.y + l * c.y, m * a.z + n * b.z + l * c.z);
 	return p;
 }

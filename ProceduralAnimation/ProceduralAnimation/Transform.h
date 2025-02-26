@@ -7,24 +7,24 @@ public:
 	virtual ~Transform();
 
 public:
-	Vec3 GetRight();
-	Vec3 GetUp();
-	Vec3 GetForward();
+	Vector3 GetRight();
+	Vector3 GetUp();
+	Vector3 GetForward();
 
 public:
-	Vec3 GetLocalPosition() { return _localPosition; }
-	Vec3 GetLocalRotation() { return _localRotation; }
-	Vec3 GetLocalScale() { return _localScale; }
-	Vec3 GetWorldPosition() { return _worldPosition; }
-	Vec3 GetWorldRotation() { return _worldRotation; }
-	Vec3 GetWorldScale() { return _worldScale; }
+	Vector3 GetLocalPosition() { return _localPosition; }
+	Vector3 GetLocalRotation() { return _localRotation; }
+	Vector3 GetLocalScale() { return _localScale; }
+	Vector3 GetWorldPosition() { return _worldPosition; }
+	Vector3 GetWorldRotation() { return _worldRotation; }
+	Vector3 GetWorldScale() { return _worldScale; }
 
-	void SetLocalPosition(const Vec3& position);
-	void SetLocalRotation(const Vec3& rotation);
-	void SetLocalScale(const Vec3& scale);
-	void SetWorldPosition(const Vec3& position);
-	void SetWorldRotation(const Vec3& rotation);
-	void SetWorldScale(const Vec3& scale);
+	void SetLocalPosition(const Vector3& position);
+	void SetLocalRotation(const Vector3& rotation);
+	void SetLocalScale(const Vector3& scale);
+	void SetWorldPosition(const Vector3& position);
+	void SetWorldRotation(const Vector3& rotation);
+	void SetWorldScale(const Vector3& scale);
 
 public:
 	Matrix GetWorldMatrix() { return _world; }
@@ -43,12 +43,12 @@ public:
 	void AddChild(shared_ptr<Transform> child) { _children.push_back(child); }
 
 private:
-	Vec3 _localPosition = { 0.f, 0.f, 0.f };
-	Vec3 _localRotation = { 0.f, 0.f, 0.f };
-	Vec3 _localScale = { 1.f, 1.f, 1.f };
-	Vec3 _worldPosition = { 0.f, 0.f, 0.f };
-	Vec3 _worldRotation = { 0.f, 0.f, 0.f };
-	Vec3 _worldScale = { 1.f, 1.f, 1.f };
+	Vector3 _localPosition = { 0.f, 0.f, 0.f };
+	Vector3 _localRotation = { 0.f, 0.f, 0.f };
+	Vector3 _localScale = { 1.f, 1.f, 1.f };
+	Vector3 _worldPosition = { 0.f, 0.f, 0.f };
+	Vector3 _worldRotation = { 0.f, 0.f, 0.f };
+	Vector3 _worldScale = { 1.f, 1.f, 1.f };
 
 	Matrix _local = ::XMMatrixIdentity();
 	Matrix _world = ::XMMatrixIdentity();

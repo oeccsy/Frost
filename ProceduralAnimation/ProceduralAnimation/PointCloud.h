@@ -18,7 +18,7 @@ public:
 
 public:
 	vector<Vertex>& GetPoints();
-	Vec3 GetNearPoint(Vec3 pos);
+	Vector3 GetNearPoint(Vector3 pos);
 
 protected:
 	void CreateGeometry();
@@ -27,8 +27,8 @@ protected:
 	void CreateScatterPoints();
 	void CreateShader();
 	void CreateInputLayout();
-	Vec3 GetCenterPos(Vec3 a, Vec3 b, Vec3 c);
-	Vec3 GetRandomPosInTriangle(Vec3 a, Vec3 b, Vec3 c);
+	Vector3 GetCenterPos(Vector3 a, Vector3 b, Vector3 c);
+	Vector3 GetRandomPosInTriangle(Vector3 a, Vector3 b, Vector3 c);
 
 protected:
 	vector<Vertex> _points;

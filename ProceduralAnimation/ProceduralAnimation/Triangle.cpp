@@ -21,11 +21,11 @@ void Triangle::CreateGeometry()
 	vector<Vertex> vertices;
 	vertices.resize(3);
 
-	vertices[0].position = Vec3(0.5f, 0.5f, 0);
+	vertices[0].position = Vector3(0.5f, 0.5f, 0);
 	vertices[0].color = Color(1.f, 0.f, 0.f, 1.f);
-	vertices[1].position = Vec3(-0.5f, 0.5f, 0);
+	vertices[1].position = Vector3(-0.5f, 0.5f, 0);
 	vertices[1].color = Color(0.f, 1.f, 0.f, 1.f);
-	vertices[2].position = Vec3(-0.5f, -0.5f, 0);
+	vertices[2].position = Vector3(-0.5f, -0.5f, 0);
 	vertices[2].color = Color(0.f, 0.f, 1.f, 1.f);
 
 	vector<uint32> indices;

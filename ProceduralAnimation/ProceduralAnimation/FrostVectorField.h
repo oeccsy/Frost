@@ -9,7 +9,7 @@ public:
 	virtual ~FrostVectorField() override;
 
 public:
-	Vec3 GetVector(Vec3 pos) override;
+	Vector3 GetVector(Vector3 pos) override;
 
 private:
 	weak_ptr<PointCloud> _refPoints;

@@ -46,9 +46,9 @@ void Camera::LateUpdate()
 
 void Camera::CalculateViewMatrix()
 {
-	Vec3 pos = _transform->GetWorldPosition();
-	Vec3 forward = _transform->GetForward();
-	Vec3 up = _transform->GetUp();
+	Vector3 pos = _transform->GetWorldPosition();
+	Vector3 forward = _transform->GetForward();
+	Vector3 up = _transform->GetUp();
 
 	XMVECTOR posVector = ::XMLoadFloat3(&pos);
 	XMVECTOR forwardVector = ::XMLoadFloat3(&forward);

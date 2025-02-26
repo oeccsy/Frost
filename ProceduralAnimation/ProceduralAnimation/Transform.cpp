@@ -5,34 +5,34 @@ Transform::Transform() {}
 
 Transform::~Transform() {}
 
-Vec3 Transform::GetRight()
+Vector3 Transform::GetRight()
 {
 	Vector rightVec = ::XMVector3TransformNormal({ 1, 0, 0 }, _world);
 	
-	Vec3 right;
+	Vector3 right;
 	::XMStoreFloat3(&right, rightVec);
 	return right;
 }
 
-Vec3 Transform::GetUp()
+Vector3 Transform::GetUp()
 {
 	Vector upVec = ::XMVector3TransformNormal({ 0, 1, 0 }, _world);
 
-	Vec3 up;
+	Vector3 up;
 	::XMStoreFloat3(&up, upVec);
 	return up;
 }
 
-Vec3 Transform::GetForward()
+Vector3 Transform::GetForward()
 {
 	Vector forwardVec = ::XMVector3TransformNormal({ 0, 0, 1 }, _world);
 
-	Vec3 forward;
+	Vector3 forward;
 	::XMStoreFloat3(&forward, forwardVec);
 	return forward;
 }
 
-void Transform::SetLocalPosition(const Vec3& position)
+void Transform::SetLocalPosition(const Vector3& position)
 {
 	_localPosition = position;
 
@@ -40,7 +40,7 @@ void Transform::SetLocalPosition(const Vec3& position)
 	DecomposeMatrix();
 }
 
-void Transform::SetLocalRotation(const Vec3& rotation)
+void Transform::SetLocalRotation(const Vector3& rotation)
 {
 	_localRotation = rotation;
 
@@ -48,7 +48,7 @@ void Transform::SetLocalRotation(const Vec3& rotation)
 	DecomposeMatrix();
 }
 
-void Transform::SetLocalScale(const Vec3& scale)
+void Transform::SetLocalScale(const Vector3& scale)
 {
 	_localScale = scale;
 
@@ -56,14 +56,14 @@ void Transform::SetLocalScale(const Vec3& scale)
 	DecomposeMatrix();
 }
 
-void Transform::SetWorldPosition(const Vec3& position)
+void Transform::SetWorldPosition(const Vector3& position)
 {
 	if (HasParent())
 	{
 		Matrix parentWorldMatrix = _parent->GetWorldMatrix(); 
 		Vector localPositionVector = ::XMVector3TransformCoord(::XMLoadFloat3(&position), ::XMMatrixInverse(nullptr, parentWorldMatrix));
 		
-		Vec3 localPosition;
+		Vector3 localPosition;
 		::XMStoreFloat3(&localPosition, localPositionVector);
 		
 		SetLocalPosition(localPosition);
@@ -74,14 +74,14 @@ void Transform::SetWorldPosition(const Vec3& position)
 	}
 }
 
-void Transform::SetWorldRotation(const Vec3& rotation)
+void Transform::SetWorldRotation(const Vector3& rotation)
 {
 	if (HasParent())
 	{
 		Matrix parentWorldMatrix = _parent->GetWorldMatrix();
 		Vector localRotationVector = ::XMVector3TransformNormal(::XMLoadFloat3(&rotation), ::XMMatrixInverse(nullptr, parentWorldMatrix));
 		
-		Vec3 localRotation;
+		Vector3 localRotation;
 		::XMStoreFloat3(&localRotation, localRotationVector);
 
 		SetLocalRotation(localRotation);
@@ -92,12 +92,12 @@ void Transform::SetWorldRotation(const Vec3& rotation)
 	}
 }
 
-void Transform::SetWorldScale(const Vec3& scale)
+void Transform::SetWorldScale(const Vector3& scale)
 {
 	if (HasParent())
 	{
-		Vec3 parentScale = _parent->GetWorldScale();
-		Vec3 newScale = scale;
+		Vector3 parentScale = _parent->GetWorldScale();
+		Vector3 newScale = scale;
 		newScale.x /= parentScale.x;
 		newScale.y /= parentScale.y;
 		newScale.z /= parentScale.z;
@@ -133,9 +133,9 @@ void Transform::CalculateMatrix()
 	}
 }
 
-Vec3 ConvertToEuler(Vec4 q)
+Vector3 ConvertToEuler(Vector4 q)
 {
-	Vec3 angles;
+	Vector3 angles;
 
 	// roll (x-axis)
 	double sinr_cosp = 2 * (q.w * q.x + q.y * q.z);
@@ -162,7 +162,7 @@ void Transform::DecomposeMatrix()
 
 	::XMStoreFloat3(&_worldPosition, worldPositionVector);
 
-	Vec4 quaternion;
+	Vector4 quaternion;
 	::XMStoreFloat4(&quaternion, worldRotationVector);
 	_worldRotation = ConvertToEuler(quaternion);
 	

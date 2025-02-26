@@ -3,20 +3,23 @@
 #include "FrostMainBranch.h"
 #include "Mesh.h"
 #include "Material.h"
+#include "DynamicMesh.h"
 
-const float FrostMainBranch::GROW_SPEED = 0.1f;
+const float FrostMainBranch::GROW_SPEED = 0.5f;
 
-FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vec3& dir)
+FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vector3& dir)
 {
+	_mesh = make_shared<DynamicMesh>();
+
 	Vector basePosVector = ::XMLoadFloat3(&basePoint.position);
 	Vector dirVector = ::XMLoadFloat3(&dir);
 	Vector endPosVector = ::XMVectorAdd(basePosVector, dirVector);
 	
-	Vec3 endPos;
+	Vector3 endPos;
 	::XMStoreFloat3(&endPos, endPosVector);
 
 	_branch.push_back(basePoint);
-	_branch.push_back({ endPos, Vec3(0, 0, 0), Vec2(0, 0), Color(1, 1, 1, 1) });
+	_branch.push_back({ endPos, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1) });
 	
 	vector<uint32> indices = { 0, 1 };
 
@@ -34,14 +37,17 @@ FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vec3& dir)
 
 FrostMainBranch::~FrostMainBranch() {}
 
-void FrostMainBranch::GrowTo(Vec3 dir)
+void FrostMainBranch::GrowTo(Vector3 dir)
 {
 	Vector endPosVec = ::XMLoadFloat3(&_branch.back().position);
-	Vector dirVec = ::XMLoadFloat3(&dir);
-	Vector newPosVec = ::XMVectorAdd(endPosVec, dirVec * GROW_SPEED);
+	Vector stepVec = ::XMVectorScale(::XMLoadFloat3(&dir), GROW_SPEED);
+	Vector newPosVec = ::XMVectorAdd(endPosVec, stepVec);
 
 	Vertex newVertex;
 	::XMStoreFloat3(&newVertex.position, newPosVec);
+	newVertex.normal = Vector3{ 0, 0, 0 };
+	newVertex.uv = Vector2{ 0, 0 };
+	newVertex.color = Color{ 1, 1, 1, 1 };
 
 	_branch.push_back(newVertex);
 	_mesh->SetVertices(_branch);

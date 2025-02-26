@@ -18,8 +18,8 @@ void Sphere::Update() {}
 void Sphere::CreateGeometry()
 {
 	float radius = 3.0f;
-	uint32 stackCount = 15;
-	uint32 sliceCount = 15;
+	uint32 stackCount = 10;
+	uint32 sliceCount = 10;
 	float stackAngle = XM_PI / stackCount;
 	float sliceAngle = XM_2PI / sliceCount;
 	float du = 1.f / static_cast<float>(sliceCount);
@@ -27,7 +27,7 @@ void Sphere::CreateGeometry()
 
 	vector<Vertex> vertices;
 
-	vertices.push_back(Vertex{ Vec3(0.0f, radius, 0.0f), Vec3(0.0f, 1.0f, 0.0f), Vec2(0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f, 1.f) });
+	vertices.push_back(Vertex{ Vector3(0.0f, radius, 0.0f), Vector3(0.0f, 1.0f, 0.0f), Vector2(0.5f, 0.0f), Color(0.5f, 0.5f, 0.5f, 1.f) });
 
 	for (uint32 y = 1; y <= stackCount - 1; y++)
 	{
@@ -42,9 +42,9 @@ void Sphere::CreateGeometry()
 			vertex.position.y = radius * cosf(thetaY);
 			vertex.position.z = radius * sinf(thetaY) * sinf(thetaX);
 
-			vertex.normal = Vec3(vertex.position.x / radius, vertex.position.y / radius, vertex.position.z / radius);
+			vertex.normal = Vector3(vertex.position.x / radius, vertex.position.y / radius, vertex.position.z / radius);
 
-			vertex.uv = Vec2(du * x, dv * y);
+			vertex.uv = Vector2(du * x, dv * y);
 
 			vertex.color = Color(0.5f, 0.5f, 0.5f, 1.f);
 
@@ -52,7 +52,7 @@ void Sphere::CreateGeometry()
 		}
 	}
 
-	vertices.push_back(Vertex{ Vec3(0.0f, -radius, 0.0f), Vec3(0.0f, -1.0f, 0.0f), Vec2(0.5f, 1.0f), Color(0.5f, 0.5f, 0.5f, 1.f) });
+	vertices.push_back(Vertex{ Vector3(0.0f, -radius, 0.0f), Vector3(0.0f, -1.0f, 0.0f), Vector2(0.5f, 1.0f), Color(0.5f, 0.5f, 0.5f, 1.f) });
 
 
 	vector<uint32> indices;

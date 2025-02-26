@@ -15,7 +15,7 @@ FrostRoot::~FrostRoot() {}
 
 void FrostRoot::Fork()
 {
-	Vec3 temp = Vec3(1, 0, 0);
+	Vector3 temp = Vector3(1, 0, 0);
 	Vector normalVector = ::XMLoadFloat3(&_basePoint->normal);
 	Vector tempVector = ::XMLoadFloat3(&temp);
 
@@ -34,17 +34,9 @@ void FrostRoot::Fork()
 		Vector dirVector = ::XMVector3Transform(biNormalVector, rot);
 		Vector stepVector = ::XMVectorScale(dirVector, 0.1f);
 		
-		Vec3 step;
+		Vector3 step;
 		::XMStoreFloat3(&step, stepVector);
 
 		_mainBranches.emplace_back(*_basePoint, step);
-	}
-}
-
-void FrostRoot::Grow()
-{
-	for (auto& branch : _mainBranches)
-	{
-		//branch.GrowTo();
 	}
 }

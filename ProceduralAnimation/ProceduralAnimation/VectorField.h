@@ -7,5 +7,5 @@ public:
 	virtual ~VectorField();
 
 public:
-	virtual Vec3 GetVector(Vec3 pos) = 0;
+	virtual Vector3 GetVector(Vector3 pos) = 0;
 };

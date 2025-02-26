@@ -21,21 +21,21 @@ void Cube::CreateGeometry()
 	vector<Vertex> vertices;
 	vertices.resize(8);
 
-	vertices[0].position = Vec3(-0.5f, -0.5f, -0.5f);
+	vertices[0].position = Vector3(-0.5f, -0.5f, -0.5f);
 	vertices[0].color = Color(1.f, 0.f, 0.f, 1.f);
-	vertices[1].position = Vec3(-0.5f, 0.5f, -0.5f);
+	vertices[1].position = Vector3(-0.5f, 0.5f, -0.5f);
 	vertices[1].color = Color(1.f, 0.f, 0.f, 1.f);
-	vertices[2].position = Vec3(0.5f, 0.5f, -0.5f);
+	vertices[2].position = Vector3(0.5f, 0.5f, -0.5f);
 	vertices[2].color = Color(1.f, 0.f, 0.f, 1.f);
-	vertices[3].position = Vec3(0.5f, -0.5f, -0.5f);
+	vertices[3].position = Vector3(0.5f, -0.5f, -0.5f);
 	vertices[3].color = Color(1.f, 0.f, 0.f, 1.f);
-	vertices[4].position = Vec3(-0.5f, -0.5f, 0.5f);
+	vertices[4].position = Vector3(-0.5f, -0.5f, 0.5f);
 	vertices[4].color = Color(1.f, 1.f, 1.f, 1.f);
-	vertices[5].position = Vec3(-0.5f, 0.5f, 0.5f);
+	vertices[5].position = Vector3(-0.5f, 0.5f, 0.5f);
 	vertices[5].color = Color(1.f, 0.f, 0.f, 1.f);
-	vertices[6].position = Vec3(0.5f, 0.5f, 0.5f);
+	vertices[6].position = Vector3(0.5f, 0.5f, 0.5f);
 	vertices[6].color = Color(0.f, 1.f, 0.f, 1.f);
-	vertices[7].position = Vec3(0.5f, -0.5f, 0.5f);
+	vertices[7].position = Vector3(0.5f, -0.5f, 0.5f);
 	vertices[7].color = Color(0.f, 0.f, 1.f, 1.f);
 
 	vector<uint32> indices;
