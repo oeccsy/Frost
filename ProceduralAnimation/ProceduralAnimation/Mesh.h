@@ -16,11 +16,11 @@ public:
 	void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { _topology = topology; }
 
 public:
-	void CreateBuffers();
-	void UpdateBuffers();
+	virtual void CreateBuffers();
+	virtual void UpdateBuffers();
 	void CreateInputLayout(shared_ptr<Material> material);
 	
-private:
+protected:
 	friend class Renderer;
 
 	// IA
