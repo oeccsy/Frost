@@ -20,15 +20,24 @@ public:
 	shared_ptr<Mesh> GetMesh() { return _mesh; }
 	shared_ptr<Material> GetMaterial() { return _material; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
-	shared_ptr<Collider> GetCollider() { return _collider; }
-	vector<shared_ptr<Component>>& GetComponents() { return _components; }
 	void AddComponent(shared_ptr<Component> component);
+
+	template <typename T>
+	shared_ptr<T> GetComponent()
+	{
+		for (const auto& comp : _components)
+		{
+			auto component = dynamic_pointer_cast<T>(comp);
+			if (component) return component;
+		}
+
+		return nullptr;
+	}
 
 protected:
 	shared_ptr<Mesh> _mesh = make_shared<Mesh>();
 	shared_ptr<Material> _material = make_shared<Material>();
 	shared_ptr<Transform> _transform = make_shared<Transform>();
-	shared_ptr<Collider> _collider = nullptr;
 
 protected:
 	vector<shared_ptr<Component>> _components;
