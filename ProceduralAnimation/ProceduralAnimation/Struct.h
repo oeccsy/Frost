@@ -27,15 +27,6 @@ struct Line3D
 	float LengthSq() { return Vector3::DistanceSquared(start, end); }
 };
 
-struct Ray3D
-{
-	Point3D origin = Point3D(0.f);
-	Vector3 direction = Vector3(0.f);
-
-	void NormalizeDirection() { direction.Normalize(); }
-	static Ray3D FromPoints(const Point3D& from, const Point3D& to) { return Ray3D{ from, to - from }; }
-};
-
 struct Sphere3D
 {
 	Point3D position;
@@ -76,12 +67,6 @@ struct OBB3D
 	Matrix orientation;
 };
 
-struct Plane3D
-{
-	Vector3 normal;
-	float distance;
-};
-
 struct Triangle3D
 {
 	union
@@ -96,4 +81,20 @@ struct Triangle3D
 		Point3D points[3];
 		float values[9];
 	};
+};
+
+struct Plane3D
+{
+	Vector3 normal;
+	float distance;
+
+	static Plane3D FromTriangle(const Triangle3D& triangle)
+	{
+		Plane3D plane;
+		plane.normal = (triangle.b - triangle.a).Cross(triangle.c - triangle.a);
+		plane.normal.Normalize();
+
+		plane.distance = plane.normal.Dot(triangle.a);
+		return plane;
+	}
 };

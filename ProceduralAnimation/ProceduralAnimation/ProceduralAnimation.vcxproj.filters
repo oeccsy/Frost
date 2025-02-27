@@ -37,6 +37,15 @@
     <Filter Include="소스 파일\00. Engine\Renderer">
       <UniqueIdentifier>{20839368-f8e2-4f8a-bb97-8fae9d277463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\04. Test">
+      <UniqueIdentifier>{10b6cd0b-598d-45bc-a651-2f5f22fba328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Engine\Collider">
+      <UniqueIdentifier>{3d4c2d65-f43c-4728-9708-2fb5b7aec3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99. Header\Utils">
+      <UniqueIdentifier>{9198ccaa-442d-4d15-9b8b-a0244d4ed0f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -126,6 +135,39 @@
     <ClInclude Include="VectorField.h">
       <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
+    <ClInclude Include="FrostVectorField.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="FrostMainBranch.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="FrostRoot.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicMesh.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="AABBCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputeShaderTest.h">
+      <Filter>소스 파일\04. Test</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMath.h">
+      <Filter>소스 파일\99. Header\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OBBCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -197,6 +239,39 @@
     <ClCompile Include="VectorField.cpp">
       <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
+    <ClCompile Include="FrostVectorField.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostMainBranch.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostRoot.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicMesh.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputeShaderTest.cpp">
+      <Filter>소스 파일\04. Test</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>소스 파일\99. Header\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="OBBCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ProceduralAnimation.rc">
@@ -227,5 +302,10 @@
     <FxCompile Include="Phong.hlsl">
       <Filter>소스 파일\98. Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleMath.inl">
+      <Filter>소스 파일\99. Header\Utils</Filter>
+    </None>
   </ItemGroup>
 </Project>

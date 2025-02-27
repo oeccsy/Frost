@@ -1,9 +1,27 @@
 #include "pch.h"
+#include "Object.h"
 #include "Component.h"
 #include "Collider.h"
+#include "Mesh.h"
 #include "MeshCollider.h"
 
 MeshCollider::~MeshCollider() {}
+
+bool MeshCollider::Intersects(Ray& ray, OUT Point3D& hitPoint)
+{
+	if (_mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) return false;
+
+	vector<Vertex>& vertices = _mesh.lock()->GetVertices();
+	vector<uint32>& indices = _mesh.lock()->GetIndices();
+	
+	for (int i = 0; i < indices.size(); i+=3)
+	{
+		Triangle3D triangle { vertices[i].position, vertices[i + 1].position, vertices[i + 2].position };
+		if (Raycast(triangle, ray, hitPoint)) return true;
+	}
+
+	return false;
+}
 
 bool MeshCollider::Intersects(Ray& ray, OUT float& distance)
 {
@@ -45,9 +63,9 @@ bool MeshCollider::IsPointInTriangle(const Point3D& point, const Triangle3D& tri
 		return false;
 }
 
-bool MeshCollider::Raycast(const Plane3D& plane, const Ray3D& ray, OUT Point3D& hitPoint)
+bool MeshCollider::Raycast(const Plane3D& plane, const Ray& ray, OUT Point3D& hitPoint)
 {
-	float n_dot_o = plane.normal.Dot(ray.origin);
+	float n_dot_o = plane.normal.Dot(ray.position);
 	float n_dot_d = plane.normal.Dot(ray.direction);
 
 	if (n_dot_d < FLT_EPSILON) return false;
@@ -56,11 +74,11 @@ bool MeshCollider::Raycast(const Plane3D& plane, const Ray3D& ray, OUT Point3D& 
 	
 	if (t < 0) return false;
 
-	hitPoint = ray.origin + t * ray.direction;
+	hitPoint = ray.position + t * ray.direction;
 	return true;
 }
 
-bool MeshCollider::Raycast(const Triangle3D& triangle, const Ray3D& ray, OUT Point3D& hitPoint)
+bool MeshCollider::Raycast(const Triangle3D& triangle, const Ray& ray, OUT Point3D& hitPoint)
 {
 	Plane3D plane = Plane3D::FromTriangle(triangle);
 	if (!Raycast(plane, ray, OUT hitPoint)) return false;
