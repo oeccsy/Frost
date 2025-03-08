@@ -21,11 +21,6 @@ PointCloud::~PointCloud() {}
 
 void PointCloud::Update() {}
 
-vector<Vertex>& PointCloud::GetPoints()
-{
-	return _points;
-}
-
 Vector3 PointCloud::GetNearPoint(Vector3 pos)
 {
 	float minDistSq = FLT_MAX;

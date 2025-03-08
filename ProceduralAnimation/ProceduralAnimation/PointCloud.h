@@ -17,7 +17,7 @@ public:
 	void Update() override;
 
 public:
-	vector<Vertex>& GetPoints();
+	vector<Vertex>& GetPoints() { return _points; }
 	Vector3 GetNearPoint(Vector3 pos);
 
 protected:
