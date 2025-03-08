@@ -3,6 +3,9 @@
 #include "Component.h"
 #include "Collider.h"
 
-Collider::Collider(ColliderType colliderType) {}
+Collider::Collider(ColliderType colliderType)
+{
+	_colliderType = colliderType;
+}
 
 Collider::~Collider() {}

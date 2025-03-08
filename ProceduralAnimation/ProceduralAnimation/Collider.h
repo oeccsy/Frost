@@ -4,7 +4,8 @@ enum class ColliderType
 {
 	Sphere,
 	AABB,
-	OBB
+	OBB,
+	Mesh
 };
 
 class Collider : public Component
