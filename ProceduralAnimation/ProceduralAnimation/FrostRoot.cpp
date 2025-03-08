@@ -2,11 +2,11 @@
 #include "Object.h"
 #include "FrostMainBranch.h"
 #include "FrostRoot.h"
+#include "Frost.h"
 #include <random>
 
-FrostRoot::FrostRoot(Vertex& basePoint)
+FrostRoot::FrostRoot(Frost& parent, Vertex& basePoint) : _parent(parent), _basePoint(basePoint)
 {
-	_basePoint = &basePoint;
 	_mainBranches.reserve(MAX_BRANCH_COUNT);
 	_isForked = false;
 }
@@ -16,10 +16,9 @@ FrostRoot::~FrostRoot() {}
 void FrostRoot::Fork()
 {
 	Vector3 temp = Vector3(1, 0, 0);
-	Vector normalVector = ::XMLoadFloat3(&_basePoint->normal);
-	Vector tempVector = ::XMLoadFloat3(&temp);
-
-	Vector biNormalVector = ::XMVector3Normalize(::XMVector3Cross(normalVector, tempVector)); 
+	Vector3 normal = _basePoint.normal;
+	Vector3 biNormal = normal.Cross(temp);
+	biNormal.Normalize();
 
 	random_device rd;
 	mt19937 gen(rd());
@@ -30,13 +29,9 @@ void FrostRoot::Fork()
 	for (int i = 0; i < branchCount; i++)
 	{
 		float angle = ::XMConvertToRadians(60.0f * i);
-		Matrix rot = ::XMMatrixRotationAxis(normalVector, angle);
-		Vector dirVector = ::XMVector3Transform(biNormalVector, rot);
-		Vector stepVector = ::XMVectorScale(dirVector, 0.1f);
-		
-		Vector3 step;
-		::XMStoreFloat3(&step, stepVector);
+		Matrix rot = Matrix::CreateFromAxisAngle(normal, angle);
+		Vector3 dir = Vector3::Transform(biNormal, rot);
 
-		_mainBranches.emplace_back(*_basePoint, step);
+		_mainBranches.emplace_back(_basePoint, dir, normal, *this);
 	}
 }

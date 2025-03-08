@@ -4,22 +4,22 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "DynamicMesh.h"
+#include "FrostRoot.h"
+#include "Frost.h"
+#include "Component.h"
+#include "Collider.h"
+#include "MeshCollider.h"
+#include "Sphere.h"
 
-const float FrostMainBranch::GROW_SPEED = 0.5f;
+const float FrostMainBranch::GROW_SPEED = 0.1f;
 
-FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vector3& dir)
+FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vector3& dir, Vector3& normal, FrostRoot& parent) : _parent(parent)
 {
 	_mesh = make_shared<DynamicMesh>();
 
-	Vector basePosVector = ::XMLoadFloat3(&basePoint.position);
-	Vector dirVector = ::XMLoadFloat3(&dir);
-	Vector endPosVector = ::XMVectorAdd(basePosVector, dirVector);
-	
-	Vector3 endPos;
-	::XMStoreFloat3(&endPos, endPosVector);
-
+	Vector3 endPos = basePoint.position + dir * GROW_SPEED;
 	_branch.push_back(basePoint);
-	_branch.push_back({ endPos, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1) });
+	_branch.push_back({ endPos, normal, Vector2(0, 0), Color(1, 1, 1, 1) });
 	
 	vector<uint32> indices = { 0, 1 };
 
@@ -37,22 +37,40 @@ FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vector3& dir)
 
 FrostMainBranch::~FrostMainBranch() {}
 
-void FrostMainBranch::GrowTo(Vector3 dir)
+void FrostMainBranch::Grow()
 {
-	Vector endPosVec = ::XMLoadFloat3(&_branch.back().position);
-	Vector stepVec = ::XMVectorScale(::XMLoadFloat3(&dir), GROW_SPEED);
-	Vector newPosVec = ::XMVectorAdd(endPosVec, stepVec);
+	int size = _branch.size();
+	Vector3 prevPos = _branch[size - 2].position;
+	Vector3 curPos = _branch[size - 1].position;
+	
+	Vector3 normal = _branch.back().normal;
+	Vector3 dir = curPos - prevPos;
+	Vector3 biNormal = normal.Cross(dir);
+	dir.Normalize();
+	biNormal.Normalize();
 
-	Vertex newVertex;
-	::XMStoreFloat3(&newVertex.position, newPosVec);
-	newVertex.normal = Vector3{ 0, 0, 0 };
-	newVertex.uv = Vector2{ 0, 0 };
-	newVertex.color = Color{ 1, 1, 1, 1 };
+	Vector3 nextStep = curPos + dir * GROW_SPEED;
+	
+	Ray ray({ nextStep, -normal });
+	Vector3 hitPos;
 
-	_branch.push_back(newVertex);
-	_mesh->SetVertices(_branch);
-	_mesh->GetIndices().push_back(_branch.size() - 1);
+	shared_ptr<MeshCollider> meshCollider = GetParent().GetParent().GetSphere()->GetComponent<MeshCollider>();
+	
+	if (meshCollider->Intersects(ray, hitPos))
+	{
+		Vector3 newDir = hitPos - curPos;
+		Vector3 newNormal = dir.Cross(biNormal);
 
-	_mesh->UpdateBuffers();
+		Vertex newVertex({ hitPos, newNormal, Vector2(0, 0), Color(1, 1, 1, 1) });
+		
+		_branch.push_back(newVertex);
+		_mesh->GetVertices().push_back(newVertex);
+		_mesh->GetIndices().push_back(_branch.size() - 1);
+		_mesh->UpdateBuffers();
+	}
+	else
+	{
+		// TODO : 성장 중단
+	}
 }
 
