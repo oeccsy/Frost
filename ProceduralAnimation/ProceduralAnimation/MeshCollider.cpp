@@ -5,18 +5,20 @@
 #include "Mesh.h"
 #include "MeshCollider.h"
 
+MeshCollider::MeshCollider() : Collider(ColliderType::Mesh) {}
 MeshCollider::~MeshCollider() {}
 
 bool MeshCollider::Intersects(Ray& ray, OUT Point3D& hitPoint)
 {
+	if (!_mesh.lock()) _mesh = GetOwner()->GetMesh(); // TODO Init()
 	if (_mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) return false;
 
 	vector<Vertex>& vertices = _mesh.lock()->GetVertices();
 	vector<uint32>& indices = _mesh.lock()->GetIndices();
 	
 	for (int i = 0; i < indices.size(); i+=3)
-	{
-		Triangle3D triangle { vertices[i].position, vertices[i + 1].position, vertices[i + 2].position };
+	{	
+		Triangle3D triangle { vertices[indices[i]].position, vertices[indices[i + 1]].position, vertices[indices[i + 2]].position };
 		if (Raycast(triangle, ray, hitPoint)) return true;
 	}
 
@@ -68,6 +70,7 @@ bool MeshCollider::Raycast(const Plane3D& plane, const Ray& ray, OUT Point3D& hi
 	float n_dot_o = plane.normal.Dot(ray.position);
 	float n_dot_d = plane.normal.Dot(ray.direction);
 
+	if (n_dot_d >= 0) return false;
 	if (n_dot_d < FLT_EPSILON) return false;
 	
 	float t = - (n_dot_o - plane.distance) / n_dot_d;

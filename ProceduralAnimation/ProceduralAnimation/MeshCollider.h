@@ -5,7 +5,7 @@ class Mesh;
 class MeshCollider : public Collider
 {
 public:
-	MeshCollider() : Collider(ColliderType::Mesh) {}
+	MeshCollider();
 	virtual ~MeshCollider();
 
 public:
