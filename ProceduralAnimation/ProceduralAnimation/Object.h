@@ -21,6 +21,7 @@ public:
 	shared_ptr<Material> GetMaterial() { return _material; }
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	void AddComponent(shared_ptr<Component> component);
+	vector<shared_ptr<Component>> GetComponents() { return _components; }
 
 	template <typename T>
 	shared_ptr<T> GetComponent()
