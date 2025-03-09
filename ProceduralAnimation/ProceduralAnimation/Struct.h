@@ -86,7 +86,7 @@ struct Triangle3D
 struct Plane3D
 {
 	Vector3 normal;
-	float distance;
+	float offset;
 
 	static Plane3D FromTriangle(const Triangle3D& triangle)
 	{
@@ -94,7 +94,7 @@ struct Plane3D
 		plane.normal = (triangle.b - triangle.a).Cross(triangle.c - triangle.a);
 		plane.normal.Normalize();
 
-		plane.distance = plane.normal.Dot(triangle.a);
+		plane.offset = plane.normal.Dot(triangle.a);
 		return plane;
 	}
 };
