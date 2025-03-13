@@ -11,7 +11,7 @@
 #include "MeshCollider.h"
 #include "Sphere.h"
 
-const float FrostMainBranch::GROW_SPEED = 0.1f;
+const float FrostMainBranch::GROW_SPEED = 1.f;
 
 FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vector3& dir, Vector3& normal, FrostRoot& parent) : _parent(parent)
 {
@@ -33,6 +33,16 @@ FrostMainBranch::FrostMainBranch(Vertex& basePoint, Vector3& dir, Vector3& norma
 	_material->CreatePS(L"Cube.hlsl", "PS", "ps_5_0");
 
 	_mesh->CreateInputLayout(_material);
+
+	_guideCircle.center = endPos;
+	_guideCircle.radius = GROW_SPEED;
+
+	_guideCircle.xAxis = normal;
+	_guideCircle.yAxis = dir;
+	_guideCircle.xAxis.Normalize();
+	_guideCircle.yAxis.Normalize();
+	
+	_guideCircle.normal = _guideCircle.xAxis.Cross(_guideCircle.yAxis);
 }
 
 FrostMainBranch::~FrostMainBranch() {}
@@ -43,34 +53,28 @@ void FrostMainBranch::Grow()
 	Vector3 prevPos = _branch[size - 2].position;
 	Vector3 curPos = _branch[size - 1].position;
 	
-	Vector3 normal = _branch.back().normal;
 	Vector3 dir = curPos - prevPos;
-	Vector3 biNormal = normal.Cross(dir);
-	dir.Normalize();
-	biNormal.Normalize();
-
-	Vector3 nextStep = curPos + dir * GROW_SPEED;
+	Vector3 normal = dir.Cross(_guideCircle.normal);
 	
-	Ray ray({ nextStep, -normal });
-	Vector3 hitPos;
+	_guideCircle.center = curPos;
+	_guideCircle.xAxis = normal;
+	_guideCircle.yAxis = dir;
 
+	float theta;
 	shared_ptr<MeshCollider> meshCollider = GetParent().GetParent().GetSphere()->GetComponent<MeshCollider>();
 	
-	if (meshCollider->Intersects(ray, hitPos))
+	if (meshCollider->Intersects(_guideCircle, theta))
 	{
-		Vector3 newDir = hitPos - curPos;
-		Vector3 newNormal = dir.Cross(biNormal);
-
-		Vertex newVertex({ hitPos, newNormal, Vector2(0, 0), Color(1, 1, 1, 1) });
+		Vector3 hitPoint = _guideCircle.center + _guideCircle.radius * (cos(theta) * _guideCircle.xAxis + sin(theta) * _guideCircle.yAxis);
 		
+		Vertex newVertex({ hitPoint, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
+
 		_branch.push_back(newVertex);
 		_mesh->GetVertices().push_back(newVertex);
 		_mesh->GetIndices().push_back(_branch.size() - 1);
 		_mesh->UpdateBuffers();
 	}
-	else
-	{
-		// TODO : 성장 중단
-	}
+
+	// TODO : 성장 중단
 }
 

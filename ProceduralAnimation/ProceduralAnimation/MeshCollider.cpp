@@ -39,6 +39,27 @@ bool MeshCollider::Intersects(shared_ptr<Collider>& other)
 	return false;
 }
 
+bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
+{
+	if (!_mesh.lock()) _mesh = GetOwner()->GetMesh(); // TODO Init()
+	if (_mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
+
+	vector<Vertex>& vertices = _mesh.lock()->GetVertices();
+	vector<uint32>& indices = _mesh.lock()->GetIndices();
+
+	vector<float> thetaContainer;
+
+	for (int i = 0; i < indices.size(); i += 3)
+	{
+		Triangle3D triangle{ vertices[indices[i]].position, vertices[indices[i + 1]].position, vertices[indices[i + 2]].position };
+		Circlecast(triangle, circle, thetaContainer);
+	}
+
+	theta = *min_element(thetaContainer.begin(), thetaContainer.end());
+
+	return !thetaContainer.empty();
+}
+
 Vector3 MeshCollider::Snap(Vector3 position)
 {
 	if (!_mesh.lock()) _mesh = GetOwner()->GetMesh(); // TODO Init()

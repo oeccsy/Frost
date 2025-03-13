@@ -15,6 +15,7 @@ public:
 
 private:
 	static const float GROW_SPEED;
+	Circle3D _guideCircle;
 	
 	FrostRoot& _parent;
 	vector<Vertex> _branch;

@@ -11,6 +11,7 @@ public:
 public:
 	virtual bool Intersects(Ray& ray, OUT float& distance) override;
 	virtual bool Intersects(shared_ptr<Collider>& other) override;
+	bool Intersects(Circle3D& circle, OUT float& theta);
 	Vector3 Snap(Vector3 position);
 
 private:
