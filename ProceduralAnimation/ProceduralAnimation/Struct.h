@@ -24,7 +24,7 @@ struct Line3D
 	Point3D end = Point3D(0.f);
 
 	float Length() { return Vector3::Distance(start, end); }
-	float LengthSq() { return Vector3::DistanceSquared(start, end); }
+	float LengthSquared() { return Vector3::DistanceSquared(start, end); }
 };
 
 struct Sphere3D
@@ -97,4 +97,14 @@ struct Plane3D
 		plane.offset = plane.normal.Dot(triangle.a);
 		return plane;
 	}
+};
+
+struct Circle3D
+{
+	Vector3 center;
+	Vector3 normal;
+	float radius;
+
+	Vector3 xAxis;
+	Vector3 yAxis;
 };

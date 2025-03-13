@@ -125,11 +125,9 @@ bool MeshCollider::Raycast(const Plane3D& plane, const Ray& ray, OUT float& dist
 {
 	float n_dot_o = plane.normal.Dot(ray.position);
 	float n_dot_d = plane.normal.Dot(ray.direction);
-
 	if (n_dot_d < FLT_EPSILON) return false;
 	
 	float t = - (n_dot_o - plane.offset) / n_dot_d;
-	
 	if (t < 0) return false;
 
 	distance = t;
@@ -143,6 +141,38 @@ bool MeshCollider::Raycast(const Triangle3D& triangle, const Ray& ray, OUT float
 	if (!Raycast(plane, ray, OUT distance)) return false;
 
 	return IsPointInTriangle(ray.position + distance * ray.direction, triangle);
+}
+
+bool MeshCollider::Circlecast(const Triangle3D& triangle, const Circle3D& circle, OUT vector<float>& theta)
+{
+	Plane3D plane = Plane3D::FromTriangle(triangle);
+
+	// Plane.Normal * P(theta) = Plane.Offset -> A * cos(theta) + B * sin(theta) = C
+	float A = circle.radius * plane.normal.Dot(circle.xAxis);
+	float B = circle.radius * plane.normal.Dot(circle.yAxis);
+	float C = plane.offset - (plane.normal.Dot(circle.center));
+
+	float R = sqrt(A * A + B * B);
+	float alpha = atan2(B, A);
+
+	// A * cos(theta) + B * sin(theta) = R * cos(theta - alpha) = C
+	if (R < fabs(C)) return false;
+
+	float theta1 = alpha + acos(C / R);
+	float theta2 = alpha - acos(C / R);
+
+	// [0, 360') Normalize
+	theta1 = fmod(theta1 + XM_2PI, XM_2PI);
+	theta2 = fmod(theta2 + XM_2PI, XM_2PI);
+
+	Vector3 point1 = circle.center + circle.radius * (cos(theta1) * circle.xAxis + sin(theta1) * circle.yAxis);
+	Vector3 point2 = circle.center + circle.radius * (cos(theta2) * circle.xAxis + sin(theta2) * circle.yAxis);
+
+	int prevThetaCount = theta.size();
+	if (IsPointInTriangle(point1, triangle)) theta.push_back(theta1);
+	if (IsPointInTriangle(point2, triangle)) theta.push_back(theta2);
+
+	return prevThetaCount < theta.size();
 }
 
 bool MeshCollider::IsPointInPlane(const Point3D& point, const Plane3D& plane)

@@ -16,9 +16,10 @@ public:
 private:
 	bool Raycast(const Plane3D& plane, const Ray& ray, OUT float& distance);
 	bool Raycast(const Triangle3D& triangle, const Ray& ray, OUT float& distance);
+	bool Circlecast(const Triangle3D& triangle, const Circle3D& circle, OUT vector<float>& theta);
 	bool IsPointInPlane(const Point3D& point, const Plane3D& plane);
-	bool IsPointInTriangle(const Point3D& p, const Triangle3D& t);
-
+	bool IsPointInTriangle(const Point3D& point, const Triangle3D& triangle);
+	
 private:
 	weak_ptr<Mesh> _mesh;
 };
