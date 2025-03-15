@@ -15,7 +15,7 @@ public:
 	virtual ~Collider();
 
 public:
-	virtual bool Intersects(Ray& ray, OUT float& distanct) = 0;
+	virtual bool Intersects(Ray& ray, OUT float& distance) = 0;
 	virtual bool Intersects(shared_ptr<Collider>& other) = 0;
 
 	ColliderType GetColliderType() { return _colliderType; }
