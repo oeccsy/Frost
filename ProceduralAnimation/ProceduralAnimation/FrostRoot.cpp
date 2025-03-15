@@ -33,6 +33,8 @@ void FrostRoot::Fork()
 		Matrix rot = Matrix::CreateFromAxisAngle(normal, angle);
 		Vector3 dir = Vector3::Transform(biNormal, rot);
 
-		_growingBranches.insert(make_shared<FrostMainBranch>(_basePoint, dir, normal, *this));
+		shared_ptr<FrostMainBranch> newBranch = make_shared<FrostMainBranch>(_basePoint, dir, normal, *this);
+		_branches.push_back(newBranch);
+		_growingBranches.insert(newBranch);
 	}
 }

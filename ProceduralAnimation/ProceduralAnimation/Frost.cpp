@@ -44,7 +44,7 @@ void Frost::Render(shared_ptr<Renderer> renderer)
 	
 	for (auto frostRoot : _forkedFrostRoots)
 	{
-		for (auto mainBranch : frostRoot->GetGrowingBranches())
+		for (auto mainBranch : frostRoot->GetBranches())
 		{
 			renderer->Render(mainBranch->GetMesh(), mainBranch->GetMaterial(), mainBranch->GetTransform());
 		}
@@ -69,7 +69,7 @@ void Frost::ForkRandomRoots()
 		if (root.IsForked()) continue;
 		if (dis(gen) < threshold) root.Fork();
 	}*/
-
+	
 	for (auto root : _unforkedFrostRoots)
 	{
 		root->Fork();
