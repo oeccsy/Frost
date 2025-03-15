@@ -36,8 +36,3 @@ void FrostRoot::Fork()
 		_growingBranches.insert(make_shared<FrostMainBranch>(_basePoint, dir, normal, *this));
 	}
 }
-
-void FrostRoot::StopGrowing(shared_ptr<FrostMainBranch> branch)
-{
-	_growingBranches.erase(branch);
-}
