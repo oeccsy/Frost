@@ -7,7 +7,6 @@
 
 FrostRoot::FrostRoot(Frost& parent, Vertex& basePoint) : _parent(parent), _basePoint(basePoint)
 {
-	_mainBranches.reserve(MAX_BRANCH_COUNT);
 	_isForked = false;
 }
 
@@ -20,11 +19,13 @@ void FrostRoot::Fork()
 	Vector3 biNormal = normal.Cross(temp);
 	biNormal.Normalize();
 
-	random_device rd;
+	/*random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<int> dis(1, MAX_BRANCH_COUNT);
 
-	int branchCount = dis(gen);
+	int branchCount = dis(gen);*/
+
+	int branchCount = 1;
 
 	for (int i = 0; i < branchCount; i++)
 	{
@@ -32,6 +33,11 @@ void FrostRoot::Fork()
 		Matrix rot = Matrix::CreateFromAxisAngle(normal, angle);
 		Vector3 dir = Vector3::Transform(biNormal, rot);
 
-		_mainBranches.emplace_back(_basePoint, dir, normal, *this);
+		_growingBranches.insert(make_shared<FrostMainBranch>(_basePoint, dir, normal, *this));
 	}
+}
+
+void FrostRoot::StopGrowing(shared_ptr<FrostMainBranch> branch)
+{
+	_growingBranches.erase(branch);
 }

@@ -7,6 +7,8 @@ class FrostVectorField;
 class FrostRoot;
 class FrostMainBranch;
 
+class PointOctree;
+
 class Frost : public Object
 {
 public:
@@ -23,18 +25,18 @@ public:
 
 protected:
 	void ForkRandomRoots();
-
-protected:
 	void Grow();
 
 private:
+	static const float MIN_POINT_DIST;
+
 	shared_ptr<Sphere> _sphere;
 	shared_ptr<PointCloud> _basePoints;
 	shared_ptr<PointCloud> _refPoints;
 	shared_ptr<FrostVectorField> _vectorField;
 
-	vector<FrostRoot> _frostRoots;
+	unordered_set<shared_ptr<FrostRoot>> _unforkedFrostRoots;
+	unordered_set<shared_ptr<FrostRoot>> _forkedFrostRoots;
 
-	vector<shared_ptr<Vertex>> _unforkedPoints; // TODO : ForkRandomRoots()에서 unforked, forked 분리, 가까운 핵 감지
-	vector<shared_ptr<Vertex>> _forkedPoints;
+	unique_ptr<PointOctree> _branchPoints;
 };

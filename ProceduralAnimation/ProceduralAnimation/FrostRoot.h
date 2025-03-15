@@ -15,7 +15,8 @@ public:
 
 public:
 	Frost& GetParent() { return _parent; }
-	vector<FrostMainBranch>& GetMainBranches() { return _mainBranches; }
+	vector<shared_ptr<FrostMainBranch>>& GetBranches() { return _branches; }
+	unordered_set<shared_ptr<FrostMainBranch>>& GetGrowingBranches() { return _growingBranches; }
 
 private:
 	static const int MAX_BRANCH_COUNT = 6;
@@ -23,6 +24,9 @@ private:
 	Frost& _parent;
 
 	Vertex& _basePoint;
-	vector<FrostMainBranch> _mainBranches;
+
+	vector<shared_ptr<FrostMainBranch>> _branches;
+	unordered_set<shared_ptr<FrostMainBranch>> _growingBranches;
+
 	bool _isForked;
 };

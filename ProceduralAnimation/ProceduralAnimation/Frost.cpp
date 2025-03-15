@@ -7,8 +7,11 @@
 #include "FrostRoot.h"
 #include "FrostMainBranch.h"
 #include "Mesh.h"
+#include "PointOctree.h"
 #include <random>
 #include "Frost.h"
+
+const float Frost::MIN_POINT_DIST = 0.5f;
 
 Frost::Frost()
 {
@@ -19,8 +22,10 @@ Frost::Frost()
 
 	for (auto& basePoint : _basePoints->GetPoints())
 	{
-		_frostRoots.emplace_back(*this, basePoint);
+		_unforkedFrostRoots.insert(make_shared<FrostRoot>(*this, basePoint));
 	}
+
+	_branchPoints = make_unique<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) })); // TODO : 위치 이동 반영
 }
 
 Frost::~Frost() {}
@@ -28,6 +33,7 @@ Frost::~Frost() {}
 void Frost::Update()
 {
 	Object::Update();
+	Grow();
 }
 
 void Frost::Render(shared_ptr<Renderer> renderer)
@@ -36,11 +42,11 @@ void Frost::Render(shared_ptr<Renderer> renderer)
 	// renderer->Render(_basePoints->GetMesh(), _basePoints->GetMaterial(), _basePoints->GetTransform());
 	// renderer->Render(_refPoints->GetMesh(), _refPoints->GetMaterial(), _refPoints->GetTransform());
 	
-	for (auto frostRoot : _frostRoots)
+	for (auto frostRoot : _forkedFrostRoots)
 	{
-		for (auto mainBranch : frostRoot.GetMainBranches())
+		for (auto mainBranch : frostRoot->GetGrowingBranches())
 		{
-			renderer->Render(mainBranch.GetMesh(), mainBranch.GetMaterial(), mainBranch.GetTransform());
+			renderer->Render(mainBranch->GetMesh(), mainBranch->GetMaterial(), mainBranch->GetTransform());
 		}
 	}
 }
@@ -48,16 +54,11 @@ void Frost::Render(shared_ptr<Renderer> renderer)
 void Frost::StartFrostAnim()
 {
 	ForkRandomRoots();
-	
-	for (int i = 0; i < 10; i++)
-	{
-		Grow();
-	}
 }
 
 void Frost::ForkRandomRoots()
 {
-	float threshold = 0.05f;
+	/*float threshold = 0.05f;
 
 	random_device rd;
 	mt19937 gen(rd());
@@ -67,16 +68,43 @@ void Frost::ForkRandomRoots()
 	{
 		if (root.IsForked()) continue;
 		if (dis(gen) < threshold) root.Fork();
+	}*/
+
+	for (auto root : _unforkedFrostRoots)
+	{
+		root->Fork();
+		_unforkedFrostRoots.erase(root);
+		_forkedFrostRoots.insert(root);
+
+		break;
 	}
 }
 
 void Frost::Grow()
 {
-	for (auto& frostRoot : _frostRoots)
+	for (auto& frostRoot : _forkedFrostRoots)
 	{
-		for (auto& mainBranch : frostRoot.GetMainBranches())
+		auto& branches = frostRoot->GetGrowingBranches();
+		
+
+		for (auto it = branches.begin(); it != branches.end();)
 		{
-			mainBranch.Grow();
+			auto branch = *it;
+			branch->Grow();
+
+			BoundingSphere checkBounds({ branch->GetBranchEndPos(), MIN_POINT_DIST });
+
+			if (_branchPoints->IntersectsWithPoints(checkBounds))
+			{
+				//frostRoot->StopGrowing(branch);
+				it = branches.erase(it);
+			}
+			else
+			{
+				it++;
+			}
+
+			_branchPoints->Insert(branch->GetBranchEndPos());
 		}
 	}
 }
