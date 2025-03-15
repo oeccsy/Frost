@@ -13,7 +13,7 @@ bool PointOctree::IsLeaf()
 	return _children[0] == nullptr;
 }
 
-void PointOctree::Insert(Vector3 point)
+bool PointOctree::IsInclude(Vector3 position)
 {
     Vector3 center = _bounds.Center;
     Vector3 size = _bounds.Extents;
@@ -21,9 +21,16 @@ void PointOctree::Insert(Vector3 point)
     Vector3 maxBounds = center + size;
     Vector3 minBounds = center - size;
 
-    if (point.x < minBounds.x || maxBounds.x < point.x) return;
-    if (point.y < minBounds.y || maxBounds.y < point.y) return;
-    if (point.z < minBounds.z || maxBounds.z < point.z) return;
+    if (position.x < minBounds.x || maxBounds.x < position.x) return false;
+    if (position.y < minBounds.y || maxBounds.y < position.y) return false;
+    if (position.z < minBounds.z || maxBounds.z < position.z) return false;
+    
+    return true;
+}
+
+void PointOctree::Insert(Vector3 point)
+{
+    if (!IsInclude(point)) return;
     
     if (IsLeaf())
     {
@@ -68,4 +75,35 @@ void PointOctree::Subdivide()
     }
 
     _points.clear();
+}
+
+bool PointOctree::IntersectsWithBounds(const BoundingSphere& boundingSphere)
+{
+    return _bounds.Intersects(boundingSphere);
+}
+
+bool PointOctree::IntersectsWithPoints(const BoundingSphere& boundingSphere)
+{
+    if (!IntersectsWithBounds(boundingSphere)) return false;
+
+    if (!IsLeaf())
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (_children[i]->IntersectsWithPoints(boundingSphere)) return true;
+        }
+
+        return false;
+    }
+    else
+    {
+        float rSquared = boundingSphere.Radius * boundingSphere.Radius;
+
+        for (Vector3 point : _points)
+        {
+            if (Vector3::DistanceSquared(point, boundingSphere.Center) <= rSquared) return true;
+        }
+
+        return false;
+    }
 }

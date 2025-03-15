@@ -11,8 +11,13 @@ public:
 	void Insert(Vector3 point);
 	void Subdivide();
 	
+public:
+	bool IsInclude(Vector3 position);
+	bool IntersectsWithBounds(const BoundingSphere& boundingSphere);
+	bool IntersectsWithPoints(const BoundingSphere& boundingSphere);
+	
 private:
-	static int MAX_POINTS_PER_SECTION;
+	static const int MAX_POINTS_PER_SECTION = 10;
 	vector<Vector3> _points;
 
 	BoundingBox _bounds;
