@@ -9,9 +9,13 @@
 MeshCollider::MeshCollider() : Collider(ColliderType::Mesh) {}
 MeshCollider::~MeshCollider() {}
 
+void MeshCollider::Init()
+{
+	_mesh = GetOwner()->GetMesh();
+}
+
 bool MeshCollider::Intersects(Ray& ray, OUT float& distance)
 {
-	if (!_mesh.lock()) _mesh = GetOwner()->GetMesh(); // TODO Init()
 	if (_mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) return false;
 
 	bool hit = false;

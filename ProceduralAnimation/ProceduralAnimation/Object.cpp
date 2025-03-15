@@ -27,4 +27,5 @@ void Object::AddComponent(shared_ptr<Component> component)
 {
 	_components.push_back(component);
 	component->SetOwner(shared_from_this());
+	component->Init();
 }

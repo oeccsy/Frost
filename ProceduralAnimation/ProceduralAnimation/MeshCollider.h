@@ -9,6 +9,9 @@ public:
 	virtual ~MeshCollider();
 
 public:
+	void Init() override;
+
+public:
 	virtual bool Intersects(Ray& ray, OUT float& distance) override;
 	virtual bool Intersects(shared_ptr<Collider>& other) override;
 	bool Intersects(Circle3D& circle, OUT float& theta);
