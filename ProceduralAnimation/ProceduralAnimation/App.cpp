@@ -37,4 +37,6 @@ void App::Run()
     _graphics->RenderBegin();
     _currentScene->Render(_renderer);
     _graphics->RenderEnd();
+
+    Sleep(1000);
 }

@@ -163,6 +163,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="OBBCollider.h" />
+    <ClInclude Include="PointOctree.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="PointCloud.h" />
     <ClInclude Include="SimpleMath.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="OBBCollider.cpp" />
+    <ClCompile Include="PointOctree.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="PointCloud.cpp" />
     <ClCompile Include="SimpleMath.cpp" />

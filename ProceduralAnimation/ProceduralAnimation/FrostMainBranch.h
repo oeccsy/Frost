@@ -1,22 +1,28 @@
 #pragma once
 
 class FrostRoot;
+class MeshCollider;
 
-class FrostMainBranch : public Object
+class FrostBranch : public Object
 {
 public:
-	FrostMainBranch(Vertex& basePoint, Vector3& dir, Vector3& normal, FrostRoot& parent);
-	virtual ~FrostMainBranch() override;
+	FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shared_ptr<FrostBranch> parent);
+	virtual ~FrostBranch() override;
 
 public:
-	FrostRoot& GetParent() { return _parent; }
+	void Grow(shared_ptr<MeshCollider> target);
+	void Fork();
+
+public:
+	shared_ptr<FrostBranch>& GetParent() { return _parent; }
+	vector<shared_ptr<FrostBranch>>& GetChildren() { return _children; }
 	Vector3 GetBranchEndPos() { return _branch.back().position; };
-	void Grow();
 
 private:
-	static const float GROW_SPEED;
 	Circle3D _guideCircle;
-	
-	FrostRoot& _parent;
+
 	vector<Vertex> _branch;
+
+	shared_ptr<FrostBranch> _parent;
+	vector<shared_ptr<FrostBranch>> _children;
 };

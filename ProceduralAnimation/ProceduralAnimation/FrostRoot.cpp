@@ -1,21 +1,26 @@
 #include "pch.h"
 #include "Object.h"
 #include "FrostMainBranch.h"
+#include "Component.h"
+#include "Collider.h"
+#include "MeshCollider.h"
+#include "PointOctree.h"
 #include "FrostRoot.h"
 #include "Frost.h"
 #include <random>
 
-FrostRoot::FrostRoot(Frost& parent, Vertex& basePoint) : _parent(parent), _basePoint(basePoint)
+FrostRoot::FrostRoot(Vector3 basePoint, Vector3 normal)
 {
-	_isForked = false;
+	_basePoint = basePoint;
+	_normal = normal;
 }
 
 FrostRoot::~FrostRoot() {}
 
-void FrostRoot::Fork()
+void FrostRoot::ForkRoot()
 {
 	Vector3 temp = Vector3(1, 0, 0);
-	Vector3 normal = _basePoint.normal;
+	Vector3 normal = _normal;
 	Vector3 biNormal = normal.Cross(temp);
 	biNormal.Normalize();
 
@@ -33,8 +38,62 @@ void FrostRoot::Fork()
 		Matrix rot = Matrix::CreateFromAxisAngle(normal, angle);
 		Vector3 dir = Vector3::Transform(biNormal, rot);
 
-		shared_ptr<FrostMainBranch> newBranch = make_shared<FrostMainBranch>(_basePoint, dir, normal, *this);
+		shared_ptr<FrostBranch> newBranch = make_shared<FrostBranch>(_basePoint, dir, normal, nullptr);
 		_branches.push_back(newBranch);
 		_growingBranches.insert(newBranch);
+		_growingMainBranches.insert(newBranch);
 	}
+}
+
+void FrostRoot::GrowBranches(shared_ptr<MeshCollider> target)
+{
+	for (auto branch : _growingBranches)
+	{
+		branch->Grow(target);
+	}
+}
+
+void FrostRoot::ForkMainBranches(shared_ptr<MeshCollider> target)
+{
+	for (auto mainBranch : _growingMainBranches)
+	{
+		mainBranch->Fork();
+
+		vector<shared_ptr<FrostBranch>> subBranches = mainBranch->GetChildren();
+		_branches.push_back(*(subBranches.end() - 1));
+		_branches.push_back(*(subBranches.end() - 2));
+		_growingBranches.insert(*(subBranches.end() - 1));
+		_growingBranches.insert(*(subBranches.end() - 2));
+	}
+}
+
+void FrostRoot::DisableGrowth(shared_ptr<PointOctree> target)
+{
+	for (auto it = _growingBranches.begin(); it != _growingBranches.end();)
+	{
+		shared_ptr<FrostBranch> branch = *it;
+
+		BoundingSphere checkBounds({ branch->GetBranchEndPos(), Frost::MIN_POINT_DIST });
+
+		if (target->IntersectsWithPoints(checkBounds))
+		{
+			it = _growingBranches.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}
+
+vector<Vector3> FrostRoot::GetLatestEndPoints()
+{
+	vector<Vector3> latestEndPoints;
+
+	for (auto& branch : _growingBranches)
+	{
+		latestEndPoints.push_back(branch->GetBranchEndPos());
+	}
+
+	return latestEndPoints;
 }

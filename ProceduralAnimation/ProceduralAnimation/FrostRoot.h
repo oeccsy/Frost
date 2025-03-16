@@ -1,32 +1,35 @@
 #pragma once
 
-class FrostMainBranch;
+class FrostBranch;
 class Frost;
+
+class MeshCollider;
+class PointOctree;
 
 class FrostRoot
 {
 public:
-	FrostRoot(Frost& parent, Vertex& basePoint);
+	FrostRoot(Vector3 basePoint, Vector3 normal);
 	~FrostRoot();
 
 public:	
-	bool IsForked() { return _isForked; }
-	void Fork();
+	void ForkRoot();
 
 public:
-	Frost& GetParent() { return _parent; }
-	vector<shared_ptr<FrostMainBranch>>& GetBranches() { return _branches; }
-	unordered_set<shared_ptr<FrostMainBranch>>& GetGrowingBranches() { return _growingBranches; }
+	void GrowBranches(shared_ptr<MeshCollider> target);
+	void ForkMainBranches(shared_ptr<MeshCollider> target);
+	void DisableGrowth(shared_ptr<PointOctree> target);
+	vector<Vector3> GetLatestEndPoints();
+
+public:
+	vector<shared_ptr<FrostBranch>>& GetBranches() { return _branches; }
+	unordered_set<shared_ptr<FrostBranch>>& GetGrowingBranches() { return _growingBranches; }
 
 private:
-	static const int MAX_BRANCH_COUNT = 6;
+	Vector3 _basePoint;
+	Vector3 _normal;
 
-	Frost& _parent;
-
-	Vertex& _basePoint;
-
-	vector<shared_ptr<FrostMainBranch>> _branches;
-	unordered_set<shared_ptr<FrostMainBranch>> _growingBranches;
-
-	bool _isForked;
+	vector<shared_ptr<FrostBranch>> _branches;
+	unordered_set<shared_ptr<FrostBranch>> _growingBranches;
+	unordered_set<shared_ptr<FrostBranch>> _growingMainBranches;
 };

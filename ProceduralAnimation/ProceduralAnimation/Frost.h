@@ -5,8 +5,9 @@ class PointCloud;
 class FrostVectorField;
 
 class FrostRoot;
-class FrostMainBranch;
+class FrostBranch;
 
+class MeshCollider;
 class PointOctree;
 
 class Frost : public Object
@@ -22,14 +23,19 @@ public:
 public:
 	void StartFrostAnim();
 	shared_ptr<Sphere> GetSphere() { return _sphere; }
+	shared_ptr<PointOctree> GetPointsContainer() { return _pointsContainer; }
 
 protected:
 	void ForkRandomRoots();
 	void Grow();
 
-private:
+public:
+	static const float MAIN_BRANCH_GROW_SPEED;
+	static const float SUB_BRANCH_GROW_SPEED;
 	static const float MIN_POINT_DIST;
+	static const int MAX_BRANCH_COUNT = 6;
 
+private:
 	shared_ptr<Sphere> _sphere;
 	shared_ptr<PointCloud> _basePoints;
 	shared_ptr<PointCloud> _refPoints;
@@ -38,5 +44,5 @@ private:
 	unordered_set<shared_ptr<FrostRoot>> _unforkedFrostRoots;
 	unordered_set<shared_ptr<FrostRoot>> _forkedFrostRoots;
 
-	unique_ptr<PointOctree> _branchPoints;
+	shared_ptr<PointOctree> _pointsContainer;
 };

@@ -45,7 +45,6 @@ bool MeshCollider::Intersects(shared_ptr<Collider>& other)
 
 bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
 {
-	if (!_mesh.lock()) _mesh = GetOwner()->GetMesh(); // TODO Init()
 	if (_mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
 
 	vector<Vertex>& vertices = _mesh.lock()->GetVertices();
@@ -66,7 +65,6 @@ bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
 
 Vector3 MeshCollider::Snap(Vector3 position)
 {
-	if (!_mesh.lock()) _mesh = GetOwner()->GetMesh(); // TODO Init()
 	if (_mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) throw;
 
 	vector<Vertex>& vertices = _mesh.lock()->GetVertices();

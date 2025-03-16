@@ -21,5 +21,5 @@ private:
 	vector<Vector3> _points;
 
 	BoundingBox _bounds;
-	unique_ptr<PointOctree> _children[8] = { nullptr };
+	shared_ptr<PointOctree> _children[8] = { nullptr };
 };

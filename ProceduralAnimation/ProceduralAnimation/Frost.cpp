@@ -8,10 +8,15 @@
 #include "FrostMainBranch.h"
 #include "Mesh.h"
 #include "PointOctree.h"
+#include "Component.h"
+#include "Collider.h"
+#include "MeshCollider.h"
 #include <random>
 #include "Frost.h"
 
-const float Frost::MIN_POINT_DIST = 0.5f;
+const float Frost::MAIN_BRANCH_GROW_SPEED = 1.0f;
+const float Frost::SUB_BRANCH_GROW_SPEED = 0.5;
+const float Frost::MIN_POINT_DIST = 0.3f;
 
 Frost::Frost()
 {
@@ -22,10 +27,10 @@ Frost::Frost()
 
 	for (auto& basePoint : _basePoints->GetPoints())
 	{
-		_unforkedFrostRoots.insert(make_shared<FrostRoot>(*this, basePoint));
+		_unforkedFrostRoots.insert(make_shared<FrostRoot>(basePoint.position, basePoint.normal));
 	}
 
-	_branchPoints = make_unique<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) })); // TODO : 위치 이동 반영
+	_pointsContainer = make_shared<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) })); // TODO : 위치 이동 반영
 }
 
 Frost::~Frost() {}
@@ -72,7 +77,7 @@ void Frost::ForkRandomRoots()
 	
 	for (auto root : _unforkedFrostRoots)
 	{
-		root->Fork();
+		root->ForkRoot();
 		_unforkedFrostRoots.erase(root);
 		_forkedFrostRoots.insert(root);
 
@@ -82,29 +87,19 @@ void Frost::ForkRandomRoots()
 
 void Frost::Grow()
 {
-	for (auto& frostRoot : _forkedFrostRoots)
+	auto target = _sphere->GetComponent<MeshCollider>();
+
+	for (auto root : _forkedFrostRoots)
 	{
-		auto& branches = frostRoot->GetGrowingBranches();
+		root->GrowBranches(target);
+		root->ForkMainBranches(target);
+
+		vector<Vector3> endPoints = root->GetLatestEndPoints();
+		root->DisableGrowth(_pointsContainer);
 		
-
-		for (auto it = branches.begin(); it != branches.end();)
+		for (Vector3& point : endPoints)
 		{
-			auto branch = *it;
-			branch->Grow();
-
-			BoundingSphere checkBounds({ branch->GetBranchEndPos(), MIN_POINT_DIST });
-
-			if (_branchPoints->IntersectsWithPoints(checkBounds))
-			{
-				//frostRoot->StopGrowing(branch);
-				it = branches.erase(it);
-			}
-			else
-			{
-				it++;
-			}
-
-			_branchPoints->Insert(branch->GetBranchEndPos());
+			_pointsContainer->Insert(point);
 		}
 	}
 }

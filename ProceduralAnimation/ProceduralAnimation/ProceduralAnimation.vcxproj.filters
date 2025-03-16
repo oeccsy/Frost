@@ -46,6 +46,9 @@
     <Filter Include="소스 파일\99. Header\Utils">
       <UniqueIdentifier>{9198ccaa-442d-4d15-9b8b-a0244d4ed0f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\00. Engine\SpatialPartitioning">
+      <UniqueIdentifier>{6c287edb-b784-4b44-8226-2857d4d353c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -168,6 +171,9 @@
     <ClInclude Include="MeshCollider.h">
       <Filter>소스 파일\00. Engine\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="PointOctree.h">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -271,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="MeshCollider.cpp">
       <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="PointOctree.cpp">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
