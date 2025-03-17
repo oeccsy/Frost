@@ -141,7 +141,7 @@
     <ClInclude Include="FrostVectorField.h">
       <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
-    <ClInclude Include="FrostMainBranch.h">
+    <ClInclude Include="FrostBranch.h">
       <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
     <ClInclude Include="FrostRoot.h">
@@ -248,7 +248,7 @@
     <ClCompile Include="FrostVectorField.cpp">
       <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
-    <ClCompile Include="FrostMainBranch.cpp">
+    <ClCompile Include="FrostBranch.cpp">
       <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
     <ClCompile Include="FrostRoot.cpp">

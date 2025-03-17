@@ -154,7 +154,7 @@
     <ClInclude Include="DynamicMesh.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Frost.h" />
-    <ClInclude Include="FrostMainBranch.h" />
+    <ClInclude Include="FrostBranch.h" />
     <ClInclude Include="FrostRoot.h" />
     <ClInclude Include="FrostScene.h" />
     <ClInclude Include="FrostVectorField.h" />
@@ -196,7 +196,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DynamicMesh.cpp" />
     <ClCompile Include="Frost.cpp" />
-    <ClCompile Include="FrostMainBranch.cpp" />
+    <ClCompile Include="FrostBranch.cpp" />
     <ClCompile Include="FrostRoot.cpp" />
     <ClCompile Include="FrostScene.cpp" />
     <ClCompile Include="FrostVectorField.cpp" />

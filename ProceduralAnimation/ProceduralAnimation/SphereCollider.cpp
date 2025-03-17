@@ -6,13 +6,9 @@
 #include "SphereCollider.h"
 
 
-SphereCollider::SphereCollider() : Collider(ColliderType::Sphere)
-{
-}
+SphereCollider::SphereCollider() : Collider(ColliderType::Sphere) {}
 
-SphereCollider::~SphereCollider()
-{
-}
+SphereCollider::~SphereCollider() {}
 
 void SphereCollider::Update()
 {

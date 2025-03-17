@@ -16,7 +16,7 @@ void DynamicMesh::CreateBuffers()
 		ZeroMemory(&desc, sizeof(desc));
 		desc.Usage = D3D11_USAGE_DYNAMIC;
 		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		desc.ByteWidth = (uint32)(sizeof(Vertex) * 300); // TODO : 크기 초과 대응
+		desc.ByteWidth = (uint32)(sizeof(Vertex) * 100); // TODO : 크기 초과 대응
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 		D3D11_SUBRESOURCE_DATA data;
@@ -32,7 +32,7 @@ void DynamicMesh::CreateBuffers()
 		ZeroMemory(&desc, sizeof(desc));
 		desc.Usage = D3D11_USAGE_DYNAMIC;
 		desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		desc.ByteWidth = (uint32)(sizeof(uint32) * 300);
+		desc.ByteWidth = (uint32)(sizeof(uint32) * 100);
 		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
 		D3D11_SUBRESOURCE_DATA data;

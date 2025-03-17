@@ -14,9 +14,9 @@
 #include <random>
 #include "Frost.h"
 
-const float Frost::MAIN_BRANCH_GROW_SPEED = 1.0f;
-const float Frost::SUB_BRANCH_GROW_SPEED = 0.2f;
-const float Frost::MIN_POINT_DIST = 0.1f;
+const float Frost::MAIN_BRANCH_GROW_SPEED = 0.5f;
+const float Frost::SUB_BRANCH_GROW_SPEED = 0.1f;
+const float Frost::MIN_POINT_DIST = 0.f;
 
 Frost::Frost()
 {
