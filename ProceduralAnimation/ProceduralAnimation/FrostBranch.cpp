@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Object.h"
-#include "FrostMainBranch.h"
+#include "FrostBranch.h"
 #include "Mesh.h"
 #include "Material.h"
 #include "DynamicMesh.h"
@@ -16,13 +16,21 @@ FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shar
 {
 	_parent = parent;
 
+	_guideCircle.center = basePoint;
+	_guideCircle.radius = (_parent == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED : Frost::SUB_BRANCH_GROW_SPEED;
+
+	_guideCircle.xAxis = normal;
+	_guideCircle.yAxis = dir;
+	_guideCircle.normal = _guideCircle.xAxis.Cross(_guideCircle.yAxis);
+
+	_guideCircle.xAxis.Normalize();
+	_guideCircle.yAxis.Normalize();
+	_guideCircle.normal.Normalize();
+
 	_mesh = make_shared<DynamicMesh>();
 
-	Vector3 endPos = basePoint + dir * Frost::MAIN_BRANCH_GROW_SPEED;
 	_branch.push_back({ basePoint, normal, Vector2(0, 0), Color(1, 1, 1, 1) });
-	_branch.push_back({ endPos, normal, Vector2(0, 0), Color(1, 1, 1, 1) });
-
-	vector<uint32> indices = { 0, 1 };
+	vector<uint32> indices = { 0 };
 
 	_mesh->SetVertices(_branch);
 	_mesh->SetIndices(indices);
@@ -35,35 +43,17 @@ FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shar
 
 	_mesh->CreateInputLayout(_material);
 
-	_guideCircle.center = endPos;
-	_guideCircle.radius = Frost::MAIN_BRANCH_GROW_SPEED;
-
-	_guideCircle.xAxis = normal;
-	_guideCircle.yAxis = dir;
-	_guideCircle.xAxis.Normalize();
-	_guideCircle.yAxis.Normalize();
-	
-	_guideCircle.normal = _guideCircle.xAxis.Cross(_guideCircle.yAxis);
+	string endPointString = to_string(_branch.back().position.x) + " " + to_string(_branch.back().position.y) + " " + to_string(_branch.back().position.z);
+	OutputDebugStringA("Create Branch \n");
+	OutputDebugStringA(("Endpoint : " + endPointString + "\n").c_str());
 }
 
 FrostBranch::~FrostBranch() {}
 
-void FrostBranch::Grow(shared_ptr<MeshCollider> target)
+bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 {
-	int size = _branch.size();
-	Vector3 prevPos = _branch[size - 2].position;
-	Vector3 curPos = _branch[size - 1].position;
-	
-	Vector3 dir = curPos - prevPos;
-	Vector3 normal = dir.Cross(_guideCircle.normal);
-	
-	_guideCircle.center = curPos;
-	_guideCircle.xAxis = normal;
-	_guideCircle.yAxis = dir;
-	_guideCircle.radius = (_parent == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED : Frost::SUB_BRANCH_GROW_SPEED;
-
 	float theta;
-	
+
 	if (target->Intersects(_guideCircle, theta))
 	{
 		Vector3 hitPoint = _guideCircle.center + _guideCircle.radius * (cos(theta) * _guideCircle.xAxis + sin(theta) * _guideCircle.yAxis);
@@ -74,17 +64,33 @@ void FrostBranch::Grow(shared_ptr<MeshCollider> target)
 		_mesh->GetVertices().push_back(newVertex);
 		_mesh->GetIndices().push_back(_branch.size() - 1);
 		_mesh->UpdateBuffers();
+
+		Vector3 newDir = (_branch.end() - 1)->position - (_branch.end() - 2)->position;
+		Vector3 newNormal = newDir.Cross(_guideCircle.normal);
+
+		_guideCircle.center = hitPoint;
+		_guideCircle.xAxis = newNormal;
+		_guideCircle.yAxis = newDir;
+
+		string endPointString = to_string(_branch.back().position.x) + " " + to_string(_branch.back().position.y) + " " + to_string(_branch.back().position.z);
+		OutputDebugStringA("Hit Success \n");
+		OutputDebugStringA(("Endpoint : " + endPointString + "\n").c_str());
+
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
-void FrostBranch::Fork()
+bool FrostBranch::Fork(shared_ptr<MeshCollider> target)
 {
-	int size = _branch.size();
-	Vector3 prevPos = _branch[size - 2].position;
-	Vector3 curPos = _branch[size - 1].position;
+	if (_branch.size() < 2) return false;
 
-	Vector3 dir = curPos - prevPos;
-	Vector3 normal = dir.Cross(_guideCircle.normal);
+	Vector3 prevPos = (_branch.end() - 2)->position;
+	Vector3 dir = _guideCircle.yAxis;
+	Vector3 normal = _guideCircle.xAxis;
 
 	constexpr float leftAngle = ::XMConvertToRadians(-60.0f);
 	constexpr float rightAngle = ::XMConvertToRadians(60.0f);
@@ -97,7 +103,12 @@ void FrostBranch::Fork()
 
 	shared_ptr<FrostBranch> leftBranch = make_shared<FrostBranch>(prevPos, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
 	shared_ptr<FrostBranch> rightBranch = make_shared<FrostBranch>(prevPos, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
-
+	
 	_children.push_back(leftBranch);
 	_children.push_back(rightBranch);
+
+	leftBranch->Grow(target);
+	rightBranch->Grow(target);
+
+	return true;
 }

@@ -10,8 +10,8 @@ public:
 	virtual ~FrostBranch() override;
 
 public:
-	void Grow(shared_ptr<MeshCollider> target);
-	void Fork();
+	bool Grow(shared_ptr<MeshCollider> target);
+	bool Fork(shared_ptr<MeshCollider> target);
 
 public:
 	shared_ptr<FrostBranch>& GetParent() { return _parent; }
