@@ -75,11 +75,11 @@ void FrostRoot::DisableGrowth(shared_ptr<PointOctree> target)
 	{
 		shared_ptr<FrostBranch> branch = *it;
 
-		BoundingSphere checkBounds({ branch->GetBranchEndPos(), Frost::MIN_POINT_DIST });
+		BoundingSphere checkBounds({ branch->GetBranchEndPos(), (branch->GetParent() == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED / 2 : Frost::SUB_BRANCH_GROW_SPEED / 2 });
 
 		if (target->IntersectsWithPoints(checkBounds))
 		{
-			OutputDebugStringA("Remove Branch");
+			OutputDebugStringA("Remove Branch\n");
 			if ((*it)->GetParent() == nullptr) _growingMainBranches.erase(*it);
 			it = _growingBranches.erase(it);
 		}
