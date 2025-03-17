@@ -5,7 +5,7 @@
 #include "VectorField.h"
 #include "FrostVectorField.h"
 #include "FrostRoot.h"
-#include "FrostMainBranch.h"
+#include "FrostBranch.h"
 #include "Mesh.h"
 #include "PointOctree.h"
 #include "Component.h"
@@ -15,8 +15,8 @@
 #include "Frost.h"
 
 const float Frost::MAIN_BRANCH_GROW_SPEED = 1.0f;
-const float Frost::SUB_BRANCH_GROW_SPEED = 0.5;
-const float Frost::MIN_POINT_DIST = 0.3f;
+const float Frost::SUB_BRANCH_GROW_SPEED = 0.2f;
+const float Frost::MIN_POINT_DIST = 0.1f;
 
 Frost::Frost()
 {
@@ -77,12 +77,17 @@ void Frost::ForkRandomRoots()
 	
 	for (auto root : _unforkedFrostRoots)
 	{
-		root->ForkRoot();
+		root->ForkRoot(_sphere->GetComponent<MeshCollider>());
+		
+		_pointsContainer->Insert(root->GetBasePoint());
+
 		_unforkedFrostRoots.erase(root);
 		_forkedFrostRoots.insert(root);
 
 		break;
 	}
+
+
 }
 
 void Frost::Grow()

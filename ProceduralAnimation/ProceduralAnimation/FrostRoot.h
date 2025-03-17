@@ -13,7 +13,7 @@ public:
 	~FrostRoot();
 
 public:	
-	void ForkRoot();
+	void ForkRoot(shared_ptr<MeshCollider> target);
 
 public:
 	void GrowBranches(shared_ptr<MeshCollider> target);
@@ -22,6 +22,7 @@ public:
 	vector<Vector3> GetLatestEndPoints();
 
 public:
+	Vector3& GetBasePoint() { return _basePoint; }
 	vector<shared_ptr<FrostBranch>>& GetBranches() { return _branches; }
 	unordered_set<shared_ptr<FrostBranch>>& GetGrowingBranches() { return _growingBranches; }
 

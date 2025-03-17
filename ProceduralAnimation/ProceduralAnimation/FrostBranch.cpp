@@ -45,7 +45,7 @@ FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shar
 
 	string endPointString = to_string(_branch.back().position.x) + " " + to_string(_branch.back().position.y) + " " + to_string(_branch.back().position.z);
 	OutputDebugStringA("Create Branch \n");
-	OutputDebugStringA(("Endpoint : " + endPointString + "\n").c_str());
+	OutputDebugStringA(("BasePoint : " + endPointString + "\n\n").c_str());
 }
 
 FrostBranch::~FrostBranch() {}
@@ -57,6 +57,11 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 	if (target->Intersects(_guideCircle, theta))
 	{
 		Vector3 hitPoint = _guideCircle.center + _guideCircle.radius * (cos(theta) * _guideCircle.xAxis + sin(theta) * _guideCircle.yAxis);
+		
+		float d = Vector3::Distance(hitPoint, _guideCircle.center);
+		OutputDebugStringA("Hit Success \n");
+		string hitPointString = to_string(hitPoint.x) + " " + to_string(hitPoint.y) + " " + to_string(hitPoint.z);
+		OutputDebugStringA(("[Endpoint] : " + hitPointString + ", [hitPoint Dist] : " + to_string(d) + ", [circle r] : " + to_string(_guideCircle.radius) + "\n\n").c_str());
 		
 		Vertex newVertex({ hitPoint, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
 
@@ -72,9 +77,6 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 		_guideCircle.xAxis = newNormal;
 		_guideCircle.yAxis = newDir;
 
-		string endPointString = to_string(_branch.back().position.x) + " " + to_string(_branch.back().position.y) + " " + to_string(_branch.back().position.z);
-		OutputDebugStringA("Hit Success \n");
-		OutputDebugStringA(("Endpoint : " + endPointString + "\n").c_str());
 		_guideCircle.xAxis.Normalize();
 		_guideCircle.yAxis.Normalize();
 
