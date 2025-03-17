@@ -75,6 +75,8 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 		string endPointString = to_string(_branch.back().position.x) + " " + to_string(_branch.back().position.y) + " " + to_string(_branch.back().position.z);
 		OutputDebugStringA("Hit Success \n");
 		OutputDebugStringA(("Endpoint : " + endPointString + "\n").c_str());
+		_guideCircle.xAxis.Normalize();
+		_guideCircle.yAxis.Normalize();
 
 		return true;
 	}
