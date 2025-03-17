@@ -80,6 +80,7 @@ void FrostRoot::DisableGrowth(shared_ptr<PointOctree> target)
 		if (target->IntersectsWithPoints(checkBounds))
 		{
 			OutputDebugStringA("Remove Branch");
+			if ((*it)->GetParent() == nullptr) _growingMainBranches.erase(*it);
 			it = _growingBranches.erase(it);
 		}
 		else
