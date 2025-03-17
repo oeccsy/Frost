@@ -23,15 +23,17 @@ public:
 public:
 	void StartFrostAnim();
 	shared_ptr<Sphere> GetSphere() { return _sphere; }
-	shared_ptr<PointOctree> GetPointsContainer() { return _pointsContainer; }
+	shared_ptr<PointOctree> GetPointsContainer() { return _frostPointsOctree; }
 
 protected:
 	void ForkRandomRoots();
+	void ForkCloseRoots();
 	void Grow();
 
 public:
 	static const float MAIN_BRANCH_GROW_SPEED;
 	static const float SUB_BRANCH_GROW_SPEED;
+	static const float ROOT_FORK_DIST;
 	static const float MIN_POINT_DIST;
 	static const int MAX_BRANCH_COUNT = 6;
 
@@ -44,5 +46,6 @@ private:
 	unordered_set<shared_ptr<FrostRoot>> _unforkedFrostRoots;
 	unordered_set<shared_ptr<FrostRoot>> _forkedFrostRoots;
 
-	shared_ptr<PointOctree> _pointsContainer;
+	shared_ptr<PointOctree> _unforkedRootsOctree;
+	shared_ptr<PointOctree> _frostPointsOctree;
 };
