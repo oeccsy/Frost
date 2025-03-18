@@ -21,14 +21,13 @@ public:
 	void Render(shared_ptr<Renderer> renderer) override;
 
 public:
-	void StartFrostAnim();
 	shared_ptr<Sphere> GetSphere() { return _sphere; }
 	shared_ptr<PointOctree> GetPointsContainer() { return _frostPointsOctree; }
 
 protected:
-	void ForkRandomRoots();
-	void ForkCloseRoots();
 	void Grow();
+	void ForkCloseRoots();
+	void ForkRandomRoots();
 
 public:
 	static const float MAIN_BRANCH_GROW_SPEED;

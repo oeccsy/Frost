@@ -12,13 +12,12 @@ public:
 	FrostRoot(Vector3 basePoint, Vector3 normal);
 	~FrostRoot();
 
-public:	
-	void ForkRoot(shared_ptr<MeshCollider> target);
+public:
+	void Grow(shared_ptr<MeshCollider> target);
+	void Fork(shared_ptr<MeshCollider> target);
 
 public:
-	void GrowBranches(shared_ptr<MeshCollider> target);
-	void ForkMainBranches(shared_ptr<MeshCollider> target);
-	void DisableGrowth(shared_ptr<PointOctree> target);
+	void StopIntersectingBranches(shared_ptr<PointOctree> frostPoints);
 	vector<Vector3> GetLatestEndPoints();
 
 public:

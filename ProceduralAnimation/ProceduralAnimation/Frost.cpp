@@ -22,8 +22,8 @@ const float Frost::MIN_POINT_DIST = 0.f;
 Frost::Frost()
 {
 	_sphere = make_shared<Sphere>();
-	_basePoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 30);
-	_refPoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 30);
+	_basePoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 50);
+	_refPoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 50);
 	_vectorField = make_shared<FrostVectorField>(_basePoints);
 
 	_unforkedRootsOctree = _frostPointsOctree = make_shared<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
@@ -61,38 +61,22 @@ void Frost::Render(shared_ptr<Renderer> renderer)
 	}
 }
 
-void Frost::StartFrostAnim()
+void Frost::Grow()
 {
-	ForkRandomRoots();
-}
+	auto target = _sphere->GetComponent<MeshCollider>();
 
-void Frost::ForkRandomRoots()
-{
-	/*float threshold = 0.05f;
-
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_real_distribution<float> dis(0.0f, 1.0f);
-	
-	for (FrostRoot& root : _frostRoots)
+	for (auto root : _forkedFrostRoots)
 	{
-		if (root.IsForked()) continue;
-		if (dis(gen) < threshold) root.Fork();
-	}*/
-	
-	for (auto root : _unforkedFrostRoots)
-	{
-		root->ForkRoot(_sphere->GetComponent<MeshCollider>());
-		
-		_frostPointsOctree->Insert(root->GetBasePoint());
+		root->Grow(target);
 
-		_unforkedFrostRoots.erase(root);
-		_forkedFrostRoots.insert(root);
+		vector<Vector3> endPoints = root->GetLatestEndPoints();
+		root->StopIntersectingBranches(_frostPointsOctree);
 
-		break;
+		for (Vector3& point : endPoints)
+		{
+			_frostPointsOctree->Insert(point);
+		}
 	}
-
-
 }
 
 void Frost::ForkCloseRoots()
@@ -105,12 +89,11 @@ void Frost::ForkCloseRoots()
 
 		if (_frostPointsOctree->IntersectsWithPoints(checkBounds))
 		{
-			root->ForkRoot(_sphere->GetComponent<MeshCollider>());
-
-			_frostPointsOctree->Insert(root->GetBasePoint());
-
+			root->Fork(_sphere->GetComponent<MeshCollider>());
 			it = _unforkedFrostRoots.erase(it);
+
 			_forkedFrostRoots.insert(root);
+			_frostPointsOctree->Insert(root->GetBasePoint());
 		}
 		else
 		{
@@ -119,21 +102,29 @@ void Frost::ForkCloseRoots()
 	}
 }
 
-void Frost::Grow()
+void Frost::ForkRandomRoots()
 {
-	auto target = _sphere->GetComponent<MeshCollider>();
+	float threshold = 0.1f;
 
-	for (auto root : _forkedFrostRoots)
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+	for (auto it = _unforkedFrostRoots.begin(); it != _unforkedFrostRoots.end();)
 	{
-		root->GrowBranches(target);
-		root->ForkMainBranches(target);
+		auto root = *it;
 
-		vector<Vector3> endPoints = root->GetLatestEndPoints();
-		root->DisableGrowth(_frostPointsOctree);
-		
-		for (Vector3& point : endPoints)
+		if (dis(gen) < threshold)
 		{
-			_frostPointsOctree->Insert(point);
+			root->Fork(_sphere->GetComponent<MeshCollider>());
+
+			it = _unforkedFrostRoots.erase(it);
+			_forkedFrostRoots.insert(root);
+			_frostPointsOctree->Insert(root->GetBasePoint());
+		}
+		else
+		{
+			it++;
 		}
 	}
 }

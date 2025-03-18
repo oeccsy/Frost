@@ -17,7 +17,28 @@ FrostRoot::FrostRoot(Vector3 basePoint, Vector3 normal)
 
 FrostRoot::~FrostRoot() {}
 
-void FrostRoot::ForkRoot(shared_ptr<MeshCollider> target)
+void FrostRoot::Grow(shared_ptr<MeshCollider> target)
+{
+	for (auto branch : _growingBranches)
+	{
+		branch->Grow(target);
+	}
+
+	for (auto mainBranch : _growingMainBranches)
+	{
+		if (mainBranch->Fork(target))
+		{
+			vector<shared_ptr<FrostBranch>> subBranches = mainBranch->GetChildren();
+
+			_branches.push_back(*(subBranches.end() - 1));
+			_branches.push_back(*(subBranches.end() - 2));
+			_growingBranches.insert(*(subBranches.end() - 1));
+			_growingBranches.insert(*(subBranches.end() - 2));
+		}
+	}
+}
+
+void FrostRoot::Fork(shared_ptr<MeshCollider> target)
 {
 	Vector3 temp = Vector3(1, 0, 0);
 	Vector3 normal = _normal;
@@ -44,30 +65,7 @@ void FrostRoot::ForkRoot(shared_ptr<MeshCollider> target)
 	}
 }
 
-void FrostRoot::GrowBranches(shared_ptr<MeshCollider> target)
-{
-	for (auto branch : _growingBranches)
-	{
-		branch->Grow(target);
-	}
-}
-
-void FrostRoot::ForkMainBranches(shared_ptr<MeshCollider> target)
-{
-	for (auto mainBranch : _growingMainBranches)
-	{
-		if (mainBranch->Fork(target))
-		{
-			vector<shared_ptr<FrostBranch>> subBranches = mainBranch->GetChildren();
-			_branches.push_back(*(subBranches.end() - 1));
-			_branches.push_back(*(subBranches.end() - 2));
-			_growingBranches.insert(*(subBranches.end() - 1));
-			_growingBranches.insert(*(subBranches.end() - 2));
-		}
-	}
-}
-
-void FrostRoot::DisableGrowth(shared_ptr<PointOctree> target)
+void FrostRoot::StopIntersectingBranches(shared_ptr<PointOctree> target)
 {
 	for (auto it = _growingBranches.begin(); it != _growingBranches.end();)
 	{
@@ -78,7 +76,6 @@ void FrostRoot::DisableGrowth(shared_ptr<PointOctree> target)
 
 		if (target->IntersectsWithPoints(checkBounds))
 		{
-			OutputDebugStringA("Remove Branch\n");
 			if ((*it)->GetParent() == nullptr) _growingMainBranches.erase(*it);
 			it = _growingBranches.erase(it);
 		}
