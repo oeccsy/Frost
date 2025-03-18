@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Object.h"
-#include "Sphere.h"
+#include "Component.h"
 #include "PointCloud.h"
 #include "VectorField.h"
 #include "FrostVectorField.h"
@@ -8,7 +8,6 @@
 #include "FrostBranch.h"
 #include "Mesh.h"
 #include "PointOctree.h"
-#include "Component.h"
 #include "Collider.h"
 #include "MeshCollider.h"
 #include <random>
@@ -19,14 +18,16 @@ const float Frost::SUB_BRANCH_GROW_SPEED = 0.04f;
 const float Frost::ROOT_FORK_DIST = 0.5f;
 const float Frost::MIN_POINT_DIST = 0.f;
 
-Frost::Frost()
-{
-	_sphere = make_shared<Sphere>();
-	_basePoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 50);
-	_refPoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 50);
-	_vectorField = make_shared<FrostVectorField>(_basePoints);
+Frost::Frost() {}
 
-	_unforkedRootsOctree = _frostPointsOctree = make_shared<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
+Frost::~Frost() {}
+
+void Frost::Init()
+{
+	_guideMeshCollider = _owner.lock()->GetComponent<MeshCollider>();
+	_basePoints = make_shared<PointCloud>(_owner.lock()->GetMesh(), PointType::Scatter, 50);
+	
+	_unforkedRootsOctree = make_shared<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
 	_frostPointsOctree = make_shared<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) })); // TODO : 위치 이동 반영
 
 	for (auto& basePoint : _basePoints->GetPoints())
@@ -37,21 +38,14 @@ Frost::Frost()
 	}
 }
 
-Frost::~Frost() {}
-
 void Frost::Update()
 {
-	Object::Update();
 	Grow();
 	ForkCloseRoots();
 }
 
 void Frost::Render(shared_ptr<Renderer> renderer)
 {
-	// renderer->Render(_sphere->GetMesh(), _sphere->GetMaterial(), _sphere->GetTransform());
-	// renderer->Render(_basePoints->GetMesh(), _basePoints->GetMaterial(), _basePoints->GetTransform());
-	// renderer->Render(_refPoints->GetMesh(), _refPoints->GetMaterial(), _refPoints->GetTransform());
-	
 	for (auto frostRoot : _forkedFrostRoots)
 	{
 		for (auto mainBranch : frostRoot->GetBranches())
@@ -63,11 +57,9 @@ void Frost::Render(shared_ptr<Renderer> renderer)
 
 void Frost::Grow()
 {
-	auto target = _sphere->GetComponent<MeshCollider>();
-
 	for (auto root : _forkedFrostRoots)
 	{
-		root->Grow(target);
+		root->Grow(_guideMeshCollider);
 
 		vector<Vector3> endPoints = root->GetLatestEndPoints();
 		root->StopIntersectingBranches(_frostPointsOctree);
@@ -89,7 +81,7 @@ void Frost::ForkCloseRoots()
 
 		if (_frostPointsOctree->IntersectsWithPoints(checkBounds))
 		{
-			root->Fork(_sphere->GetComponent<MeshCollider>());
+			root->Fork(_guideMeshCollider);
 			it = _unforkedFrostRoots.erase(it);
 
 			_forkedFrostRoots.insert(root);
@@ -116,7 +108,7 @@ void Frost::ForkRandomRoots()
 
 		if (dis(gen) < threshold)
 		{
-			root->Fork(_sphere->GetComponent<MeshCollider>());
+			root->Fork(_guideMeshCollider);
 
 			it = _unforkedFrostRoots.erase(it);
 			_forkedFrostRoots.insert(root);

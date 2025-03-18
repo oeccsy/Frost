@@ -13,8 +13,6 @@ Sphere::Sphere()
 
 Sphere::~Sphere() { }
 
-void Sphere::Update() {}
-
 void Sphere::CreateGeometry()
 {
 	float radius = 3.0f;

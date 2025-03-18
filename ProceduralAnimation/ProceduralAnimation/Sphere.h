@@ -6,9 +6,6 @@ public:
 	Sphere();
 	~Sphere() override;
 
-public:
-	void Update() override;
-
 protected:
 	void CreateGeometry();
 	void CreateShader();

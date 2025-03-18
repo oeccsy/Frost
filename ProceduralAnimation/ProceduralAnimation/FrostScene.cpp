@@ -21,12 +21,13 @@ void FrostScene::Init()
 	Camera::SetMainCamera(_camera);
 	Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, -10));
 
-	shared_ptr<Frost> frost = make_shared<Frost>();
+	shared_ptr<Sphere> sphere = make_shared<Sphere>();
 	{
-		frost->GetSphere()->AddComponent(make_shared<MeshCollider>());
+		sphere->AddComponent(make_shared<MeshCollider>());
+		sphere->AddComponent(make_shared<Frost>());
 	}
 
-	_objects.push_back(frost);
+	_objects.push_back(sphere);
 
-	frost->ForkRandomRoots();
+	sphere->GetComponent<Frost>()->ForkRandomRoots();
 }

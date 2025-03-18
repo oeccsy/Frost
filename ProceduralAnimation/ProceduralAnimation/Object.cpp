@@ -21,6 +21,11 @@ void Object::Update()
 void Object::Render(shared_ptr<Renderer> renderer)
 {
 	renderer->Render(_mesh, _material, _transform);
+
+	for (auto comp : GetComponents())
+	{
+		comp->Render(renderer);
+	}
 }
 
 void Object::AddComponent(shared_ptr<Component> component)

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Object.h"
+#include "Component.h"
 #include "Frost.h"
 #include "FrostBranch.h"
 #include "Mesh.h"

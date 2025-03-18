@@ -13,6 +13,8 @@ public:
 	virtual void Update() {}
 	virtual void LateUpdate() {}
 
+	virtual void Render(shared_ptr<Renderer> renderer) {}
+
 public:
 	shared_ptr<Object> GetOwner() { return _owner.lock(); };
 

@@ -10,18 +10,16 @@ class FrostBranch;
 class MeshCollider;
 class PointOctree;
 
-class Frost : public Object
+class Frost : public Component
 {
 public:
 	Frost();
 	virtual ~Frost() override;
 
 public:
+	void Init() override;
 	void Update() override;
 	void Render(shared_ptr<Renderer> renderer) override;
-
-public:
-	shared_ptr<Sphere> GetSphere() { return _sphere; }
 
 public:
 	void ForkRandomRoots();
@@ -38,14 +36,12 @@ public:
 	static const int MAX_BRANCH_COUNT = 6;
 
 private:
-	shared_ptr<Sphere> _sphere;
+	shared_ptr<MeshCollider> _guideMeshCollider;
 	shared_ptr<PointCloud> _basePoints;
-	shared_ptr<PointCloud> _refPoints;
-	shared_ptr<FrostVectorField> _vectorField;
-
-	unordered_set<shared_ptr<FrostRoot>> _unforkedFrostRoots;
-	unordered_set<shared_ptr<FrostRoot>> _forkedFrostRoots;
 
 	shared_ptr<PointOctree> _unforkedRootsOctree;
 	shared_ptr<PointOctree> _frostPointsOctree;
+
+	unordered_set<shared_ptr<FrostRoot>> _unforkedFrostRoots;
+	unordered_set<shared_ptr<FrostRoot>> _forkedFrostRoots;
 };

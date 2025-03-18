@@ -6,6 +6,7 @@
 #include "MeshCollider.h"
 #include "PointOctree.h"
 #include "FrostRoot.h"
+#include "Component.h"
 #include "Frost.h"
 #include <random>
 
