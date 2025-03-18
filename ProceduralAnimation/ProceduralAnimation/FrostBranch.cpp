@@ -78,7 +78,7 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 
 bool FrostBranch::Fork(shared_ptr<MeshCollider> target)
 {
-	if (_branch.size() < 2) return false;
+	if (_branch.size() < 3) return false;
 
 	Vector3 prevPos = (_branch.end() - 2)->position;
 	Vector3 dir = _guideCircle.yAxis;
