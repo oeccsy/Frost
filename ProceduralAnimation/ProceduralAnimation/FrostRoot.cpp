@@ -41,14 +41,17 @@ void FrostRoot::Grow(shared_ptr<MeshCollider> target)
 
 void FrostRoot::Fork(shared_ptr<MeshCollider> target)
 {
-	Vector3 temp = Vector3(1, 0, 0);
-	Vector3 normal = _normal;
-	Vector3 biNormal = normal.Cross(temp);
-	biNormal.Normalize();
-
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<int> dis(1, 6);
+	uniform_real_distribution<float> dis_float(-1.f, 1.f);
+
+	Vector3 random = Vector3(dis_float(gen), dis_float(gen), dis_float(gen));
+	if (random == Vector3::Zero) random = Vector3::Forward;
+
+	Vector3 normal = _normal;
+	Vector3 biNormal = normal.Cross(random);
+	biNormal.Normalize();
 
 	int branchCount = dis(gen);
 
