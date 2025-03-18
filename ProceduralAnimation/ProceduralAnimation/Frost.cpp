@@ -14,16 +14,16 @@
 #include <random>
 #include "Frost.h"
 
-const float Frost::MAIN_BRANCH_GROW_SPEED = 0.5f;
-const float Frost::SUB_BRANCH_GROW_SPEED = 0.1f;
-const float Frost::ROOT_FORK_DIST = 1.f;
+const float Frost::MAIN_BRANCH_GROW_SPEED = 0.2f;
+const float Frost::SUB_BRANCH_GROW_SPEED = 0.04f;
+const float Frost::ROOT_FORK_DIST = 0.5f;
 const float Frost::MIN_POINT_DIST = 0.f;
 
 Frost::Frost()
 {
 	_sphere = make_shared<Sphere>();
-	_basePoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::MeshVertices, 10);
-	_refPoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 10);
+	_basePoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 30);
+	_refPoints = make_shared<PointCloud>(_sphere->GetMesh(), PointType::Scatter, 30);
 	_vectorField = make_shared<FrostVectorField>(_basePoints);
 
 	_unforkedRootsOctree = _frostPointsOctree = make_shared<PointOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
@@ -48,8 +48,8 @@ void Frost::Update()
 
 void Frost::Render(shared_ptr<Renderer> renderer)
 {
-	renderer->Render(_sphere->GetMesh(), _sphere->GetMaterial(), _sphere->GetTransform());
-	renderer->Render(_basePoints->GetMesh(), _basePoints->GetMaterial(), _basePoints->GetTransform());
+	// renderer->Render(_sphere->GetMesh(), _sphere->GetMaterial(), _sphere->GetTransform());
+	// renderer->Render(_basePoints->GetMesh(), _basePoints->GetMaterial(), _basePoints->GetTransform());
 	// renderer->Render(_refPoints->GetMesh(), _refPoints->GetMaterial(), _refPoints->GetTransform());
 	
 	for (auto frostRoot : _forkedFrostRoots)
