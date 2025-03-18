@@ -1,16 +1,13 @@
 #include "pch.h"
 #include "Object.h"
+#include "Frost.h"
 #include "FrostBranch.h"
 #include "Mesh.h"
-#include "Material.h"
 #include "DynamicMesh.h"
-#include "FrostRoot.h"
-#include "Frost.h"
+#include "Material.h"
 #include "Component.h"
 #include "Collider.h"
 #include "MeshCollider.h"
-#include "Sphere.h"
-#include <string>
 
 FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shared_ptr<FrostBranch> parent)
 {
@@ -42,10 +39,6 @@ FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shar
 	_material->CreatePS(L"Cube.hlsl", "PS", "ps_5_0");
 
 	_mesh->CreateInputLayout(_material);
-
-	string endPointString = to_string(_branch.back().position.x) + " " + to_string(_branch.back().position.y) + " " + to_string(_branch.back().position.z);
-	OutputDebugStringA("Create Branch \n");
-	OutputDebugStringA(("BasePoint : " + endPointString + "\n\n").c_str());
 }
 
 FrostBranch::~FrostBranch() {}
@@ -57,11 +50,6 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 	if (target->Intersects(_guideCircle, theta))
 	{
 		Vector3 hitPoint = _guideCircle.center + _guideCircle.radius * (cos(theta) * _guideCircle.xAxis + sin(theta) * _guideCircle.yAxis);
-		
-		float d = Vector3::Distance(hitPoint, _guideCircle.center);
-		OutputDebugStringA("Hit Success \n");
-		string hitPointString = to_string(hitPoint.x) + " " + to_string(hitPoint.y) + " " + to_string(hitPoint.z);
-		OutputDebugStringA(("[Endpoint] : " + hitPointString + ", [hitPoint Dist] : " + to_string(d) + ", [circle r] : " + to_string(_guideCircle.radius) + "\n\n").c_str());
 		
 		Vertex newVertex({ hitPoint, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
 
