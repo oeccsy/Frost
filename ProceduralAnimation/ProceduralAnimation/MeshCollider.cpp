@@ -58,9 +58,15 @@ bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
 		Circlecast(triangle, circle, thetaContainer);
 	}
 
-	theta = *min_element(thetaContainer.begin(), thetaContainer.end());
-
-	return !thetaContainer.empty();
+	if (!thetaContainer.empty())
+	{
+		theta = *min_element(thetaContainer.begin(), thetaContainer.end());
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 Vector3 MeshCollider::Snap(Vector3 position)
