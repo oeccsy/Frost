@@ -1,4 +1,4 @@
-# procedural-animation
+# Frost
 
 ## 프로젝트 개요
 - **서리가 성장하는 절차적 애니메이션 구현**
