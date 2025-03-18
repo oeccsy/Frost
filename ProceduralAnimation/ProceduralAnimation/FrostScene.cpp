@@ -28,5 +28,5 @@ void FrostScene::Init()
 
 	_objects.push_back(frost);
 
-	frost->StartFrostAnim();
+	frost->ForkRandomRoots();
 }

@@ -22,12 +22,13 @@ public:
 
 public:
 	shared_ptr<Sphere> GetSphere() { return _sphere; }
-	shared_ptr<PointOctree> GetPointsContainer() { return _frostPointsOctree; }
+
+public:
+	void ForkRandomRoots();
 
 protected:
 	void Grow();
 	void ForkCloseRoots();
-	void ForkRandomRoots();
 
 public:
 	static const float MAIN_BRANCH_GROW_SPEED;
