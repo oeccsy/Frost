@@ -1,15 +1,13 @@
 #include "pch.h"
-#include "Object.h"
 #include "Component.h"
+#include "Collider.h"
+#include "MeshCollider.h"
+#include "Object.h"
 #include "PointCloud.h"
-#include "VectorField.h"
-#include "FrostVectorField.h"
 #include "FrostRoot.h"
 #include "FrostBranch.h"
 #include "Mesh.h"
 #include "PointOctree.h"
-#include "Collider.h"
-#include "MeshCollider.h"
 #include <random>
 #include "Frost.h"
 

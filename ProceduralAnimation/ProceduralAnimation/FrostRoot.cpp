@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "Object.h"
-#include "FrostBranch.h"
 #include "Component.h"
 #include "Collider.h"
 #include "MeshCollider.h"
+#include "Object.h"
+#include "PointCloud.h"
 #include "PointOctree.h"
-#include "FrostRoot.h"
-#include "Component.h"
 #include "Frost.h"
+#include "FrostRoot.h"
+#include "FrostBranch.h"
 #include <random>
 
 FrostRoot::FrostRoot(Vector3 basePoint, Vector3 normal)

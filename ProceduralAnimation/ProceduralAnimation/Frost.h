@@ -1,13 +1,8 @@
 #pragma once
 
-class Sphere;
-class PointCloud;
-class FrostVectorField;
-
-class FrostRoot;
-class FrostBranch;
-
 class MeshCollider;
+class PointCloud;
+class FrostRoot;
 class PointOctree;
 
 class Frost : public Component
