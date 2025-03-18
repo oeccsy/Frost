@@ -1,6 +1,5 @@
 #pragma once
 
-class FrostRoot;
 class MeshCollider;
 
 class FrostBranch : public Object

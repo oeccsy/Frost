@@ -24,13 +24,11 @@ void FrostRoot::ForkRoot(shared_ptr<MeshCollider> target)
 	Vector3 biNormal = normal.Cross(temp);
 	biNormal.Normalize();
 
-	/*random_device rd;
+	random_device rd;
 	mt19937 gen(rd());
-	uniform_int_distribution<int> dis(1, MAX_BRANCH_COUNT);
+	uniform_int_distribution<int> dis(1, 6);
 
-	int branchCount = dis(gen);*/
-
-	int branchCount = 1;
+	int branchCount = dis(gen);
 
 	for (int i = 0; i < branchCount; i++)
 	{
@@ -75,7 +73,8 @@ void FrostRoot::DisableGrowth(shared_ptr<PointOctree> target)
 	{
 		shared_ptr<FrostBranch> branch = *it;
 
-		BoundingSphere checkBounds({ branch->GetBranchEndPos(), (branch->GetParent() == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED / 2 : Frost::SUB_BRANCH_GROW_SPEED / 2 });
+		float minDist = (branch->GetParent() == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED - 0.01f : Frost::SUB_BRANCH_GROW_SPEED - 0.01f;
+		BoundingSphere checkBounds({ branch->GetBranchEndPos(), minDist });
 
 		if (target->IntersectsWithPoints(checkBounds))
 		{
