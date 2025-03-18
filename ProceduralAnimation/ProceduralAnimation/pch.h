@@ -45,3 +45,6 @@ using namespace Microsoft::WRL;
 #include "Graphics.h"
 #include "Renderer.h"
 #include "VertexData.h"
+
+// Render Mode
+#define RENDER_ONLY_FROST

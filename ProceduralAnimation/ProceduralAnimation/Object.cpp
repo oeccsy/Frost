@@ -20,7 +20,9 @@ void Object::Update()
 
 void Object::Render(shared_ptr<Renderer> renderer)
 {
+#ifndef RENDER_ONLY_FROST
 	renderer->Render(_mesh, _material, _transform);
+#endif
 
 	for (auto comp : GetComponents())
 	{
