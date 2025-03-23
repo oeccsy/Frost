@@ -32,8 +32,8 @@ https://github.com/user-attachments/assets/0bd93aac-38e4-4b91-a257-6e642917485d
 <div align="center">
   <table>
     <tr>
-      <th align="center" width="360px"> 1. Mesh의 표면에 서리의 핵을 여러개 <br> 배치한다. </th>
-      <th align="center" width="360px"> 2. 무작위 서리의 중심에서 서리의 성장을 <br> 시작한다. </th>
+      <th align="center" width="360px"> 1. Mesh의 표면에 서리의 핵을 여러개 배치한다. </span> </th>
+      <th align="center" width="360px"> 2. 무작위 서리의 중심에서 서리의 성장을 시작한다. </th>
       <th align="center" width="360px"> 3. 서리는 Mesh의 표면을 따라 성장한다. </th>
     </tr>  
     <tr>
@@ -42,9 +42,9 @@ https://github.com/user-attachments/assets/0bd93aac-38e4-4b91-a257-6e642917485d
       <td align="center"> <img src="https://github.com/user-attachments/assets/8dc54720-09a7-4863-8c1e-e22d45e77c1f" width="360px" height="180px"/> </td>
     </tr>
     <tr>
-      <th align="center"> 4. 성장하는 서리는 가지에서 Sub 가지가 <br> 뻗어나간다. </td>
-      <th align="center"> 5. 서리가 성장을 시작하지 않은 핵과 <br> 가까워지면 그 핵에서 서리의 성장이 시작된다. </td>
-      <th align="center"> 6. 서리가 다른 서리와 가까워지면 <br> 성장을 멈춘다. </td>
+      <th align="center"> 4. 성장하는 서리는 가지에서 Sub 가지가 뻗어나간다. </td>
+      <th align="center"> 5. 서리가 성장을 시작하지 않은 핵과 가까워지면 그 핵에서 서리의 성장이 시작된다. </td>
+      <th align="center"> 6. 서리가 다른 서리와 가까워지면 성장을 멈춘다. </td>
     </tr>
     <tr>
       <td align="center"> <img src="https://github.com/user-attachments/assets/8ed2a445-8ccd-4551-8910-c4c81f063992" width="360px" height="180px"/> </td>
