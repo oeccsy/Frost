@@ -146,6 +146,7 @@
     <ClInclude Include="AABBCollider.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="BasicRenderer.h" />
+    <ClInclude Include="BufferPool.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="AABBCollider.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="BasicRenderer.cpp" />
+    <ClCompile Include="BufferPool.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />

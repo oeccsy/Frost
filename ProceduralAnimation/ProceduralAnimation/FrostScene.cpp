@@ -11,6 +11,7 @@
 #include "MeshCollider.h"
 #include "Sphere.h"
 #include "TeaPot.h"
+#include "BufferPool.h"
 
 FrostScene::FrostScene() {}
 
@@ -21,6 +22,9 @@ void FrostScene::Init()
 	_camera = make_shared<Camera>();
 	Camera::SetMainCamera(_camera);
 	Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, -10));
+
+	BufferPool::vertexBufferPool = make_unique<BufferPool>(BufferType::Vertex, sizeof(Vertex) * 200, 1200);
+	BufferPool::indexBufferPool = make_unique<BufferPool>(BufferType::Index, sizeof(uint32) * 200, 1200);
 
 	/*
 	shared_ptr<Sphere> sphere = make_shared<Sphere>();

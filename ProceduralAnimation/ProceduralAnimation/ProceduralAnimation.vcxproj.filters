@@ -180,6 +180,9 @@
     <ClInclude Include="TeaPot.h">
       <Filter>소스 파일\03. Frost</Filter>
     </ClInclude>
+    <ClInclude Include="BufferPool.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -292,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="TeaPot.cpp">
       <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferPool.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

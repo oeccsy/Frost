@@ -9,4 +9,8 @@ public:
 public:
 	void CreateBuffers() override;
 	void UpdateBuffers() override;
+
+private:
+	bool _useVertexBufferPool = false;
+	bool _useIndexBufferPool = false;
 };

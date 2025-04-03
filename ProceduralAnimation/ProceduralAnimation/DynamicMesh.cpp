@@ -2,15 +2,26 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "DynamicMesh.h"
+#include "BufferPool.h"
 
 DynamicMesh::DynamicMesh() {}
 
-DynamicMesh::~DynamicMesh() {}
+DynamicMesh::~DynamicMesh()
+{
+	if (_useVertexBufferPool) BufferPool::vertexBufferPool->ReturnBuffer(_vertexBuffer);
+	if (_useIndexBufferPool) BufferPool::indexBufferPool->ReturnBuffer(_indexBuffer);
+}
 
 void DynamicMesh::CreateBuffers()
 {
 	auto device = Graphics::GetDevice();
 
+	if (BufferPool::vertexBufferPool != nullptr)
+	{
+		_vertexBuffer = BufferPool::vertexBufferPool->GetBuffer();
+		_useVertexBufferPool = true;
+	}
+	else
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(desc));
@@ -27,6 +38,12 @@ void DynamicMesh::CreateBuffers()
 		assert(SUCCEEDED(hr));
 	}
 
+	if (BufferPool::indexBufferPool != nullptr)
+	{
+		_indexBuffer = BufferPool::indexBufferPool->GetBuffer();
+		_useIndexBufferPool = true;
+	}
+	else
 	{
 		D3D11_BUFFER_DESC desc;
 		ZeroMemory(&desc, sizeof(desc));
