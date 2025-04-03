@@ -175,6 +175,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="TriangleOctree.h" />
     <ClInclude Include="TriangleScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />
+    <ClCompile Include="TriangleOctree.cpp" />
     <ClCompile Include="TriangleScene.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="pch.cpp">

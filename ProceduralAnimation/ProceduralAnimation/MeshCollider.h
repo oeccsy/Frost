@@ -1,6 +1,7 @@
 #pragma once
 
 class Mesh;
+class TriangleOctree;
 
 class MeshCollider : public Collider
 {
@@ -26,4 +27,5 @@ private:
 	
 private:
 	weak_ptr<Mesh> _mesh;
+	shared_ptr<TriangleOctree> _triangleOctree;
 };

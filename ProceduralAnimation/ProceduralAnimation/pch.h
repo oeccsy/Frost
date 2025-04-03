@@ -11,6 +11,7 @@
 #include <array>
 #include <vector>
 #include <list>
+#include <stack>
 #include <map>
 #include <unordered_set>
 #include <unordered_map>
@@ -47,4 +48,5 @@ using namespace Microsoft::WRL;
 #include "VertexData.h"
 
 // Render Mode
-#define RENDER_ONLY_FROST
+// #define RENDER_OBJECT
+#define RENDER_FROST

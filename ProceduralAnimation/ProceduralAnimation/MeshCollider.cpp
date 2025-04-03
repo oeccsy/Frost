@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Collider.h"
 #include "Mesh.h"
+#include "TriangleOctree.h"
 #include "MeshCollider.h"
 #include <algorithm>
 
@@ -12,6 +13,16 @@ MeshCollider::~MeshCollider() {}
 void MeshCollider::Init()
 {
 	_mesh = GetOwner()->GetMesh();
+	_triangleOctree = make_shared<TriangleOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
+
+	vector<Vertex>& vertices = _mesh.lock()->GetVertices();
+	vector<uint32>& indices = _mesh.lock()->GetIndices();
+
+	for (int i = 0; i < indices.size(); i += 3)
+	{
+		Triangle3D triangle{ vertices[indices[i]].position, vertices[indices[i + 1]].position, vertices[indices[i + 2]].position };
+		_triangleOctree->Insert(triangle);
+	}
 }
 
 bool MeshCollider::Intersects(Ray& ray, OUT float& distance)
@@ -52,10 +63,29 @@ bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
 
 	vector<float> thetaContainer;
 
-	for (int i = 0; i < indices.size(); i += 3)
+	stack<shared_ptr<TriangleOctree>> dfsStack;
+	dfsStack.push(_triangleOctree);
+
+	BoundingSphere checkBounds({ circle.center, circle.radius });
+
+	while (!dfsStack.empty())
 	{
-		Triangle3D triangle{ vertices[indices[i]].position, vertices[indices[i + 1]].position, vertices[indices[i + 2]].position };
-		Circlecast(triangle, circle, thetaContainer);
+		shared_ptr<TriangleOctree> curOctree = dfsStack.top();
+		dfsStack.pop();
+
+		for (auto& triangle : curOctree->GetTriangles())
+		{
+			Circlecast(triangle, circle, thetaContainer);
+		}
+
+		if (!curOctree->IsLeaf())
+		{
+			for (int i = 0; i < 8; i++)
+			{
+				shared_ptr<TriangleOctree> child = curOctree->GetChild(i);
+				if (child->IntersectsWithBounds(checkBounds)) dfsStack.push(child);
+			}
+		}
 	}
 
 	if (!thetaContainer.empty())

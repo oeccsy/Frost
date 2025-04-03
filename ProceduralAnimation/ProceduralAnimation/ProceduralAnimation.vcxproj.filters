@@ -183,6 +183,9 @@
     <ClInclude Include="BufferPool.h">
       <Filter>소스 파일\00. Engine</Filter>
     </ClInclude>
+    <ClInclude Include="TriangleOctree.h">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="BufferPool.cpp">
       <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleOctree.cpp">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
