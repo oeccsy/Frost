@@ -44,6 +44,7 @@ void Frost::Update()
 
 void Frost::Render(shared_ptr<Renderer> renderer)
 {
+#ifdef RENDER_FROST
 	for (auto frostRoot : _forkedFrostRoots)
 	{
 		for (auto mainBranch : frostRoot->GetBranches())
@@ -51,6 +52,7 @@ void Frost::Render(shared_ptr<Renderer> renderer)
 			renderer->Render(mainBranch->GetMesh(), mainBranch->GetMaterial(), mainBranch->GetTransform());
 		}
 	}
+#endif
 }
 
 void Frost::Grow()
