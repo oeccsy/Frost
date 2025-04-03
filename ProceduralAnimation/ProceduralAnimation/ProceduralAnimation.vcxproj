@@ -150,7 +150,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="ComputeShaderTest.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DynamicMesh.h" />
     <ClInclude Include="framework.h" />
@@ -197,7 +196,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="ComputeShaderTest.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DynamicMesh.cpp" />
     <ClCompile Include="Frost.cpp" />
