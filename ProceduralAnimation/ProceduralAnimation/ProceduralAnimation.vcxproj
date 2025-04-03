@@ -166,9 +166,11 @@
     <ClInclude Include="PointOctree.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="PointCloud.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="SphereCollider.h" />
+    <ClInclude Include="TeaPot.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Triangle.h" />
@@ -208,9 +210,11 @@
     <ClCompile Include="PointOctree.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="PointCloud.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
+    <ClCompile Include="TeaPot.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Triangle.cpp" />

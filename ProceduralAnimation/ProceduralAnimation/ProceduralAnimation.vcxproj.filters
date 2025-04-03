@@ -174,6 +174,12 @@
     <ClInclude Include="PointOctree.h">
       <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TeaPot.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -280,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="PointOctree.cpp">
       <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TeaPot.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

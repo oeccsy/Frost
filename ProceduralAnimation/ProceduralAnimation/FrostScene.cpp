@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "MeshCollider.h"
 #include "Sphere.h"
+#include "TeaPot.h"
 
 FrostScene::FrostScene() {}
 
@@ -21,6 +22,7 @@ void FrostScene::Init()
 	Camera::SetMainCamera(_camera);
 	Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, -10));
 
+	/*
 	shared_ptr<Sphere> sphere = make_shared<Sphere>();
 	{
 		sphere->AddComponent(make_shared<MeshCollider>());
@@ -30,4 +32,17 @@ void FrostScene::Init()
 	_objects.push_back(sphere);
 
 	sphere->GetComponent<Frost>()->ForkRandomRoots();
+	*/
+
+	shared_ptr<TeaPot> teapot = make_shared<TeaPot>();
+	{
+		teapot->GetTransform()->SetWorldRotation(Vector3(-XM_PI / 6, 0, 0));
+		
+		teapot->AddComponent(make_shared<MeshCollider>());
+		teapot->AddComponent(make_shared<Frost>());
+	}
+
+	_objects.push_back(teapot);
+
+	teapot->GetComponent<Frost>()->ForkRandomRoots();
 }
