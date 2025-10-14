@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Renderer.h"
 #include "BasicRenderer.h"
 #include "Mesh.h"
@@ -44,6 +44,7 @@ void BasicRenderer::Render(shared_ptr<Mesh> mesh, shared_ptr<Material> material,
 
 	// OM
 	deviceContext->OMSetBlendState(_blendState.Get(), 0, 0xFFFFFFFF);
+	deviceContext->OMSetDepthStencilState(_depthState.Get(), 0);
 
 
 	deviceContext->DrawIndexed(static_cast<UINT>(mesh->GetIndices().size()), 0, 0);

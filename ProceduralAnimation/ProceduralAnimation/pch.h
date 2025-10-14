@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #define _XM_NO_INTRINSICS_
 
 // Base
@@ -48,5 +48,5 @@ using namespace Microsoft::WRL;
 #include "VertexData.h"
 
 // Render Mode
-// #define RENDER_OBJECT
+#define RENDER_OBJECT
 #define RENDER_FROST

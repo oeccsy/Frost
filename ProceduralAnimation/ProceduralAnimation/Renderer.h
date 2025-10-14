@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 class Mesh;
 class Material;
@@ -35,4 +35,5 @@ protected:
 	static vector<ComPtr<ID3D11ShaderResourceView>> _textures;
 	static ComPtr<ID3D11SamplerState> _samplerState;
 	static ComPtr<ID3D11BlendState> _blendState;
+	static ComPtr<ID3D11DepthStencilState> _depthState;
 };

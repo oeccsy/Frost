@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "Renderer.h"
 #include "Mesh.h"
 #include "Material.h"
@@ -19,6 +19,7 @@ ComPtr<ID3D11PixelShader> Renderer::_pixelShader = nullptr;
 vector<ComPtr<ID3D11ShaderResourceView>> Renderer::_textures;
 ComPtr<ID3D11SamplerState> Renderer::_samplerState = nullptr;
 ComPtr<ID3D11BlendState> Renderer::_blendState = nullptr;
+ComPtr<ID3D11DepthStencilState> Renderer::_depthState = nullptr;
 
 Renderer::Renderer()
 {
@@ -57,6 +58,14 @@ void Renderer::Bind(shared_ptr<Material> material)
 	_textures = material->_textures;
 	_samplerState = material->_samplerState;
 	_blendState = material->_blendState;
+
+	D3D11_DEPTH_STENCIL_DESC desc = {};
+	desc.DepthEnable = false;
+	desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	desc.DepthFunc = D3D11_COMPARISON_ALWAYS;
+	desc.StencilEnable = false;
+
+	Graphics::GetDevice()->CreateDepthStencilState(&desc, _depthState.GetAddressOf());
 }
 
 void Renderer::Bind(shared_ptr<Transform> transform)
