@@ -10,6 +10,8 @@
 #include "Collider.h"
 #include "MeshCollider.h"
 
+shared_ptr<Material> FrostBranch::frost_branch_material = nullptr;
+
 FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shared_ptr<FrostBranch> parent)
 {
 	_parent = parent;
@@ -36,9 +38,15 @@ FrostBranch::FrostBranch(Vector3& basePoint, Vector3& dir, Vector3& normal, shar
 	_mesh->CreateBuffers();
 	_mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
-	_material->CreateVS(L"Cube.hlsl", "VS", "vs_5_0");
-	_material->CreatePS(L"Cube.hlsl", "PS", "ps_5_0");
-
+	if (frost_branch_material == nullptr)
+	{
+		frost_branch_material = make_shared<Material>();
+		frost_branch_material->CreateVS(L"Cube.hlsl", "VS", "vs_5_0");
+		frost_branch_material->CreatePS(L"Cube.hlsl", "PS", "ps_5_0");
+	}
+	
+	_material = frost_branch_material;
+	
 	_mesh->CreateInputLayout(_material);
 }
 

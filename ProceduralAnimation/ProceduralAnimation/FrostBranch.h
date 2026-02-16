@@ -18,6 +18,8 @@ public:
 	Vector3 GetBranchEndPos() { return _branch.back().position; };
 
 private:
+	static shared_ptr<Material> frost_branch_material;
+
 	Circle3D _guideCircle;
 
 	vector<Vertex> _branch;
