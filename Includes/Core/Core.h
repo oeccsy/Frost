@@ -13,28 +13,26 @@
 #include <WS2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
 
+#include <d3d11.h>
+#include <d3dcompiler.h>
+#include <wrl.h>
+#include <DirectXMath.h>
+#include <DirectXTex/DirectXTex.h>
+#include <DirectXTex/DirectXTex.inl>
+using namespace DirectX;
+using namespace Microsoft::WRL;
+
+#pragma comment(lib, "d3d11.lib")
+#pragma	comment(lib, "d3dcompiler.lib")
+
+#ifdef _DEBUG
+#pragma comment(lib, "DirectXTex\\DirectXTex64d.lib")
+#else
+#pragma comment(lib, "DirectXTex\\DirectXTex64d.lib")
+#endif
+
 #if BuildEngineDLL
 #define Engine_API __declspec(dllexport)
 #else
 #define Engine_API __declspec(dllimport)
 #endif
-
-template<typename T>
-void SafeDelete(T*& target)
-{
-	if (target)
-	{
-		delete target;
-		target = nullptr;
-	}
-}
-
-template<typename T>
-void SafeDeleteArray(T*& target)
-{
-	if (target)
-	{
-		delete[] target;
-		target = nullptr;
-	}
-}
