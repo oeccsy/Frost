@@ -4,7 +4,7 @@
 #include "EngineSettings.h"
 #include <memory>
 
-class Engine_API Engine
+class ENGINE_API Engine
 {
 public:
 	Engine();

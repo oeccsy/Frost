@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-class Engine_API Input
+class ENGINE_API Input
 {
 	friend class Engine;
 

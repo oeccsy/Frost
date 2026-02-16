@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-class Engine_API RTTI
+class ENGINE_API RTTI
 {
 public:
 	virtual const size_t& TypeIdInstance() const = 0;

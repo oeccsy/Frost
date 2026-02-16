@@ -32,7 +32,7 @@ using namespace Microsoft::WRL;
 #endif
 
 #if BuildEngineDLL
-#define Engine_API __declspec(dllexport)
+#define ENGINE_API __declspec(dllexport)
 #else
-#define Engine_API __declspec(dllimport)
+#define ENGINE_API __declspec(dllimport)
 #endif

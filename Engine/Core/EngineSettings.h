@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-struct Engine_API EngineSettings
+struct ENGINE_API EngineSettings
 {
 	int width = 0;
 	int height = 0;
