@@ -63,6 +63,9 @@
     <ClInclude Include="Networking\Command.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\SimpleMath.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp">
@@ -95,5 +98,13 @@
     <ClCompile Include="Networking\Server.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\SimpleMath.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Utils\SimpleMath.inl">
+      <Filter>헤더 파일</Filter>
+    </None>
   </ItemGroup>
 </Project>

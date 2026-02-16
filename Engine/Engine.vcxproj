@@ -186,6 +186,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Networking\Command.h" />
     <ClInclude Include="Networking\Server.h" />
     <ClInclude Include="Utils\Color.h" />
+    <ClInclude Include="Utils\SimpleMath.h" />
     <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +200,10 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Networking\Client.cpp" />
     <ClCompile Include="Networking\Server.cpp" />
+    <ClCompile Include="Utils\SimpleMath.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Utils\SimpleMath.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
