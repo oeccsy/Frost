@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\01. Main">
+      <UniqueIdentifier>{678ba731-d6e1-46f1-8c37-3585b4fc2bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99. Header">
+      <UniqueIdentifier>{f8c77135-bb94-4ade-b05e-471186dd386c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99. Header\Dummy">
+      <UniqueIdentifier>{1625885d-d2f3-4164-934a-0533364b7047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\98. Shaders">
+      <UniqueIdentifier>{04b6ba35-2154-4021-b2c3-2fca12f5380c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Engine">
+      <UniqueIdentifier>{27f08900-94a0-4969-89eb-b2590b051d97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\02. Triangle">
+      <UniqueIdentifier>{6435c67b-2576-4ff1-9dd6-8ba7349fc0e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\03. Frost">
+      <UniqueIdentifier>{c50a45e6-e957-47c9-aab7-5c8785003b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Engine\Renderer">
+      <UniqueIdentifier>{20839368-f8e2-4f8a-bb97-8fae9d277463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\04. Test">
+      <UniqueIdentifier>{10b6cd0b-598d-45bc-a651-2f5f22fba328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Engine\Collider">
+      <UniqueIdentifier>{3d4c2d65-f43c-4728-9708-2fb5b7aec3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\99. Header\Utils">
+      <UniqueIdentifier>{9198ccaa-442d-4d15-9b8b-a0244d4ed0f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\00. Engine\SpatialPartitioning">
+      <UniqueIdentifier>{6c287edb-b784-4b44-8226-2857d4d353c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>소스 파일\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Values.h">
+      <Filter>소스 파일\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>소스 파일\99. Header\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>소스 파일\99. Header\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>소스 파일\99. Header\Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="Struct.h">
+      <Filter>소스 파일\99. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ProceduralAnimation.h">
+      <Filter>소스 파일\01. Main</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleScene.h">
+      <Filter>소스 파일\02. Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="FrostScene.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>소스 파일\01. Main</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexData.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>소스 파일\02. Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>소스 파일\02. Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicRenderer.h">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="PointCloud.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="Frost.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorField.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="FrostVectorField.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="FrostBranch.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="FrostRoot.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicMesh.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="AABBCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="ComputeShaderTest.h">
+      <Filter>소스 파일\04. Test</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMath.h">
+      <Filter>소스 파일\99. Header\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="OBBCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCollider.h">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="PointOctree.h">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TeaPot.h">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferPool.h">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleOctree.h">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일\99. Header</Filter>
+    </ClCompile>
+    <ClCompile Include="ProceduralAnimation.cpp">
+      <Filter>소스 파일\01. Main</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleScene.cpp">
+      <Filter>소스 파일\02. Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostScene.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>소스 파일\01. Main</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexData.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>소스 파일\02. Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Triangle.cpp">
+      <Filter>소스 파일\02. Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicRenderer.cpp">
+      <Filter>소스 파일\00. Engine\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="PointCloud.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="Frost.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="VectorField.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostVectorField.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostBranch.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="FrostRoot.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicMesh.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="AABBCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="ComputeShaderTest.cpp">
+      <Filter>소스 파일\04. Test</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>소스 파일\99. Header\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="OBBCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshCollider.cpp">
+      <Filter>소스 파일\00. Engine\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="PointOctree.cpp">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TeaPot.cpp">
+      <Filter>소스 파일\03. Frost</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferPool.cpp">
+      <Filter>소스 파일\00. Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TriangleOctree.cpp">
+      <Filter>소스 파일\00. Engine\SpatialPartitioning</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ProceduralAnimation.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="ProceduralAnimation.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Triangle.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Point.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Cube.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Rectangle.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Phong.hlsl">
+      <Filter>소스 파일\98. Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleMath.inl">
+      <Filter>소스 파일\99. Header\Utils</Filter>
+    </None>
+  </ItemGroup>
+</Project>
