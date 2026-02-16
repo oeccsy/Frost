@@ -10,13 +10,13 @@ public:
 	Engine();
 	virtual ~Engine();
 
-	static Engine& Get();
+	void Run();
+	void Quit();
 
 	FORCEINLINE int Width() const { return settings.width; }
 	FORCEINLINE int Height() const { return settings.height; }
 
-	void Run();
-	void Quit();
+	static Engine& Get();
 
 private:
 	void LoadEngineSettings();
@@ -26,8 +26,8 @@ private:
 	void Render();
 	
 private:
-	static Engine* instance;
-
-	std::shared_ptr<class Input> input = nullptr;
 	EngineSettings settings;
+	std::shared_ptr<class Input> input = nullptr;
+	
+	static Engine* instance;
 };

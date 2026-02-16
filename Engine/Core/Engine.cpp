@@ -6,9 +6,9 @@ Engine* Engine::instance = nullptr;
 
 Engine::Engine()
 {
-	instance = this;
-	input = std::make_shared<Input>();
 	LoadEngineSettings();
+	input = std::make_shared<Input>();
+	instance = this;
 
 	CONSOLE_CURSOR_INFO info;
 	info.bVisible = false;
@@ -21,10 +21,7 @@ Engine::Engine()
 
 Engine::~Engine() { }
 
-Engine& Engine::Get()
-{
-	return *instance;
-}
+
 
 void Engine::Run()
 {
@@ -66,6 +63,11 @@ void Engine::Run()
 void Engine::Quit()
 {
 	PostQuitMessage(0);
+}
+
+Engine& Engine::Get()
+{
+	return *instance;
 }
 
 void Engine::LoadEngineSettings()
