@@ -27,7 +27,7 @@ private:
 	
 private:
 	EngineSettings settings;
-	std::shared_ptr<class Input> input = nullptr;
+	shared_ptr<class Input> input = nullptr;
 	
 	static Engine* instance;
 };

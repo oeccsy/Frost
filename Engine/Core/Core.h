@@ -11,6 +11,7 @@
 #include <Windows.h>
 #include <MSWSock.h>
 #include <WS2tcpip.h>
+using namespace std;
 #pragma comment(lib, "ws2_32.lib")
 
 #include <d3d11.h>

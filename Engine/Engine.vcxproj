@@ -136,7 +136,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,7 +144,8 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy *.h ..\Includes /y /e</Command>
+      <Command>xcopy *.h ..\Includes /y /e
+xcopy *.inl ..\Includes /y /e</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy $(OutDir)\Engine.lib ..\Lib\Engine\ /y
@@ -181,14 +182,16 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Core\RTTI.h" />
     <ClInclude Include="Core\Graphics.h" />
-    <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Render\Mesh.h" />
+    <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Utils\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\Graphics.cpp" />
     <ClCompile Include="Core\Input.cpp" />
-    <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Utils\SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
