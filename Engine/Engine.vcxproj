@@ -176,6 +176,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\EngineSettings.h" />
@@ -189,6 +190,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Utils\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\Graphics.cpp" />
     <ClCompile Include="Core\Input.cpp" />
