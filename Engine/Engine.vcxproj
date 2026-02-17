@@ -92,11 +92,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Math;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>xcopy *.h ..\Includes /y /e</Command>
@@ -114,11 +115,12 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Math;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>xcopy *.h ..\Includes /y /e</Command>
@@ -134,11 +136,12 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Math;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>xcopy *.h ..\Includes /y /e</Command>
@@ -156,11 +159,12 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Math;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
       <Command>xcopy *.h ..\Includes /y /e</Command>
@@ -171,35 +175,20 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Actor\Actor.h" />
-    <ClInclude Include="Collider\BoxCollider.h" />
     <ClInclude Include="Core\Core.h" />
-    <ClInclude Include="Core\Delegate.h" />
     <ClInclude Include="Core\Engine.h" />
+    <ClInclude Include="Core\EngineSettings.h" />
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Core\RTTI.h" />
-    <ClInclude Include="Level\Level.h" />
-    <ClInclude Include="Math\FVector2.h" />
-    <ClInclude Include="Math\Mathf.h" />
-    <ClInclude Include="Math\Vector2.h" />
-    <ClInclude Include="Networking\Client.h" />
-    <ClInclude Include="Networking\Command.h" />
-    <ClInclude Include="Networking\Server.h" />
-    <ClInclude Include="Utils\Color.h" />
+    <ClInclude Include="Core\Graphics.h" />
+    <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Utils\SimpleMath.h" />
-    <ClInclude Include="Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actor\Actor.cpp" />
-    <ClCompile Include="Collider\BoxCollider.cpp" />
-    <ClCompile Include="Core\Delegate.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
+    <ClCompile Include="Core\Graphics.cpp" />
     <ClCompile Include="Core\Input.cpp" />
-    <ClCompile Include="Level\Level.cpp" />
-    <ClCompile Include="Math\FVector2.cpp" />
-    <ClCompile Include="Math\Vector2.cpp" />
-    <ClCompile Include="Networking\Client.cpp" />
-    <ClCompile Include="Networking\Server.cpp" />
+    <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Utils\SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
