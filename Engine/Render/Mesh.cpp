@@ -55,4 +55,5 @@ void Mesh::CreateInputLayout(shared_ptr<Material> material)
 
 	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
 	HRESULT hr = Graphics::GetDevice()->CreateInputLayout(layout, count, material->vs_blob->GetBufferPointer(), material->vs_blob->GetBufferSize(), input_layout.GetAddressOf());
+	assert(SUCCEEDED(hr));
 }

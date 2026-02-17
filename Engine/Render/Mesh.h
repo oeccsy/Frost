@@ -17,9 +17,9 @@ public:
 	FORCEINLINE const vector<uint32>& GetIndices() const { return indices; }
 	FORCEINLINE D3D11_PRIMITIVE_TOPOLOGY GetTopology() { return topology; }
 
-	FORCEINLINE void SetVertices(vector<Vertex>& vertices) { vertices = vertices; }
-	FORCEINLINE void SetIndices(vector<uint32>& indices) { indices = indices; }
-	FORCEINLINE void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { topology = topology; }
+	FORCEINLINE void SetVertices(vector<Vertex>& new_vertices) { vertices = new_vertices; }
+	FORCEINLINE void SetIndices(vector<uint32>& new_indices) { indices = new_indices; }
+	FORCEINLINE void SetTopology(D3D11_PRIMITIVE_TOPOLOGY new_topology) { topology = new_topology; }
 
 public:
 	virtual void CreateBuffers();

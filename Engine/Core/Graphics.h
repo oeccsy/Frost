@@ -10,8 +10,8 @@ public:
 	void RenderBegin();
 	void RenderEnd();
 
-	static ComPtr<ID3D11Device> GetDevice() { return device; }
-	static ComPtr<ID3D11DeviceContext> GetDeviceContext() { return device_context; }
+	static ComPtr<ID3D11Device>& GetDevice() { return device; }
+	static ComPtr<ID3D11DeviceContext>& GetDeviceContext() { return device_context; }
 
 private:
 	void CreateDeviceAndSwapChain();

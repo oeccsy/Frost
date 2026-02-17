@@ -44,7 +44,7 @@ void Material::AddTexture(const wstring& path)
 
 void Material::LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob)
 {
-	const uint32 compileFlag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION; // TODO : Debug -> Release
+	const uint32 compile_flag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION; // TODO : Debug -> Release
 
 	HRESULT hr = ::D3DCompileFromFile(
 		path.c_str(),
@@ -52,7 +52,7 @@ void Material::LoadShaderFromFile(const wstring& path, const string& name, const
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		name.c_str(),
 		version.c_str(),
-		compileFlag,
+		compile_flag,
 		0,
 		blob.GetAddressOf(),
 		nullptr
