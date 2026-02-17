@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include "Graphics.h"
+#include "Material.h"
 
 Mesh::Mesh() {}
 
@@ -42,16 +43,16 @@ void Mesh::CreateBuffers()
 
 void Mesh::UpdateBuffers() { }
 
-//void Mesh::CreateInputLayout(shared_ptr<Material> material)
-//{
-//	D3D11_INPUT_ELEMENT_DESC layout[] =
-//	{
-//	   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-//	   {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-//	   {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-//	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
-//	};
-//
-//	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
-//	HRESULT hr = Graphics::GetDevice()->CreateInputLayout(layout, count, material->_vsBlob->GetBufferPointer(), material->_vsBlob->GetBufferSize(), input_layout.GetAddressOf());
-//}
+void Mesh::CreateInputLayout(shared_ptr<Material> material)
+{
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+	   {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	   {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	   {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	   {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+	};
+
+	const int32 count = sizeof(layout) / sizeof(D3D11_INPUT_ELEMENT_DESC);
+	HRESULT hr = Graphics::GetDevice()->CreateInputLayout(layout, count, material->vs_blob->GetBufferPointer(), material->vs_blob->GetBufferSize(), input_layout.GetAddressOf());
+}

@@ -183,6 +183,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Core\RTTI.h" />
     <ClInclude Include="Core\Graphics.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Utils\SimpleMath.h" />
@@ -191,6 +192,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\Graphics.cpp" />
     <ClCompile Include="Core\Input.cpp" />
+    <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Utils\SimpleMath.cpp" />
   </ItemGroup>

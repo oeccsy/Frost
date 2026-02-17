@@ -24,7 +24,7 @@ public:
 public:
 	virtual void CreateBuffers();
 	virtual void UpdateBuffers();
-	//void CreateInputLayout(shared_ptr<Material> material);
+	void CreateInputLayout(shared_ptr<class Material> material);
 
 protected:
 	// IA
