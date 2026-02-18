@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Core.h"
+#include "RTTI.h"
 #include <memory>
 
-class ENGINE_API Component
+class ENGINE_API Component : public RTTI
 {
+	RTTI_DECLARATIONS(Component, RTTI)
+	
 public:
 	Component();
 	virtual ~Component();
@@ -13,8 +16,8 @@ public:
 	virtual void Update();
 	virtual void LateUpdate();
 	
-	FORCEINLINE shared_ptr<class Object> GetOwner() { return owner.lock(); };
-	FORCEINLINE void SetOwner(shared_ptr<class Object> owner) { owner = owner; }
+	FORCEINLINE shared_ptr<class Object> GetOwner() const { return owner.lock(); };
+	FORCEINLINE void SetOwner(shared_ptr<class Object> new_owner) { owner = new_owner; }
 
 protected:
 	weak_ptr<class Object> owner;

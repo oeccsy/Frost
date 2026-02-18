@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Core.h"
+#include "RTTI.h"
 #include <memory>
 
-class ENGINE_API Component
+class ENGINE_API Component : public RTTI
 {
+	RTTI_DECLARATIONS(Component, RTTI)
+	
 public:
 	Component();
 	virtual ~Component();
