@@ -5,7 +5,4 @@ class Game
 public:
 	Game();
 	~Game();
-
-public:
-	void Run();
 };

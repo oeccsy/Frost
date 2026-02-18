@@ -36,6 +36,8 @@ void Engine::Run()
 		float delta_time = timer->CalculateDeltaTime();
 		input->ProcessInput();
 
+		if (scene == nullptr) continue;
+
 		if (delta_time >= one_frame_time)
 		{
 			timer->Update();
