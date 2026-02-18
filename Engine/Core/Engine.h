@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "EngineSettings.h"
+#include "Data/EngineSettings.h"
 #include <memory>
 
 class ENGINE_API Engine
@@ -10,24 +10,27 @@ public:
 	Engine();
 	virtual ~Engine();
 
+	void Init(HWND hwnd);
 	void Run();
 	void Quit();
 
-	FORCEINLINE int Width() const { return settings.width; }
-	FORCEINLINE int Height() const { return settings.height; }
-
+	FORCEINLINE int GetWidth() const { return settings.width; }
+	FORCEINLINE int GetHeight() const { return settings.height; }
+	
+	FORCEINLINE void SetScene(shared_ptr<class Scene> new_scene) { scene = new_scene; }
+	
 	static Engine& Get();
 
 private:
 	void LoadEngineSettings();
-
-	void Awake();
-	void Update(float delta_time = 0.0f);
-	void Render();
 	
 private:
 	EngineSettings settings;
-	shared_ptr<class Input> input = nullptr;
+	
+	shared_ptr<class Timer> timer;
+	shared_ptr<class Input> input;
+	shared_ptr<class Graphics> graphics;
+	shared_ptr<class Scene> scene;
 	
 	static Engine* instance;
 };

@@ -1,5 +1,8 @@
 ﻿#include "Engine.h"
+#include "Timer.h"
 #include "Input.h"
+#include "Graphics.h"
+#include "Scene/Scene.h"
 #include <iostream>
 
 Engine* Engine::instance = nullptr;
@@ -7,54 +10,43 @@ Engine* Engine::instance = nullptr;
 Engine::Engine()
 {
 	LoadEngineSettings();
-	input = std::make_shared<Input>();
+	
+	timer = make_shared<Timer>();
+	input = make_shared<Input>();
+	graphics = make_shared<Graphics>();
+	
 	instance = this;
-
-	CONSOLE_CURSOR_INFO info;
-	info.bVisible = false;
-	info.dwSize = 1;
-
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);
-
 	srand(static_cast<unsigned int>(time(nullptr)));
 }
 
 Engine::~Engine() { }
 
-
+void Engine::Init(HWND hwnd)
+{
+	graphics->Init(hwnd, settings.width, settings.height);
+}
 
 void Engine::Run()
 {
-	LARGE_INTEGER current_time;
-	LARGE_INTEGER previous_time;
-	QueryPerformanceCounter(&current_time);
-	previous_time = current_time;
-
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-
-	float target_framerate = (settings.framerate <= 0.0f) ? 60.0f : settings.framerate;
-	float oneframe_time = 1.0f / target_framerate;
+	float target_framerate = settings.framerate == 0.0f ? 60.0f : settings.framerate;
+	float one_frame_time = 1.0f / target_framerate;
 
 	while (true)
 	{
-		QueryPerformanceCounter(&current_time);
-		float delta_time = (current_time.QuadPart - previous_time.QuadPart) / (float)frequency.QuadPart;
-
+		float delta_time = timer->CalculateDeltaTime();
 		input->ProcessInput();
 
-		if (delta_time >= oneframe_time)
+		if (delta_time >= one_frame_time)
 		{
-			Awake();
-			Update(delta_time);
-			Render();
-
-			char title_text[50] = { };
-			sprintf_s(title_text, 50, "FPS : %f", (1.0f / delta_time));
-			SetConsoleTitleA(title_text);
-
-			previous_time = current_time;
-
+			timer->Update();
+			
+			scene->Update(delta_time);
+			scene->LateUpdate();
+			
+			graphics->RenderBegin();
+			scene->Render();
+			graphics->RenderEnd();
+			
 			input->SavePreviousKeyStates();
 		}
 	}
@@ -120,19 +112,4 @@ void Engine::LoadEngineSettings()
 	buffer = nullptr;
 
 	fclose(file);
-}
-
-void Engine::Awake()
-{
-
-}
-
-void Engine::Update(float delta_time)
-{
-
-}
-
-void Engine::Render()
-{
-
 }

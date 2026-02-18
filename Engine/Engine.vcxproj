@@ -179,11 +179,12 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\Engine.h" />
-    <ClInclude Include="Core\EngineSettings.h" />
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Core\RTTI.h" />
     <ClInclude Include="Core\Graphics.h" />
+    <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Data\EngineSettings.h" />
     <ClInclude Include="Data\Frustum.h" />
     <ClInclude Include="Data\Vertex.h" />
     <ClInclude Include="Enum\ProjectionType.h" />
@@ -200,6 +201,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\Graphics.cpp" />
     <ClCompile Include="Core\Input.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Material.cpp" />

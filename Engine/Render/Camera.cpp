@@ -12,11 +12,11 @@ Camera::Camera()
 
     frustum.near_z = 1.f;
     frustum.far_z = 100.f;
-    frustum.aspect = static_cast<float>(Engine::Get().Width()) / Engine::Get().Height();
+    frustum.aspect = static_cast<float>(Engine::Get().GetWidth()) / Engine::Get().GetHeight();
     frustum.fov_y = XM_2PI / 6.0f;
 	
-    frustum.far_width = static_cast<float>(Engine::Get().Width());
-    frustum.far_height = static_cast<float>(Engine::Get().Height());
+    frustum.far_width = static_cast<float>(Engine::Get().GetWidth());
+    frustum.far_height = static_cast<float>(Engine::Get().GetHeight());
 
     view_matrix = Matrix::Identity;
     proj_matrix = Matrix::Identity;

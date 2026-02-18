@@ -4,15 +4,17 @@
 ComPtr<ID3D11Device> Graphics::device = nullptr;
 ComPtr<ID3D11DeviceContext> Graphics::device_context = nullptr;
 
-Graphics::Graphics(HWND hwnd, int width, int height) : hwnd(hwnd), width(width), height(height)
-{
-	CreateDeviceAndSwapChain();
-	CreateRenderTargetView();
-	CreateDepthStencilView();
-	SetViewport();
-}
+Graphics::Graphics() { }
 
 Graphics::~Graphics() { }
+
+void Graphics::Init(HWND hwnd, uint32 width, uint32 height)
+{
+	CreateDeviceAndSwapChain(hwnd, width, height);
+	CreateRenderTargetView();
+	CreateDepthStencilView(width, height);
+	SetViewport(width, height);
+}
 
 void Graphics::RenderBegin()
 {
@@ -28,7 +30,7 @@ void Graphics::RenderEnd()
 	assert(SUCCEEDED(hr));
 }
 
-void Graphics::CreateDeviceAndSwapChain()
+void Graphics::CreateDeviceAndSwapChain(HWND hwnd, uint32 width, uint32 height)
 {
 	DXGI_SWAP_CHAIN_DESC desc;
 	ZeroMemory(&desc, sizeof(desc));
@@ -77,14 +79,14 @@ void Graphics::CreateRenderTargetView()
 	assert(SUCCEEDED(hr));
 }
 
-void Graphics::CreateDepthStencilView()
+void Graphics::CreateDepthStencilView(uint32 width, uint32 height)
 {
 	HRESULT hr;
 
 	D3D11_TEXTURE2D_DESC texture2d_desc = { 0 };
 	ZeroMemory(&texture2d_desc, sizeof(texture2d_desc));
-	texture2d_desc.Width = static_cast<int>(width);
-	texture2d_desc.Height = static_cast<int>(height);
+	texture2d_desc.Width = width;
+	texture2d_desc.Height = height;
 	texture2d_desc.MipLevels = 1;
 	texture2d_desc.ArraySize = 1;
 	texture2d_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -108,7 +110,7 @@ void Graphics::CreateDepthStencilView()
 	assert(SUCCEEDED(hr));
 }
 
-void Graphics::SetViewport()
+void Graphics::SetViewport(uint32 width, uint32 height)
 {
 	viewport.TopLeftX = 0.f;
 	viewport.TopLeftY = 0.f;

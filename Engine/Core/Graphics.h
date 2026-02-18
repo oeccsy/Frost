@@ -1,12 +1,14 @@
 #pragma once
 #include "Core.h"
+#include "Types.h"
 
 class ENGINE_API Graphics
 {
 public:
-	Graphics(HWND hwnd, int width, int height);
+	Graphics();
 	~Graphics();
 
+	void Init(HWND hwnd, uint32 width, uint32 height);
 	void RenderBegin();
 	void RenderEnd();
 
@@ -14,16 +16,12 @@ public:
 	static ComPtr<ID3D11DeviceContext>& GetDeviceContext() { return device_context; }
 
 private:
-	void CreateDeviceAndSwapChain();
+	void CreateDeviceAndSwapChain(HWND hwnd, uint32 width, uint32 height);
 	void CreateRenderTargetView();
-	void CreateDepthStencilView();
-	void SetViewport();
+	void CreateDepthStencilView(uint32 width, uint32 height);
+	void SetViewport(uint32 width, uint32 height);
 
 private:
-	HWND hwnd;
-	int width;
-	int height;
-
 	ComPtr<IDXGISwapChain> swap_chain;
 	ComPtr<ID3D11RenderTargetView> render_target_view;
 	ComPtr<ID3D11Texture2D> depth_stencil_texture;
