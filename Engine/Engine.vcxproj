@@ -185,13 +185,13 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Core\Graphics.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Data\Frustum.h" />
+    <ClInclude Include="Data\Vertex.h" />
     <ClInclude Include="Enum\ProjectionType.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\Transform.h" />
-    <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Utils\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
