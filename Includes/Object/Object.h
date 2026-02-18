@@ -15,7 +15,7 @@ public:
     virtual ~Object();
 
     virtual void Awake();
-    virtual void Update();
+    virtual void Update(float delta_time);
     virtual void Render();
     
     void AddComponent(shared_ptr<class Component> component);

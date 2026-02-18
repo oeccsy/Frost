@@ -15,7 +15,7 @@ Object::~Object() {}
 
 void Object::Awake() {}
 
-void Object::Update()
+void Object::Update(float delta_time)
 {
     for (auto component : GetComponents())
     {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "Vertex.h"
+#include "Data/Vertex.h"
 #include "Types.h"
 #include <vector>
 #include <memory>

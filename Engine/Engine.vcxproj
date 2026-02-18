@@ -192,6 +192,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\Transform.h" />
+    <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Utils\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +205,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\Transform.cpp" />
+    <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Utils\SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
