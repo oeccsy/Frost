@@ -24,7 +24,6 @@ void Scene::Update(float delta_time)
     {
         object->Update(delta_time);
     }
-    add_requested_objects.clear();
 }
 
 void Scene::LateUpdate()
