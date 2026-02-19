@@ -186,12 +186,14 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Data\EngineSettings.h" />
     <ClInclude Include="Data\Frustum.h" />
+    <ClInclude Include="Data\TransformData.h" />
     <ClInclude Include="Data\Vertex.h" />
     <ClInclude Include="Enum\ProjectionType.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Render\Mesh.h" />
+    <ClInclude Include="Render\Renderer\Renderer.h" />
     <ClInclude Include="Render\Transform.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Utils\SimpleMath.h" />
@@ -206,6 +208,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />
+    <ClCompile Include="Render\Renderer\Renderer.cpp" />
     <ClCompile Include="Render\Transform.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Utils\SimpleMath.cpp" />

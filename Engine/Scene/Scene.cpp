@@ -16,11 +16,27 @@ void Scene::DestroyObject(shared_ptr<class Object> destroyed_object)
     destroy_requested_objects.emplace_back(destroyed_object);
 }
 
-void Scene::Init() { }
+void Scene::Awake()
+{
+    for (auto& object : objects)
+    {
+        if (object->IsAwake()) continue;
+        object->Awake();
+    }
+}
+
+void Scene::Start()
+{
+    for (auto& object : objects)
+    {
+        if (object->IsStarted()) continue;
+        object->Start();
+    }
+}
 
 void Scene::Update(float delta_time)
 {
-    for (auto object : objects)
+    for (auto& object : objects)
     {
         object->Update(delta_time);
     }

@@ -94,7 +94,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Client\;..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -119,7 +119,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Client\;..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,7 +144,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Client\;..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -169,7 +169,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Client\;..\Includes\;..\Includes\Core\;..\Includes\Utils\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,6 +190,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClInclude Include="Client.h" />
     <ClInclude Include="Core\Game.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Object\Triangle.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\TriangleScene.h" />
@@ -198,6 +199,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Core\Game.cpp" />
+    <ClCompile Include="Object\Triangle.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -217,7 +219,20 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <Library Include="Engine.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Object\" />
+    <Folder Include="Shader\" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\Triangle.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

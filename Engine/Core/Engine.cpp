@@ -31,25 +31,39 @@ void Engine::Run()
 	float target_framerate = settings.framerate == 0.0f ? 60.0f : settings.framerate;
 	float one_frame_time = 1.0f / target_framerate;
 
-	while (true)
+	MSG msg = { };
+	
+	while (msg.message != WM_QUIT)
 	{
-		float delta_time = timer->CalculateDeltaTime();
-		input->ProcessInput();
-
-		if (scene == nullptr) continue;
-
-		if (delta_time >= one_frame_time)
+		if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			timer->Update();
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			float delta_time = timer->CalculateDeltaTime();
+			input->ProcessInput();
+
+			if (scene == nullptr) continue;
+		
+			if (delta_time >= one_frame_time)
+			{
+				timer->Update();
 			
-			scene->Update(delta_time);
-			scene->LateUpdate();
+				scene->Awake();
+				scene->Start();
+				scene->Update(delta_time);
+				scene->LateUpdate();
 			
-			graphics->RenderBegin();
-			scene->Render();
-			graphics->RenderEnd();
+				graphics->RenderBegin();
+				scene->Render();
+				graphics->RenderEnd();
 			
-			input->SavePreviousKeyStates();
+				input->SavePreviousKeyStates();
+
+				scene->ProcessAddAndDestroyObjects();
+			}
 		}
 	}
 }

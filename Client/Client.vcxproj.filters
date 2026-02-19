@@ -33,6 +33,12 @@
     <ClInclude Include="Core\Game.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Triangle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TriangleScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -42,6 +48,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Core\Game.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Triangle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TriangleScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,5 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="Engine.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\Triangle.hlsl" />
   </ItemGroup>
 </Project>

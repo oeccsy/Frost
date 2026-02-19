@@ -27,6 +27,8 @@ public:
 	void CreateInputLayout(shared_ptr<class Material> material);
 
 protected:
+	friend class Renderer;
+	
 	// IA
 	vector<Vertex> vertices;
 	vector<uint32> indices;

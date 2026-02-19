@@ -16,7 +16,8 @@ public:
     void AddObject(shared_ptr<class Object> new_object);
     void DestroyObject(shared_ptr<class Object> destroyed_object);
     
-    virtual void Init();
+    virtual void Awake();
+    virtual void Start();
     virtual void Update(float delta_time);
     virtual void LateUpdate();
     virtual void Render();

@@ -3,17 +3,25 @@
 #include "Render/Material.h"
 #include "Render/Transform.h"
 #include "Component/Component.h"
+#include "Render/Renderer/Renderer.h"
 
-Object::Object()
+Object::Object() { }
+
+Object::~Object() {}
+
+void Object::Awake()
 {
     mesh = make_shared<Mesh>();
     material = make_shared<Material>();
     transform = make_shared<Transform>();
+    
+    is_awake = true;
 }
 
-Object::~Object() {}
-
-void Object::Awake() {}
+void Object::Start()
+{
+    is_started = true;
+}
 
 void Object::Update(float delta_time)
 {
@@ -23,7 +31,11 @@ void Object::Update(float delta_time)
     }
 }
 
-void Object::Render() { }
+void Object::Render()
+{
+    shared_ptr<Renderer> renderer = GetComponent<Renderer>();
+    if (renderer) renderer->Render();
+}
 
 void Object::AddComponent(shared_ptr<Component> component)
 {

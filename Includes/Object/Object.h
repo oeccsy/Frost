@@ -15,6 +15,7 @@ public:
     virtual ~Object();
 
     virtual void Awake();
+    virtual void Start();
     virtual void Update(float delta_time);
     virtual void Render();
     
@@ -24,9 +25,12 @@ public:
     template <typename T>
     shared_ptr<T> GetComponent()
     {
-        for (const auto& component : components)
+        for (auto& component : components)
         {
-            if (component->As<T>() != nullptr) return component;
+            if (component->As<T>() != nullptr)
+            {
+                return static_pointer_cast<T>(component);
+            }
         }
 
         return nullptr;
@@ -35,6 +39,9 @@ public:
     FORCEINLINE shared_ptr<class Mesh> GetMesh() { return mesh; }
     FORCEINLINE shared_ptr<class Material> GetMaterial() { return material; }
     FORCEINLINE shared_ptr<class Transform> GetTransform() { return transform; }
+    
+    FORCEINLINE bool IsAwake() { return is_awake; }
+    FORCEINLINE bool IsStarted() { return is_started; }
 
 protected:
     vector<shared_ptr<Component>> components;
@@ -42,4 +49,8 @@ protected:
     shared_ptr<class Mesh> mesh;
     shared_ptr<class Material> material;
     shared_ptr<class Transform> transform;
+    
+private:
+    bool is_awake = false;
+    bool is_started = false;
 };

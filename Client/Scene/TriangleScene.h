@@ -3,6 +3,8 @@
 
 class TriangleScene : public Scene
 {
+    RTTI_DECLARATIONS(TriangleScene, Scene)
+    
 public:
     TriangleScene();
     ~TriangleScene();

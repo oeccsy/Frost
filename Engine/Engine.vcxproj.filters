@@ -33,13 +33,7 @@
     <ClInclude Include="Core\Graphics.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Core\EngineSettings.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Render\Mesh.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Vertex.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Core\Types.h">
@@ -49,6 +43,36 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Component\Component.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Timer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\EngineSettings.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Frustum.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Vertex.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enum\ProjectionType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Camera.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Transform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Renderer\Renderer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -72,6 +96,24 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Component\Component.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Timer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Camera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Transform.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Renderer\Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
