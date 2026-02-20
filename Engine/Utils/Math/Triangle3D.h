@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Types.h"
-#include "Utils/Math/Point3D.h"
+#include <vector>
+
+struct Circle3D;
 
 struct Triangle3D
 {
@@ -9,14 +11,16 @@ struct Triangle3D
 	{
 		struct
 		{
-			Point3D a;
-			Point3D b;
-			Point3D c;
+			Vector3 a;
+			Vector3 b;
+			Vector3 c;
 		};
 
-		Point3D points[3];
+		Vector3 points[3];
 		float values[9];
 	};
 
-	bool IsPointInside(const Point3D& point) const;
+	bool IsPointInside(const Vector3& point) const;
+	bool Raycast(const Ray& ray, OUT float& distance) const;
+	bool Circlecast(const Circle3D& circle, OUT std::vector<float>& theta) const;
 };
