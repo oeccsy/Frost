@@ -7,7 +7,7 @@
 TriangleScene::TriangleScene()
 {
     Camera::SetMainCamera(make_shared<Camera>());
-    Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, -10));
+    Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0,30));
     
     shared_ptr<Triangle> triangle = make_shared<Triangle>();
     AddObject(triangle);

@@ -2,7 +2,7 @@
 #include "Client.h"
 #include "framework.h"
 #include "Engine.h"
-#include "Scene/TriangleScene.h"
+#include "Scene/SphereScene.h"
 
 
 #define MAX_LOADSTRING 100
@@ -27,10 +27,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Engine engine;
     engine.Init(hWnd);
-    engine.SetScene(make_shared<TriangleScene>());
+    engine.SetScene(make_shared<SphereScene>());
     engine.Run();
+    
     MSG msg = {};
-
     return (int)msg.wParam;
 }
 

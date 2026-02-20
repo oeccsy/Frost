@@ -57,8 +57,11 @@ void Transform::SetWorldRotation(const Quaternion& rotation)
 	}
 	else
 	{
-		Matrix world_to_parent_local = parent_transform->GetWorldMatrix().Invert();
-		SetLocalRotation(rotation);
+		Quaternion parent_world_rot = parent_transform->GetWorldRotation();
+		Quaternion inv_parent;
+		parent_world_rot.Inverse(inv_parent);
+		
+		SetLocalRotation(rotation * inv_parent);
 	}
 }
 
