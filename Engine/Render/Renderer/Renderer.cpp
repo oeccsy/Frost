@@ -107,9 +107,9 @@ void Renderer::Bind(shared_ptr<Material> material)
 void Renderer::Bind(shared_ptr<Transform> transform)
 {
 	TransformData transform_data;
-	transform_data.worldMatrix = transform->GetWorldMatrix();
-	transform_data.viewMatrix = Camera::GetMainCamera()->GetViewMatrix();
-	transform_data.projMatrix = Camera::GetMainCamera()->GetProjMatrix();
+	transform_data.world_matrix = transform->GetWorldMatrix();
+	transform_data.view_matrix = Camera::GetMainCamera()->GetViewMatrix();
+	transform_data.proj_matrix = Camera::GetMainCamera()->GetProjMatrix();
 
 	D3D11_MAPPED_SUBRESOURCE sub_resource;
 	ZeroMemory(&sub_resource, sizeof(sub_resource));

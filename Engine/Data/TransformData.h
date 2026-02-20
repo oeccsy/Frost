@@ -4,7 +4,7 @@
 
 struct TransformData
 {
-    Matrix worldMatrix = Matrix::Identity;
-    Matrix viewMatrix = Matrix::Identity;;
-    Matrix projMatrix = Matrix::Identity;;
+    Matrix world_matrix = Matrix::Identity;
+    Matrix view_matrix = Matrix::Identity;;
+    Matrix proj_matrix = Matrix::Identity;;
 };

@@ -5,16 +5,17 @@
 #include "Component/Component.h"
 #include "Render/Renderer/Renderer.h"
 
-Object::Object() { }
+Object::Object()
+{
+    mesh = make_shared<Mesh>();
+    material = make_shared<Material>();
+    transform = make_shared<Transform>();
+}
 
 Object::~Object() {}
 
 void Object::Awake()
 {
-    mesh = make_shared<Mesh>();
-    material = make_shared<Material>();
-    transform = make_shared<Transform>();
-    
     is_awake = true;
 }
 
