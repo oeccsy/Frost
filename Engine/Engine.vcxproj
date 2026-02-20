@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\SimpleMath\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,7 +115,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\SimpleMath\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,7 +136,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\SimpleMath\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,7 +160,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BuildEngineDLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Includes\;..\Includes\Core\;..\Includes\Utils\SimpleMath\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -202,7 +202,15 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Render\Renderer\Renderer.h" />
     <ClInclude Include="Render\Transform.h" />
     <ClInclude Include="Scene\Scene.h" />
-    <ClInclude Include="Utils\SimpleMath.h" />
+    <ClInclude Include="Utils\Math\AABB3D.h" />
+    <ClInclude Include="Utils\Math\Circle3D.h" />
+    <ClInclude Include="Utils\Math\Line3D.h" />
+    <ClInclude Include="Utils\Math\OBB3D.h" />
+    <ClInclude Include="Utils\Math\Plane3D.h" />
+    <ClInclude Include="Utils\Math\Point3D.h" />
+    <ClInclude Include="Utils\Math\Sphere3D.h" />
+    <ClInclude Include="Utils\Math\Triangle3D.h" />
+    <ClInclude Include="Utils\SimpleMath\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component\Collider\AABBCollider.cpp" />
@@ -222,10 +230,12 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Render\Renderer\Renderer.cpp" />
     <ClCompile Include="Render\Transform.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
-    <ClCompile Include="Utils\SimpleMath.cpp" />
+    <ClCompile Include="Utils\Math\Plane3D.cpp" />
+    <ClCompile Include="Utils\Math\Triangle3D.cpp" />
+    <ClCompile Include="Utils\SimpleMath\SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Utils\SimpleMath.inl" />
+    <None Include="Utils\SimpleMath\SimpleMath.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

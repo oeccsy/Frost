@@ -27,7 +27,7 @@
     <ClInclude Include="Core\Input.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\SimpleMath.h">
+    <ClInclude Include="Utils\SimpleMath\SimpleMath.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Core\Graphics.h">
@@ -96,6 +96,30 @@
     <ClInclude Include="Component\Collider\SphereCollider.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\Math\Plane3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\Triangle3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\Line3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\Sphere3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\AABB3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\OBB3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\Circle3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Math\Point3D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp">
@@ -104,7 +128,7 @@
     <ClCompile Include="Core\Input.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\SimpleMath.cpp">
+    <ClCompile Include="Utils\SimpleMath\SimpleMath.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Core\Graphics.cpp">
@@ -152,9 +176,15 @@
     <ClCompile Include="Component\Collider\SphereCollider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\Math\Plane3D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Math\Triangle3D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Utils\SimpleMath.inl">
+    <None Include="Utils\SimpleMath\SimpleMath.inl">
       <Filter>헤더 파일</Filter>
     </None>
   </ItemGroup>
