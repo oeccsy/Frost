@@ -176,6 +176,11 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Collider\AABBCollider.h" />
+    <ClInclude Include="Component\Collider\Collider.h" />
+    <ClInclude Include="Component\Collider\MeshCollider.h" />
+    <ClInclude Include="Component\Collider\OBBCollider.h" />
+    <ClInclude Include="Component\Collider\SphereCollider.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\Engine.h" />
@@ -188,6 +193,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Data\Frustum.h" />
     <ClInclude Include="Data\TransformData.h" />
     <ClInclude Include="Data\Vertex.h" />
+    <ClInclude Include="Enum\ColliderType.h" />
     <ClInclude Include="Enum\ProjectionType.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Render\Camera.h" />
@@ -199,6 +205,11 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Utils\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Collider\AABBCollider.cpp" />
+    <ClCompile Include="Component\Collider\Collider.cpp" />
+    <ClCompile Include="Component\Collider\MeshCollider.cpp" />
+    <ClCompile Include="Component\Collider\OBBCollider.cpp" />
+    <ClCompile Include="Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\Graphics.cpp" />

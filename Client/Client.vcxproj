@@ -194,6 +194,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClInclude Include="Object\Triangle.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\FrostScene.h" />
     <ClInclude Include="Scene\SphereScene.h" />
     <ClInclude Include="Scene\TriangleScene.h" />
     <ClInclude Include="targetver.h" />
@@ -209,6 +210,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Scene\FrostScene.cpp" />
     <ClCompile Include="Scene\SphereScene.cpp" />
     <ClCompile Include="Scene\TriangleScene.cpp" />
   </ItemGroup>

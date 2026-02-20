@@ -8,5 +8,5 @@ class TriangleScene : public Scene
     
 public:
     TriangleScene();
-    ~TriangleScene();
+    virtual ~TriangleScene();
 };

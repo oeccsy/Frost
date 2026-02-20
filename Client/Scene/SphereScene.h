@@ -8,5 +8,5 @@ class SphereScene : public Scene
     
 public:
     SphereScene();
-    ~SphereScene();
+    virtual ~SphereScene();
 };
