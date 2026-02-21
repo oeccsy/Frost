@@ -188,6 +188,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Component\Frost.h" />
     <ClInclude Include="Core\Game.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Object\Sphere.h" />
@@ -201,6 +202,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Component\Frost.cpp" />
     <ClCompile Include="Core\Game.cpp" />
     <ClCompile Include="Object\Sphere.cpp" />
     <ClCompile Include="Object\Triangle.cpp" />

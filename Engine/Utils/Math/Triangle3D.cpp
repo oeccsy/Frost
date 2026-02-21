@@ -1,6 +1,7 @@
 #include "Triangle3D.h"
 #include "Utils/Math/Plane3D.h"
 #include "Utils/Math/Circle3D.h"
+#include <random>
 
 bool Triangle3D::IsPointInside(const Vector3& point) const
 {
@@ -64,4 +65,50 @@ bool Triangle3D::Circlecast(const Circle3D& circle, OUT std::vector<float>& thet
 	if (IsPointInside(point2)) theta.push_back(theta2);
 
 	return prev_theta_count < theta.size();
+}
+
+Vector3 Triangle3D::CalculateCenterPosition() const
+{
+	return Vector3((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
+}
+
+Vector3 Triangle3D::SelectRandomPointInTriangle() const
+{
+	random_device random;
+	mt19937 gen(random());
+	uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+	float r1 = dis(gen);
+	float r2 = dis(gen);
+
+	float sqrt_r1 = sqrt(r1);
+	float m = 1 - sqrt_r1;
+	float n = sqrt_r1 * r2;
+	float l = sqrt_r1 * (1 - r2);
+
+	Vector3 p = Vector3(m * a.x + n * b.x + l * c.x, m * a.y + n * b.y + l * c.y, m * a.z + n * b.z + l * c.z);
+	return p;
+}
+
+Vector3 Triangle3D::CalculateCenterPosition(Vector3 a, Vector3 b, Vector3 c)
+{
+	return Vector3((a.x + b.x + c.x) / 3, (a.y + b.y + c.y) / 3, (a.z + b.z + c.z) / 3);
+}
+
+Vector3 Triangle3D::SelectRandomPointInTriangle(Vector3 a, Vector3 b, Vector3 c)
+{
+	random_device random;
+	mt19937 gen(random());
+	uniform_real_distribution<float> dis(0.0f, 1.0f);
+
+	float r1 = dis(gen);
+	float r2 = dis(gen);
+
+	float sqrt_r1 = sqrt(r1);
+	float m = 1 - sqrt_r1;
+	float n = sqrt_r1 * r2;
+	float l = sqrt_r1 * (1 - r2);
+
+	Vector3 p = Vector3(m * a.x + n * b.x + l * c.x, m * a.y + n * b.y + l * c.y, m * a.z + n * b.z + l * c.z);
+	return p;
 }

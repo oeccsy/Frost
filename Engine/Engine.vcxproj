@@ -202,6 +202,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Render\Renderer\Renderer.h" />
     <ClInclude Include="Render\Transform.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="SpatialPartitioning\PointCloud.h" />
     <ClInclude Include="SpatialPartitioning\TriangleOctree.h" />
     <ClInclude Include="Utils\Math\AABB3D.h" />
     <ClInclude Include="Utils\Math\Circle3D.h" />
@@ -231,6 +232,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Render\Renderer\Renderer.cpp" />
     <ClCompile Include="Render\Transform.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="SpatialPartitioning\PointCloud.cpp" />
     <ClCompile Include="SpatialPartitioning\TriangleOctree.cpp" />
     <ClCompile Include="Utils\Math\Plane3D.cpp" />
     <ClCompile Include="Utils\Math\Triangle3D.cpp" />
