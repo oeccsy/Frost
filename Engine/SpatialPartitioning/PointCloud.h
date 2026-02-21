@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Core.h"
-#include "Data/Vertex.h"
 #include "Types.h"
 #include <memory>
 
-class PointCloud
+class ENGINE_API PointCloud
 {
 public:
 	PointCloud(const BoundingBox bounds);
@@ -14,6 +13,7 @@ public:
 	void GenerateMeshVertices(shared_ptr<class Mesh> base_mesh, int amount);
 	void GenerateMeshTriangleCenters(shared_ptr<class Mesh> base_mesh, int amount);
 	void GenerateScatterPoints(shared_ptr<class Mesh> base_mesh, int amount);
+	void Insert(Vector3 point);
 	
 	Vector3 GetNearPoint(Vector3 pos);
 	vector<Vector3> GetAllPoints();
@@ -22,7 +22,6 @@ public:
 
 protected:
 	FORCEINLINE bool IsLeaf() const { return children[0] == nullptr; }
-	void Insert(Vector3 point);
 	void Subdivide();
 	bool IsInBounds(Vector3 position);
 
