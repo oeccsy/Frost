@@ -5,13 +5,6 @@
 #include "Types.h"
 #include <memory>
 
-enum class PointType
-{
-	MeshVertices,
-	TriangleCenter,
-	Scatter
-};
-
 class PointCloud
 {
 public:
@@ -27,7 +20,7 @@ public:
 	bool IntersectsWithPoints(const BoundingSphere& bounding_sphere);
 
 protected:
-	FORCEINLINE bool IsLeaf() const { children[0] == nullptr; }
+	FORCEINLINE bool IsLeaf() const { return children[0] == nullptr; }
 	void Insert(Vector3 point);
 	void Subdivide();
 	bool IsInBounds(Vector3 position);
