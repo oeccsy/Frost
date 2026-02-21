@@ -180,6 +180,38 @@ Vector3 PointCloud::GetNearPoint(Vector3 pos)
 	return near_point;
 }
 
+vector<Vector3> PointCloud::GetAllPoints()
+{
+	vector<Vector3> all_points;
+
+	stack<PointCloud*> dfs_stack;
+	dfs_stack.push(this);
+
+	while (!dfs_stack.empty())
+	{
+		PointCloud* cur_section = dfs_stack.top();
+		dfs_stack.pop();
+
+		if (cur_section->IsLeaf())
+		{
+			for (const Vector3& point : cur_section->points)
+			{
+				all_points.push_back(point);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 8; ++i)
+			{
+				PointCloud* next_section = cur_section->children[i].get();
+				if(next_section) dfs_stack.push(next_section);
+			}
+		}
+	}
+
+	return all_points;
+}
+
 bool PointCloud::IntersectsWithBounds(const BoundingSphere& bounding_sphere)
 {
 	return bounds.Intersects(bounding_sphere);
@@ -214,7 +246,7 @@ bool PointCloud::IntersectsWithPoints(const BoundingSphere& bounding_sphere)
 void PointCloud::Insert(Vector3 point)
 {
 	if (!IsInBounds(point)) return;
-
+	
 	if (IsLeaf())
 	{
 		points.push_back(point);

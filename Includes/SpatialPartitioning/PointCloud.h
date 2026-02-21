@@ -16,6 +16,7 @@ public:
 	void GenerateScatterPoints(shared_ptr<class Mesh> base_mesh, int amount);
 	
 	Vector3 GetNearPoint(Vector3 pos);
+	vector<Vector3> GetAllPoints();
 	bool IntersectsWithBounds(const BoundingSphere& bounding_sphere);
 	bool IntersectsWithPoints(const BoundingSphere& bounding_sphere);
 
