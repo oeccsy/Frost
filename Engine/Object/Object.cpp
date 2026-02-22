@@ -26,7 +26,7 @@ void Object::Start()
 
 void Object::Update(float delta_time)
 {
-    for (auto component : GetComponents())
+    for (const shared_ptr<Component>& component : GetComponents())
     {
         component->Update();
     }
@@ -34,8 +34,12 @@ void Object::Update(float delta_time)
 
 void Object::Render()
 {
-    shared_ptr<Renderer> renderer = GetComponent<Renderer>();
-    if (renderer) renderer->Render();
+    vector<shared_ptr<Renderer>> renderers = GetComponents<Renderer>();
+    
+    for (shared_ptr<Renderer>& renderer : renderers)
+    {
+        if (renderer) renderer->Render();
+    }
 }
 
 void Object::AddComponent(shared_ptr<Component> component)

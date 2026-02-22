@@ -16,8 +16,8 @@ public:
 
 	FORCEINLINE int GetWidth() const { return settings.width; }
 	FORCEINLINE int GetHeight() const { return settings.height; }
-	
-	FORCEINLINE void SetScene(shared_ptr<class Scene> new_scene) { scene = new_scene; }
+	FORCEINLINE shared_ptr<class Scene> GetScene() const { return scene; }
+	void SetScene(shared_ptr<class Scene> new_scene);
 	
 	static Engine& Get();
 

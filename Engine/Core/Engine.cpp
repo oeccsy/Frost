@@ -50,8 +50,7 @@ void Engine::Run()
 			if (delta_time >= one_frame_time)
 			{
 				timer->Update();
-			
-				scene->Awake();
+				
 				scene->Start();
 				scene->Update(delta_time);
 				scene->LateUpdate();
@@ -71,6 +70,12 @@ void Engine::Run()
 void Engine::Quit()
 {
 	PostQuitMessage(0);
+}
+
+void Engine::SetScene(shared_ptr<class Scene> new_scene)
+{
+	scene = new_scene;
+	scene->Awake();
 }
 
 Engine& Engine::Get()

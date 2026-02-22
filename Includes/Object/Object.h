@@ -36,6 +36,22 @@ public:
         return nullptr;
     }
     
+    template <typename T>
+    vector<shared_ptr<T>> GetComponents()
+    {
+        vector<shared_ptr<T>> results;
+        
+        for (auto& component : components)
+        {
+            if (component->As<T>() != nullptr)
+            {
+                results.push_back(static_pointer_cast<T>(component));
+            }
+        }
+
+        return results;
+    }
+    
     FORCEINLINE shared_ptr<class Mesh> GetMesh() { return mesh; }
     FORCEINLINE shared_ptr<class Material> GetMaterial() { return material; }
     FORCEINLINE shared_ptr<class Transform> GetTransform() { return transform; }

@@ -191,6 +191,8 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClInclude Include="Component\Frost.h" />
     <ClInclude Include="Core\Game.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Object\FrostBranch.h" />
+    <ClInclude Include="Object\FrostRoot.h" />
     <ClInclude Include="Object\Sphere.h" />
     <ClInclude Include="Object\Triangle.h" />
     <ClInclude Include="pch.h" />
@@ -204,6 +206,8 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Component\Frost.cpp" />
     <ClCompile Include="Core\Game.cpp" />
+    <ClCompile Include="Object\FrostBranch.cpp" />
+    <ClCompile Include="Object\FrostRoot.cpp" />
     <ClCompile Include="Object\Sphere.cpp" />
     <ClCompile Include="Object\Triangle.cpp" />
     <ClCompile Include="pch.cpp">
@@ -215,6 +219,21 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClCompile Include="Scene\FrostScene.cpp" />
     <ClCompile Include="Scene\SphereScene.cpp" />
     <ClCompile Include="Scene\TriangleScene.cpp" />
+    <FxCompile Include="Shader\Frost.hlsl">
+      <FileType>Document</FileType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc" />
@@ -225,9 +244,6 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Engine.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Shader\" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\Phong.hlsl">

@@ -51,6 +51,12 @@
     <ClInclude Include="Component\Frost.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\FrostBranch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\FrostRoot.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -80,6 +86,12 @@
     <ClCompile Include="Component\Frost.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\FrostBranch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\FrostRoot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -100,5 +112,6 @@
   <ItemGroup>
     <FxCompile Include="Shader\Triangle.hlsl" />
     <FxCompile Include="Shader\Phong.hlsl" />
+    <FxCompile Include="Shader\Frost.hlsl" />
   </ItemGroup>
 </Project>
