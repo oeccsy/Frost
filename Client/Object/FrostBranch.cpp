@@ -6,6 +6,8 @@
 #include "Render/Material.h"
 #include "Component/Collider/MeshCollider.h"
 #include "Render/Renderer/Renderer.h"
+#include "Engine.h"
+#include "Scene/Scene.h"
 
 shared_ptr<Material> FrostBranch::frost_branch_material = nullptr;
 
@@ -111,6 +113,10 @@ bool FrostBranch::Fork(shared_ptr<MeshCollider> target)
 
 	shared_ptr<FrostBranch> leftBranch = make_shared<FrostBranch>(prev_pos, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
 	shared_ptr<FrostBranch> rightBranch = make_shared<FrostBranch>(prev_pos, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
+	leftBranch->Awake();
+	rightBranch->Awake();
+	Engine::Get().GetScene()->AddObject(leftBranch);
+	Engine::Get().GetScene()->AddObject(rightBranch);
 	
 	children.push_back(leftBranch);
 	children.push_back(rightBranch);
