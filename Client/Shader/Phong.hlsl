@@ -27,9 +27,7 @@ VS_OUTPUT VS(VS_INPUT input)
     output.position = mul(input.position, world_matrix);
     output.position = mul(output.position, view_matrix);
     output.position = mul(output.position, proj_matrix);
-    output.normal = mul(input.normal, world_matrix);
-    output.normal = mul(input.normal, view_matrix);
-    output.normal = mul(input.normal, proj_matrix);
+    output.normal = mul(input.normal, (float3x3)world_matrix);
     output.uv = input.uv;
     output.color = input.color;
     
