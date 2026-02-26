@@ -4,14 +4,21 @@
 #include "Render/Transform.h"
 #include "Object/Sphere.h"
 
-SphereScene::SphereScene()
+SphereScene::SphereScene() { }
+
+SphereScene::~SphereScene() { }
+
+void SphereScene::Awake()
 {
+    Scene::Awake();
+
     Camera::SetMainCamera(make_shared<Camera>());
     Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, 10));
-    
+
     shared_ptr<Sphere> sphere = make_shared<Sphere>();
+    sphere->Awake();
     sphere->GetTransform()->SetWorldPosition(Vector3(0, 0, 0));
     AddObject(sphere);
 }
 
-SphereScene::~SphereScene() { }
+

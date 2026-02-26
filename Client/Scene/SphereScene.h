@@ -9,4 +9,6 @@ class SphereScene : public Scene
 public:
     SphereScene();
     virtual ~SphereScene();
+
+    virtual void Awake() override;
 };

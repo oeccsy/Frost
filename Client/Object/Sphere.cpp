@@ -17,7 +17,7 @@ void Sphere::Awake()
 	CreateShader();
 	CreateInputLayout();
 
-	// AddComponent(make_shared<Renderer>());
+	AddComponent(make_shared<Renderer>());
 }
 
 void Sphere::Update(float delta_time)
