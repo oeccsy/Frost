@@ -441,6 +441,7 @@ FodyWeavers.xsd
 *.so
 *.dylib
 *.dll
+!Lib/**/*.dll
 
 # Fortran module files
 *.mod
@@ -451,6 +452,7 @@ FodyWeavers.xsd
 *.la
 *.a
 *.lib
+!Lib/**/*.lib
 
 # Executables
 *.exe
