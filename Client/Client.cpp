@@ -2,7 +2,7 @@
 #include "Client.h"
 #include "framework.h"
 #include "Engine.h"
-#include "Scene/SphereScene.h"
+#include "Scene/TeapotScene.h"
 #include "Scene/FrostScene.h"
 
 #define MAX_LOADSTRING 100
@@ -27,7 +27,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Engine engine;
     engine.Init(hWnd);
-    engine.SetScene(make_shared<FrostScene>());
+    engine.SetScene(make_shared<TeapotScene>());
     engine.Run();
     
     MSG msg = {};

@@ -194,11 +194,13 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClInclude Include="Object\FrostBranch.h" />
     <ClInclude Include="Object\FrostRoot.h" />
     <ClInclude Include="Object\Sphere.h" />
+    <ClInclude Include="Object\Teapot.h" />
     <ClInclude Include="Object\Triangle.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\FrostScene.h" />
     <ClInclude Include="Scene\SphereScene.h" />
+    <ClInclude Include="Scene\TeapotScene.h" />
     <ClInclude Include="Scene\TriangleScene.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -209,6 +211,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClCompile Include="Object\FrostBranch.cpp" />
     <ClCompile Include="Object\FrostRoot.cpp" />
     <ClCompile Include="Object\Sphere.cpp" />
+    <ClCompile Include="Object\Teapot.cpp" />
     <ClCompile Include="Object\Triangle.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -218,6 +221,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     </ClCompile>
     <ClCompile Include="Scene\FrostScene.cpp" />
     <ClCompile Include="Scene\SphereScene.cpp" />
+    <ClCompile Include="Scene\TeapotScene.cpp" />
     <ClCompile Include="Scene\TriangleScene.cpp" />
     <FxCompile Include="Shader\Frost.hlsl">
       <FileType>Document</FileType>

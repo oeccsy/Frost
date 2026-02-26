@@ -213,6 +213,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Utils\Math\Point3D.h" />
     <ClInclude Include="Utils\Math\Sphere3D.h" />
     <ClInclude Include="Utils\Math\Triangle3D.h" />
+    <ClInclude Include="Utils\ResourceManager.h" />
     <ClInclude Include="Utils\SimpleMath\SimpleMath.h" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +239,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="SpatialPartitioning\TriangleOctree.cpp" />
     <ClCompile Include="Utils\Math\Plane3D.cpp" />
     <ClCompile Include="Utils\Math\Triangle3D.cpp" />
+    <ClCompile Include="Utils\ResourceManager.cpp" />
     <ClCompile Include="Utils\SimpleMath\SimpleMath.cpp" />
   </ItemGroup>
   <ItemGroup>
