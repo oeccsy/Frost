@@ -2,7 +2,10 @@
 #include "Graphics.h"
 #include "Types.h"
 
-Material::Material() {}
+Material::Material()
+{
+	CreateRasterizerState();
+}
 
 Material::~Material() {}
 
@@ -58,6 +61,18 @@ void Material::LoadShaderFromFile(const wstring& path, const string& name, const
 		nullptr
 	);
 
+	assert(SUCCEEDED(hr));
+}
+
+void Material::CreateRasterizerState()
+{
+	D3D11_RASTERIZER_DESC desc;
+	ZeroMemory(&desc, sizeof(desc));
+	desc.FillMode = D3D11_FILL_SOLID;
+	desc.CullMode = D3D11_CULL_BACK;
+	desc.FrontCounterClockwise = true;
+
+	HRESULT hr = Graphics::GetDevice()->CreateRasterizerState(&desc, rasterizer_state.GetAddressOf());
 	assert(SUCCEEDED(hr));
 }
 

@@ -17,6 +17,7 @@ public:
 
 private:
 	void LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob);
+	void CreateRasterizerState();
 
 private:
 	friend class Renderer;
