@@ -3,6 +3,7 @@
 #include "framework.h"
 #include "Engine.h"
 #include "Scene/TeapotScene.h"
+#include "Scene/SphereScene.h"
 #include "Scene/FrostScene.h"
 
 #define MAX_LOADSTRING 100

@@ -19,6 +19,7 @@ void TeapotScene::Awake()
     shared_ptr<Teapot> teapot = make_shared<Teapot>();
     teapot->Awake();
     teapot->GetTransform()->SetWorldPosition(Vector3(0, 0, 0));
+	teapot->GetTransform()->SetWorldRotation(Vector3(30, 0, 0));
     AddObject(teapot);
 }
 

@@ -16,26 +16,10 @@ void Transform::SetLocalPosition(const Vector3& position)
 	RefreshWorldTRS();
 }
 
-void Transform::SetLocalRotation(const Quaternion& rotation)
-{
-	local_rotation = rotation;
-
-	RefreshMatrix();
-	RefreshWorldTRS();
-}
-
-void Transform::SetLocalScale(const Vector3& scale)
-{
-	local_scale = scale;
-
-	RefreshMatrix();
-	RefreshWorldTRS();
-}
-
 void Transform::SetWorldPosition(const Vector3& position)
 {
 	shared_ptr<Transform> parent_transform = parent.lock();
-	
+
 	if (parent_transform == nullptr)
 	{
 		SetLocalPosition(position);
@@ -47,10 +31,30 @@ void Transform::SetWorldPosition(const Vector3& position)
 	}
 }
 
+void Transform::SetLocalRotation(const Vector3& rotation)
+{
+	Quaternion quaternion = ConvertToQuaternion(rotation);
+	SetLocalRotation(quaternion);
+}
+
+void Transform::SetWorldRotation(const Vector3& rotation)
+{
+	Quaternion quaternion = ConvertToQuaternion(rotation);
+	SetWorldRotation(quaternion);
+}
+
+void Transform::SetLocalRotation(const Quaternion& rotation)
+{
+	local_rotation = rotation;
+
+	RefreshMatrix();
+	RefreshWorldTRS();
+}
+
 void Transform::SetWorldRotation(const Quaternion& rotation)
 {
 	shared_ptr<Transform> parent_transform = parent.lock();
-	
+
 	if (parent_transform == nullptr)
 	{
 		SetLocalRotation(rotation);
@@ -60,9 +64,17 @@ void Transform::SetWorldRotation(const Quaternion& rotation)
 		Quaternion parent_world_rot = parent_transform->GetWorldRotation();
 		Quaternion inv_parent;
 		parent_world_rot.Inverse(inv_parent);
-		
+
 		SetLocalRotation(rotation * inv_parent);
 	}
+}
+
+void Transform::SetLocalScale(const Vector3& scale)
+{
+	local_scale = scale;
+
+	RefreshMatrix();
+	RefreshWorldTRS();
 }
 
 void Transform::SetWorldScale(const Vector3& scale)
@@ -98,29 +110,38 @@ void Transform::RefreshMatrix()
 	}
 }
 
-Vector3 ConvertToEuler(Quaternion quaternion)
+void Transform::RefreshWorldTRS()
+{
+	world_matrix.Decompose(world_scale, world_rotation, world_position);
+}
+
+Vector3 Transform::ConvertToEuler(Quaternion quaternion)
 {
 	Vector3 angles;
-	
+
 	// roll (x-axis)
 	double sinr_cosp = 2 * (quaternion.w * quaternion.x + quaternion.y * quaternion.z);
 	double cosr_cosp = 1 - 2 * (quaternion.x * quaternion.x + quaternion.y * quaternion.y);
-	angles.x = static_cast<float>(std::atan2(sinr_cosp, cosr_cosp));
+	angles.x = XMConvertToRadians(std::atan2(sinr_cosp, cosr_cosp));
 
 	// pitch (y-axis)
 	double sinp = std::sqrt(1 + 2 * (quaternion.w * quaternion.y - quaternion.x * quaternion.z));
 	double cosp = std::sqrt(1 - 2 * (quaternion.w * quaternion.y - quaternion.x * quaternion.z));
-	angles.y = static_cast<float>(2 * std::atan2(sinp, cosp) - XM_PI / 2);
+	angles.y = XMConvertToRadians(2 * std::atan2(sinp, cosp) - XM_PI / 2);
 
 	// yaw (z-axis)
 	double siny_cosp = 2 * (quaternion.w * quaternion.z + quaternion.x * quaternion.y);
 	double cosy_cosp = 1 - 2 * (quaternion.y * quaternion.y + quaternion.z * quaternion.z);
-	angles.z = static_cast<FLOAT>(std::atan2(siny_cosp, cosy_cosp));
+	angles.z = XMConvertToRadians(std::atan2(siny_cosp, cosy_cosp));
 
 	return angles;
 }
 
-void Transform::RefreshWorldTRS()
+Quaternion Transform::ConvertToQuaternion(Vector3 euler)
 {
-	world_matrix.Decompose(world_scale, world_rotation, world_position);
+	float x_radian = XMConvertToRadians(euler.x);
+	float y_radian = XMConvertToRadians(euler.y);
+	float z_radian = XMConvertToRadians(euler.z);
+
+	return Quaternion::CreateFromYawPitchRoll(y_radian, x_radian, z_radian);
 }
