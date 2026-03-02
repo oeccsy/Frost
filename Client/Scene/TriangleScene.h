@@ -8,5 +8,7 @@ class TriangleScene : public Scene
     
 public:
     TriangleScene();
-    virtual ~TriangleScene();
+    virtual ~TriangleScene() override;
+    
+    virtual void Awake() override;
 };

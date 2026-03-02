@@ -17,8 +17,6 @@ void Teapot::Awake()
 	CreateGeometry();
 	CreateShader();
 	CreateInputLayout();
-
-	// AddComponent(make_shared<Renderer>());
 }
 
 void Teapot::Update(float delta_time)

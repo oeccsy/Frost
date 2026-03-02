@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "Data/EngineSettings.h"
+#include "Scene/Scene.h"
 #include <memory>
 
 class ENGINE_API Engine
@@ -17,7 +18,13 @@ public:
 	FORCEINLINE int GetWidth() const { return settings.width; }
 	FORCEINLINE int GetHeight() const { return settings.height; }
 	FORCEINLINE shared_ptr<class Scene> GetScene() const { return scene; }
-	void SetScene(shared_ptr<class Scene> new_scene);
+	
+	template<typename T>
+	void LoadScene()
+	{
+		scene = make_shared<T>();
+		scene->Awake();
+	}
 	
 	static Engine& Get();
 

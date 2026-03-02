@@ -16,8 +16,6 @@ void Triangle::Awake()
     CreateGeometry();
     CreateShader();
     CreateInputLayout();
-    
-    AddComponent(make_shared<Renderer>());
 }
 
 void Triangle::Update(float delta_time) { }
@@ -35,7 +33,7 @@ void Triangle::CreateGeometry()
     vertices[2].color = Color(0.f, 0.f, 1.f, 1.f);
 
     vector<uint32> indices;
-    indices = { 0, 2, 1 };
+    indices = { 0, 1, 2 };
 
     GetMesh()->SetVertices(vertices);
     GetMesh()->SetIndices(indices);
