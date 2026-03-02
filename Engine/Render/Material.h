@@ -2,6 +2,8 @@
 
 #include "Core.h"
 #include <string>
+#include <unordered_map>
+#include <memory>
 
 class ENGINE_API Material
 {
@@ -15,8 +17,24 @@ public:
 	void CreatePS(const wstring& path, const string& name, const string& version);
 	void AddTexture(const wstring& path);
 
+	template<typename T>
+	static shared_ptr<Material> GetMaterial()
+	{
+		if (materials.find(T::TypeIdClass()) != materials.end()) return materials[T::TypeIdClass()];
+		return nullptr;
+	}
+	
+	template<typename T>
+	static shared_ptr<Material> CreateMaterial()
+	{
+		if (materials.find(T::TypeIdClass()) != materials.end()) return nullptr;
+		shared_ptr<Material> new_material = make_shared<Material>();
+		materials.insert({ T::TypeIdClass(), new_material });
+		return new_material;
+	}
+
 private:
-	void LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob);
+	void LoadShaderFromFile(const wstring& path, const string& entry_point, const string& version, ComPtr<ID3DBlob>& blob);
 	void CreateRasterizerState();
 
 private:
@@ -43,4 +61,6 @@ private:
 
 	// OM
 	ComPtr<ID3D11BlendState> blend_state;
+	
+	static unordered_map<size_t, shared_ptr<Material>> materials;
 };

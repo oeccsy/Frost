@@ -9,6 +9,8 @@ Material::Material()
 
 Material::~Material() {}
 
+unordered_map<size_t, shared_ptr<Material>> Material::materials;
+
 void Material::CreateVS(const wstring& path, const string& name, const string& version)
 {
 	LoadShaderFromFile(path, name, version, vs_blob);
@@ -45,7 +47,7 @@ void Material::AddTexture(const wstring& path)
 	textures.push_back(shader_resource_view);
 }
 
-void Material::LoadShaderFromFile(const wstring& path, const string& name, const string& version, ComPtr<ID3DBlob>& blob)
+void Material::LoadShaderFromFile(const wstring& path, const string& entry_point, const string& version, ComPtr<ID3DBlob>& blob)
 {
 	const uint32 compile_flag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION; // TODO : Debug -> Release
 
@@ -53,7 +55,7 @@ void Material::LoadShaderFromFile(const wstring& path, const string& name, const
 		path.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		name.c_str(),
+		entry_point.c_str(),
 		version.c_str(),
 		compile_flag,
 		0,

@@ -9,8 +9,6 @@
 #include "Engine.h"
 #include "Scene/Scene.h"
 
-shared_ptr<Material> FrostBranch::frost_branch_material = nullptr;
-
 FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, shared_ptr<FrostBranch> parent)
 {
 	this->parent = parent;
@@ -35,15 +33,14 @@ FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, sha
 
 	mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 	mesh->CreateBuffers();
-
-	if (frost_branch_material == nullptr)
-	{
-		frost_branch_material = make_shared<Material>();
-		frost_branch_material->CreateVS(L"Shader/Frost.hlsl", "VS", "vs_5_0");
-		frost_branch_material->CreatePS(L"Shader/Frost.hlsl", "PS", "ps_5_0");
-	}
 	
-	material = frost_branch_material;
+	material = Material::GetMaterial<FrostBranch>();
+	if (material == nullptr)
+	{
+		material = Material::CreateMaterial<FrostBranch>();
+		material->CreateVS(L"Shader/Frost.hlsl", "VS", "vs_5_0");
+		material->CreatePS(L"Shader/Frost.hlsl", "PS", "ps_5_0");
+	}
 	
 	mesh->CreateInputLayout(material);
 }
