@@ -77,19 +77,19 @@ bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
 
 	while (!dfs_stack.empty())
 	{
-		shared_ptr<TriangleOctree> curOctree = dfs_stack.top();
+		shared_ptr<TriangleOctree> cur_octree = dfs_stack.top();
 		dfs_stack.pop();
 
-		for (auto& triangle : curOctree->GetTriangles())
+		for (auto& triangle : cur_octree->GetTriangles())
 		{
 			triangle.Circlecast(circle, theta_container);
 		}
 
-		if (!curOctree->IsLeaf())
+		if (!cur_octree->IsLeaf())
 		{
 			for (int i = 0; i < 8; i++)
 			{
-				shared_ptr<TriangleOctree> child = curOctree->GetChild(i);
+				shared_ptr<TriangleOctree> child = cur_octree->GetChild(i);
 				if (child->IntersectsWithBounds(check_bounds)) dfs_stack.push(child);
 			}
 		}
@@ -133,11 +133,11 @@ Vector3 MeshCollider::Snap(Vector3 position)
 
 			if (triangle.IsPointInside(plane_hit_point))
 			{
-				float curDistSquared = Vector3::DistanceSquared(plane_hit_point, position);
-				if (curDistSquared < snap_dist_squared)
+				float cur_dist_squared = Vector3::DistanceSquared(plane_hit_point, position);
+				if (cur_dist_squared < snap_dist_squared)
 				{
 					snap_pos = plane_hit_point;
-					snap_dist_squared = curDistSquared;
+					snap_dist_squared = cur_dist_squared;
 				}
 			}
 			else
@@ -158,26 +158,26 @@ Vector3 MeshCollider::Snap(Vector3 position)
 				float ab_dot_ab = ab.Dot(ab);
 				float ab_dot_ap = ab.Dot(ap);
 
-				Vector3 closestPos;
+				Vector3 closest_pos;
 
 				if (ab_dot_ap < 0)
 				{
-					closestPos = closest_line.start;
+					closest_pos = closest_line.start;
 				}
 				else if (ab_dot_ap > ab_dot_ab)
 				{
-					closestPos = closest_line.end;
+					closest_pos = closest_line.end;
 				}
 				else
 				{
 					float t = ab_dot_ap / ab_dot_ab;
-					closestPos = closest_line.start + t * ab;
+					closest_pos = closest_line.start + t * ab;
 				}
 
-				float cur_dist_squared = Vector3::DistanceSquared(closestPos, position);
+				float cur_dist_squared = Vector3::DistanceSquared(closest_pos, position);
 				if (cur_dist_squared < snap_dist_squared)
 				{
-					snap_pos = closestPos;
+					snap_pos = closest_pos;
 					snap_dist_squared = cur_dist_squared;
 				}
 			}

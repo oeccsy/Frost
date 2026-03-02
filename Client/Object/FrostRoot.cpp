@@ -18,16 +18,16 @@ void FrostRoot::Grow(shared_ptr<MeshCollider> target)
 		branch->Grow(target);
 	}
 
-	for (auto mainBranch : growing_main_branches)
+	for (auto main_branch : growing_main_branches)
 	{
-		if (mainBranch->Fork(target))
+		if (main_branch->Fork(target))
 		{
-			vector<shared_ptr<FrostBranch>> subBranches = mainBranch->GetChildren();
+			vector<shared_ptr<FrostBranch>> sub_branches = main_branch->GetChildren();
 
-			branches.push_back(*(subBranches.end() - 1));
-			branches.push_back(*(subBranches.end() - 2));
-			growing_branches.insert(*(subBranches.end() - 1));
-			growing_branches.insert(*(subBranches.end() - 2));
+			branches.push_back(*(sub_branches.end() - 1));
+			branches.push_back(*(sub_branches.end() - 2));
+			growing_branches.insert(*(sub_branches.end() - 1));
+			growing_branches.insert(*(sub_branches.end() - 2));
 		}
 	}
 }
@@ -54,13 +54,13 @@ void FrostRoot::Fork(shared_ptr<MeshCollider> target)
 		Matrix rot = Matrix::CreateFromAxisAngle(fork_normal, angle);
 		Vector3 dir = Vector3::Transform(bi_normal, rot);
 
-		shared_ptr<FrostBranch> newBranch = make_shared<FrostBranch>(base_point, dir, fork_normal, nullptr);
-		newBranch->Awake();
-		Engine::Get().GetScene()->AddObject(newBranch);
+		shared_ptr<FrostBranch> new_branch = make_shared<FrostBranch>(base_point, dir, fork_normal, nullptr);
+		new_branch->Awake();
+		Engine::Get().GetScene()->AddObject(new_branch);
 		
-		branches.push_back(newBranch);
-		growing_branches.insert(newBranch);
-		growing_main_branches.insert(newBranch);
+		branches.push_back(new_branch);
+		growing_branches.insert(new_branch);
+		growing_main_branches.insert(new_branch);
 	}
 }
 
@@ -71,9 +71,9 @@ void FrostRoot::StopIntersectingBranches(shared_ptr<PointCloud> target)
 		shared_ptr<FrostBranch> branch = *it;
 
 		float min_dist = (branch->GetParent() == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED - 0.01f : Frost::SUB_BRANCH_GROW_SPEED - 0.01f;
-		BoundingSphere checkBounds({ branch->GetBranchEndPos(), min_dist });
+		BoundingSphere check_bounds({ branch->GetBranchEndPos(), min_dist });
 
-		if (target->IntersectsWithPoints(checkBounds))
+		if (target->IntersectsWithPoints(check_bounds))
 		{
 			if ((*it)->GetParent() == nullptr) growing_main_branches.erase(*it);
 			it = growing_branches.erase(it);

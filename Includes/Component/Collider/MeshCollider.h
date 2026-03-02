@@ -15,7 +15,7 @@ class ENGINE_API MeshCollider : public Collider
 	
 public:
 	MeshCollider();
-	virtual ~MeshCollider();
+	virtual ~MeshCollider() override;
 
 	virtual void Awake() override;
 

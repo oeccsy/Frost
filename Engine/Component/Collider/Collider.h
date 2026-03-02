@@ -12,7 +12,7 @@ class ENGINE_API Collider : public Component
 
 public:
 	Collider(ColliderType collider_type);
-	virtual ~Collider();
+	virtual ~Collider() override;
 
 public:
 	virtual bool Intersects(Ray& ray, OUT float& distance) = 0;

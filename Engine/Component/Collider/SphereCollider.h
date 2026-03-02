@@ -11,7 +11,7 @@ class ENGINE_API SphereCollider : public Collider
 
 public:
 	SphereCollider();
-	virtual ~SphereCollider();
+	virtual ~SphereCollider() override;
 
 public:
 	virtual void Update() override;

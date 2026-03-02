@@ -19,11 +19,11 @@ bool OBBCollider::Intersects(shared_ptr<Collider>& other)
 	switch (type)
 	{
 	case ColliderType::Sphere:
-		return bounding_box.Intersects(dynamic_pointer_cast<SphereCollider>(other)->GetBoundingSphere());
+		return bounding_box.Intersects(other->As<SphereCollider>()->GetBoundingSphere());
 	case ColliderType::AABB:
-		return bounding_box.Intersects(dynamic_pointer_cast<AABBCollider>(other)->GetBoundingBox());
+		return bounding_box.Intersects(other->As<AABBCollider>()->GetBoundingBox());
 	case ColliderType::OBB:
-		return bounding_box.Intersects(dynamic_pointer_cast<OBBCollider>(other)->GetBoundingBox());
+		return bounding_box.Intersects(other->As<OBBCollider>()->GetBoundingBox());
 	}
 
 	return false;

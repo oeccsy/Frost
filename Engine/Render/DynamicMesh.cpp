@@ -45,12 +45,12 @@ void DynamicMesh::CreateBuffers()
 void DynamicMesh::UpdateBuffers()
 {
 	{
-		D3D11_MAPPED_SUBRESOURCE subResource = { };
-		ZeroMemory(&subResource, sizeof(subResource));
+		D3D11_MAPPED_SUBRESOURCE sub_resource = { };
+		ZeroMemory(&sub_resource, sizeof(sub_resource));
 
 		auto deviceContext = Graphics::GetDeviceContext();
-		deviceContext->Map(vertex_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-		::memcpy(subResource.pData, vertices.data(), sizeof(Vertex) * vertices.size());
+		deviceContext->Map(vertex_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &sub_resource);
+		::memcpy(sub_resource.pData, vertices.data(), sizeof(Vertex) * vertices.size());
 		deviceContext->Unmap(vertex_buffer.Get(), 0);
 	}
 

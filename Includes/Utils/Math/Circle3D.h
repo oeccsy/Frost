@@ -8,6 +8,6 @@ struct Circle3D
 	Vector3 normal;
 	float radius;
 
-	Vector3 xAxis;
-	Vector3 yAxis;
+	Vector3 x_axis;
+	Vector3 y_axis;
 };

@@ -11,7 +11,7 @@ class ENGINE_API AABBCollider : Collider
 
 public:
 	AABBCollider();
-	virtual ~AABBCollider();
+	virtual ~AABBCollider() override;
 
 public:
 	virtual bool Intersects(Ray& ray, OUT float& distance) override;

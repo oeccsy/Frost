@@ -8,8 +8,8 @@ class ENGINE_API Input
 
 	struct KeyState
 	{
-		bool isKeyDown = false;
-		bool previouseKeyDown = false;
+		bool is_key_down = false;
+		bool previouse_key_down = false;
 	};
 
 public:
@@ -26,7 +26,7 @@ private:
 	void SavePreviousKeyStates();
 
 private:
-	KeyState keyStates[255] = { };
+	KeyState key_states[255] = { };
 
 	static Input* instance;
 };

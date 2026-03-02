@@ -15,12 +15,12 @@ FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, sha
 	guide_circle.center = base_point;
 	guide_circle.radius = (parent == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED : Frost::SUB_BRANCH_GROW_SPEED;
 
-	guide_circle.xAxis = normal;
-	guide_circle.yAxis = dir;
-	guide_circle.normal = guide_circle.xAxis.Cross(guide_circle.yAxis);
+	guide_circle.x_axis = normal;
+	guide_circle.y_axis = dir;
+	guide_circle.normal = guide_circle.x_axis.Cross(guide_circle.y_axis);
 
-	guide_circle.xAxis.Normalize();
-	guide_circle.yAxis.Normalize();
+	guide_circle.x_axis.Normalize();
+	guide_circle.y_axis.Normalize();
 	guide_circle.normal.Normalize();
 
 	mesh = make_shared<DynamicMesh>();
@@ -59,7 +59,7 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 
 	if (target->Intersects(guide_circle, theta))
 	{
-		Vector3 hit_point = guide_circle.center + guide_circle.radius * (cos(theta) * guide_circle.xAxis + sin(theta) * guide_circle.yAxis);
+		Vector3 hit_point = guide_circle.center + guide_circle.radius * (cos(theta) * guide_circle.x_axis + sin(theta) * guide_circle.y_axis);
 		
 		Vertex new_vertex({ hit_point, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
 		branch.push_back(new_vertex);
@@ -77,11 +77,11 @@ bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
 		Vector3 new_normal = new_dir.Cross(guide_circle.normal);
 
 		guide_circle.center = hit_point;
-		guide_circle.xAxis = new_normal;
-		guide_circle.yAxis = new_dir;
+		guide_circle.x_axis = new_normal;
+		guide_circle.y_axis = new_dir;
 
-		guide_circle.xAxis.Normalize();
-		guide_circle.yAxis.Normalize();
+		guide_circle.x_axis.Normalize();
+		guide_circle.y_axis.Normalize();
 
 		return true;
 	}
@@ -96,8 +96,8 @@ bool FrostBranch::Fork(shared_ptr<MeshCollider> target)
 	if (branch.size() < 3) return false;
 
 	Vector3 prev_pos = (branch.end() - 2)->position;
-	Vector3 dir = guide_circle.yAxis;
-	Vector3 normal = guide_circle.xAxis;
+	Vector3 dir = guide_circle.y_axis;
+	Vector3 normal = guide_circle.x_axis;
 
 	constexpr float leftAngle = ::XMConvertToRadians(-60.0f);
 	constexpr float rightAngle = ::XMConvertToRadians(60.0f);

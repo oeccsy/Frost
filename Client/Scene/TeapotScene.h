@@ -8,7 +8,7 @@ class TeapotScene : public Scene
 
 public:
     TeapotScene();
-    virtual ~TeapotScene();
+    virtual ~TeapotScene() override;
 
     virtual void Awake() override;
 };

@@ -19,12 +19,12 @@ bool ResourceManager::LoadObj(const char* path, shared_ptr<class Mesh> mesh)
 
 	while (true)
 	{
-		char lineHeader[128];
+		char line_header[128];
 
-		if (fscanf_s(file, "%s", lineHeader, 128) == EOF)
+		if (fscanf_s(file, "%s", line_header, 128) == EOF)
 			break;
 
-		if (strcmp(lineHeader, "v") == 0)
+		if (strcmp(line_header, "v") == 0)
 		{
 			Vertex vertex;
 			fscanf_s(file, "%f %f %f\n", &vertex.position.x, &vertex.position.y, &vertex.position.z);
@@ -34,7 +34,7 @@ bool ResourceManager::LoadObj(const char* path, shared_ptr<class Mesh> mesh)
 
 			temp_vertices.push_back(vertex);
 		}
-		else if (strcmp(lineHeader, "f") == 0)
+		else if (strcmp(line_header, "f") == 0)
 		{
 			uint32 vertexIndex[3];
 			int matches = fscanf_s(file, "%d %d %d\n", &vertexIndex[0], &vertexIndex[1], &vertexIndex[2]);

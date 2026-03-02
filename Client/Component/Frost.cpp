@@ -45,10 +45,10 @@ void Frost::Grow()
 	{
 		root->Grow(guide_mesh_collider);
 
-		vector<Vector3> endPoints = root->GetLatestEndPoints();
+		vector<Vector3> end_points = root->GetLatestEndPoints();
 		root->StopIntersectingBranches(frost_points);
 
-		for (Vector3& point : endPoints)
+		for (Vector3& point : end_points)
 		{
 			frost_points->Insert(point);
 		}
@@ -61,9 +61,9 @@ void Frost::ForkCloseRoots()
 	{
 		auto root = *it;
 
-		BoundingSphere checkBounds({ root->GetBasePoint(), ROOT_FORK_DIST });
+		BoundingSphere check_bounds({ root->GetBasePoint(), ROOT_FORK_DIST });
 
-		if (frost_points->IntersectsWithPoints(checkBounds))
+		if (frost_points->IntersectsWithPoints(check_bounds))
 		{
 			root->Fork(guide_mesh_collider);
 			it = unforked_frost_roots.erase(it);

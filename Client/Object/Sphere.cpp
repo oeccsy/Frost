@@ -41,16 +41,16 @@ void Sphere::CreateGeometry()
 
 	for (uint32 y = 1; y <= stack_count - 1; y++)
 	{
-		float thetaY = y * stack_angle;
+		float theta_y = y * stack_angle;
 
 		for (uint32 x = 0; x <= slice_count; x++)
 		{
-			float thetaX = x * slice_angle;
+			float theta_x = x * slice_angle;
 
 			Vertex vertex;
-			vertex.position.x = radius * sinf(thetaY) * cosf(thetaX);
-			vertex.position.y = radius * cosf(thetaY);
-			vertex.position.z = radius * sinf(thetaY) * sinf(thetaX);
+			vertex.position.x = radius * sinf(theta_y) * cosf(theta_x);
+			vertex.position.y = radius * cosf(theta_y);
+			vertex.position.z = radius * sinf(theta_y) * sinf(theta_x);
 
 			vertex.normal = Vector3(vertex.position.x / radius, vertex.position.y / radius, vertex.position.z / radius);
 
