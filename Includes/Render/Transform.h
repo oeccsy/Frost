@@ -21,7 +21,7 @@ public:
     void SetLocalPosition(const Vector3& position);
     void SetWorldPosition(const Vector3& position);
     void SetLocalRotation(const Vector3& rotation);
-	void SetWorldRotation(const Vector3& rotation);
+    void SetWorldRotation(const Vector3& rotation);
     void SetLocalRotation(const Quaternion& rotation);
     void SetWorldRotation(const Quaternion& rotation);
     void SetLocalScale(const Vector3& scale);
@@ -42,7 +42,7 @@ private:
     void RefreshMatrix();
     void RefreshWorldTRS();
     Vector3 ConvertToEuler(Quaternion quaternion);
-	Quaternion ConvertToQuaternion(Vector3 euler);
+    Quaternion ConvertToQuaternion(Vector3 euler);
 
 private:
     Vector3 local_position = Vector3::Zero;
