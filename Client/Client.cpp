@@ -28,7 +28,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Engine engine;
     engine.Init(hWnd);
-    engine.SetScene(make_shared<TeapotScene>());
+    engine.SetScene(make_shared<SphereScene>());
     engine.Run();
     
     MSG msg = {};

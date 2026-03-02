@@ -15,10 +15,8 @@ void SphereScene::Awake()
     Camera::SetMainCamera(make_shared<Camera>());
     Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, 10));
 
-    shared_ptr<Sphere> sphere = make_shared<Sphere>();
-    sphere->Awake();
+    shared_ptr<Sphere> sphere = SpawnObject<Sphere>();
     sphere->GetTransform()->SetWorldPosition(Vector3(0, 0, 0));
-    AddObject(sphere);
 }
 
 

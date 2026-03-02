@@ -23,6 +23,15 @@ public:
     virtual void Render();
     
     void ProcessAddAndDestroyObjects();
+
+	template<typename T>
+    shared_ptr<T> SpawnObject()
+    {
+		shared_ptr<T> new_object = make_shared<T>();
+		new_object->Awake();
+		add_requested_objects.push_back(new_object);
+		return new_object;
+    }
     
 protected:
     vector<shared_ptr<class Object>> objects;
