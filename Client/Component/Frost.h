@@ -29,11 +29,8 @@ public:
 
 private:
 	shared_ptr<class MeshCollider> guide_mesh_collider;
-	shared_ptr<class PointCloud> base_points;
-	
-	shared_ptr<class PointCloud> unforked_roots;
 	shared_ptr<class PointCloud> frost_points;
 
-	unordered_set<shared_ptr<class FrostRoot>> unforked_frost_roots;
-	unordered_set<shared_ptr<class FrostRoot>> forked_frost_roots;
+	vector<shared_ptr<class FrostRoot>> unforked_frost_roots;
+	vector<shared_ptr<class FrostRoot>> forked_frost_roots;
 };

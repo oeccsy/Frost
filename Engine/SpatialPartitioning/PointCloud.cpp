@@ -1,102 +1,26 @@
 #include "PointCloud.h"
 #include "Render/Mesh.h"
-#include "Utils/Math/Triangle3D.h"
-#include <random>
-#include <limits>
 #include <stack>
 
 PointCloud::PointCloud(const BoundingBox bounds) : bounds(bounds) { }
 
 PointCloud::~PointCloud() { }
 
-void PointCloud::GenerateMeshVertices(shared_ptr<class Mesh> base_mesh, int amount)
+void PointCloud::Insert(Vector3 point)
 {
-	vector<Vertex> base_vertices = base_mesh->GetVertices();
-	vector<Vertex> shuffled_vertices = base_vertices;
-
-	random_device rd;
-	mt19937 gen(rd());
-	shuffle(shuffled_vertices.begin(), shuffled_vertices.end(), gen);
-
-	amount = min(amount, base_vertices.size());
-
-	for (int i = 0; i < amount; i++)
+	if (!IsInBounds(point)) return;
+	
+	if (IsLeaf())
 	{
-		Insert(shuffled_vertices[i].position);
+		points.push_back(point);
+		if (points.size() > MAX_POINTS_PER_SECTION) Subdivide();
 	}
-}
-
-void PointCloud::GenerateMeshTriangleCenters(shared_ptr<class Mesh> base_mesh, int amount)
-{
-	if (base_mesh->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) return;
-
-	vector<Vertex> base_vertices = base_mesh->GetVertices();
-	vector<uint32> base_indices = base_mesh->GetIndices();
-
-	vector<int> triangle_first_indices;
-
-	for (int i = 0; i < base_indices.size() / 3; i++)
+	else
 	{
-		triangle_first_indices.push_back(i * 3);
-	}
-
-	random_device rd;
-	mt19937 gen(rd());
-	shuffle(triangle_first_indices.begin(), triangle_first_indices.end(), gen);
-
-	amount = min(amount, triangle_first_indices.size());
-
-	for (int i = 0; i < amount; i++)
-	{
-		int triangle_first_index = triangle_first_indices[i];
-		int a_index = base_indices[triangle_first_index];
-		int b_index = base_indices[triangle_first_index + 1];
-		int c_index = base_indices[triangle_first_index + 2];
-
-		Vector3 a = base_vertices[a_index].position;
-		Vector3 b = base_vertices[b_index].position;
-		Vector3 c = base_vertices[c_index].position;
-
-		Vector3 triangle_center = Triangle3D::CalculateCenterPosition(a, b, c);
-		Insert(triangle_center);
-		// TODO : Normal 필요성 검토
-	}
-}
-
-void PointCloud::GenerateScatterPoints(shared_ptr<class Mesh> base_mesh, int amount)
-{
-	if (base_mesh->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) return;
-
-	vector<Vertex> base_vertices = base_mesh->GetVertices();
-	vector<uint32> base_indices = base_mesh->GetIndices();
-
-	vector<int> triangle_first_indices;
-
-	for (int i = 0; i < base_indices.size() / 3; i++)
-	{
-		triangle_first_indices.push_back(i * 3);
-	}
-
-	random_device rd;
-	mt19937 gen(rd());
-	shuffle(triangle_first_indices.begin(), triangle_first_indices.end(), gen);
-
-	amount = min(amount, triangle_first_indices.size());
-
-	for (int i = 0; i < amount; i++)
-	{
-		int triangle_first_index = triangle_first_indices[i];
-		int a_index = base_indices[triangle_first_index];
-		int b_index = base_indices[triangle_first_index + 1];
-		int c_index = base_indices[triangle_first_index + 2];
-
-		Vector3 a = base_vertices[a_index].position;
-		Vector3 b = base_vertices[b_index].position;
-		Vector3 c = base_vertices[c_index].position;
-
-		Vector3 random_point_in_triangle = Triangle3D::SelectRandomPointInTriangle(a, b, c);
-		Insert(random_point_in_triangle);
-		// TODO : Normal 필요성 검토
+		for (int i = 0; i < 8; i++)
+		{
+			children[i]->Insert(point);
+		}
 	}
 }
 
@@ -243,23 +167,6 @@ bool PointCloud::IntersectsWithPoints(const BoundingSphere& bounding_sphere)
 	}
 }
 
-void PointCloud::Insert(Vector3 point)
-{
-	if (!IsInBounds(point)) return;
-	
-	if (IsLeaf())
-	{
-		points.push_back(point);
-		if (points.size() > MAX_POINTS_PER_SECTION) Subdivide();
-	}
-	else
-	{
-		for (int i = 0; i < 8; i++)
-		{
-			children[i]->Insert(point);
-		}
-	}
-}
 
 void PointCloud::Subdivide()
 {
