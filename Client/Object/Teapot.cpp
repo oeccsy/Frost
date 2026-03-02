@@ -18,10 +18,13 @@ void Teapot::Awake()
 	CreateShader();
 	CreateInputLayout();
 
-	AddComponent(make_shared<Renderer>());
+	// AddComponent(make_shared<Renderer>());
 }
 
-void Teapot::Update(float delta_time) { }
+void Teapot::Update(float delta_time)
+{
+	Object::Update(delta_time);
+}
 
 void Teapot::CreateGeometry()
 {

@@ -3,6 +3,7 @@
 #include "Render/Camera.h"
 #include "Render/Transform.h"
 #include "Object/Sphere.h"
+#include "Object/Teapot.h"
 #include "Component/Collider/MeshCollider.h"
 #include "Component/Frost.h"
 
@@ -15,11 +16,12 @@ void FrostScene::Awake()
     Scene::Awake();
     
     Camera::SetMainCamera(make_shared<Camera>());
-    Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 0, 10));
+    Camera::GetMainCamera()->GetTransform()->SetWorldPosition(Vector3(0, 3, 10));
+    Camera::GetMainCamera()->GetTransform()->SetWorldRotation(Vector3(-10, 0, 0));
 
-    shared_ptr<Sphere> sphere = SpawnObject<Sphere>();
-    sphere->AddComponent(make_shared<MeshCollider>());
-    sphere->AddComponent(make_shared<Frost>());
+    shared_ptr<Teapot> teapot = SpawnObject<Teapot>();
+    teapot->AddComponent(make_shared<MeshCollider>());
+    teapot->AddComponent(make_shared<Frost>());
     
-    sphere->GetComponent<Frost>()->ForkRandomRoots();
+    teapot->GetComponent<Frost>()->ForkRandomRoots();
 }
