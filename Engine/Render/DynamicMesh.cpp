@@ -48,20 +48,20 @@ void DynamicMesh::UpdateBuffers()
 		D3D11_MAPPED_SUBRESOURCE sub_resource = { };
 		ZeroMemory(&sub_resource, sizeof(sub_resource));
 
-		auto deviceContext = Graphics::GetDeviceContext();
-		deviceContext->Map(vertex_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &sub_resource);
+		auto device_context = Graphics::GetDeviceContext();
+		device_context->Map(vertex_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &sub_resource);
 		::memcpy(sub_resource.pData, vertices.data(), sizeof(Vertex) * vertices.size());
-		deviceContext->Unmap(vertex_buffer.Get(), 0);
+		device_context->Unmap(vertex_buffer.Get(), 0);
 	}
 
 	{
-		D3D11_MAPPED_SUBRESOURCE subResource = { };
-		ZeroMemory(&subResource, sizeof(subResource));
+		D3D11_MAPPED_SUBRESOURCE sub_resource = { };
+		ZeroMemory(&sub_resource, sizeof(sub_resource));
 
-		auto deviceContext = Graphics::GetDeviceContext();
-		deviceContext->Map(index_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
-		::memcpy(subResource.pData, indices.data(), sizeof(uint32) * indices.size());
-		deviceContext->Unmap(index_buffer.Get(), 0);
+		auto device_context = Graphics::GetDeviceContext();
+		device_context->Map(index_buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &sub_resource);
+		::memcpy(sub_resource.pData, indices.data(), sizeof(uint32) * indices.size());
+		device_context->Unmap(index_buffer.Get(), 0);
 	}
 }
 

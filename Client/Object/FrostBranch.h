@@ -18,7 +18,7 @@ public:
 public:
     shared_ptr<FrostBranch>& GetParent() { return parent; }
     vector<shared_ptr<FrostBranch>>& GetChildren() { return children; }
-    Vector3 GetBranchEndPos() { return branch.back().position; };
+    Vector3 GetBranchEndPos() { return branch.back().position; }
 
 private:
     Circle3D guide_circle;
