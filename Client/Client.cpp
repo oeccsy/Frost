@@ -61,7 +61,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
     hInst = hInstance;
 
-    RECT windowRect = { 0, 0, 1920, 1080 };
+    RECT windowRect = { 0, 0, 1280, 720 };
     ::AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);
 
     hWnd = CreateWindowW(L"DX11_3", L"Client", WS_OVERLAPPEDWINDOW,
