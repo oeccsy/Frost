@@ -4,6 +4,6 @@
 
 struct Sphere3D
 {
-	Point3D position;
+	Vector3 position;
 	float radius;
 };

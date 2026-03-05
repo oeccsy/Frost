@@ -44,8 +44,8 @@ bool Triangle3D::Circlecast(const Circle3D& circle, OUT std::vector<float>& thet
 	float B = circle.radius * plane.normal.Dot(circle.y_axis);
 	float C = plane.offset - (plane.normal.Dot(circle.center));
 
-	float R = static_cast<float>(sqrt(A * A + B * B));
-	float alpha = static_cast<float>(atan2(B, A));
+	float R = sqrt(A * A + B * B);
+	float alpha = atan2(B, A);
 
 	// A * cos(theta) + B * sin(theta) = R * cos(theta - alpha) = C
 	if (R < fabs(C)) return false;
@@ -54,13 +54,13 @@ bool Triangle3D::Circlecast(const Circle3D& circle, OUT std::vector<float>& thet
 	float theta2 = alpha - acos(C / R);
 
 	// [0, 360') Normalize
-	theta1 = static_cast<float>(fmod(theta1 + XM_2PI, XM_2PI));
-	theta2 = static_cast<float>(fmod(theta2 + XM_2PI, XM_2PI));
+	theta1 = fmod(theta1 + XM_2PI, XM_2PI);
+	theta2 = fmod(theta2 + XM_2PI, XM_2PI);
 
-	Vector3 point1 = circle.center + circle.radius * ((float)cos(theta1) * circle.x_axis + (float)sin(theta1) * circle.y_axis);
-	Vector3 point2 = circle.center + circle.radius * ((float)cos(theta2) * circle.x_axis + (float)sin(theta2) * circle.y_axis);
+	Vector3 point1 = circle.center + circle.radius * (cos(theta1) * circle.x_axis + sin(theta1) * circle.y_axis);
+	Vector3 point2 = circle.center + circle.radius * (cos(theta2) * circle.x_axis + sin(theta2) * circle.y_axis);
 
-	int prev_theta_count = theta.size();
+	size_t prev_theta_count = theta.size();
 	if (IsPointInside(point1)) theta.push_back(theta1);
 	if (IsPointInside(point2)) theta.push_back(theta2);
 
