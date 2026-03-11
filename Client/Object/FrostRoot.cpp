@@ -70,12 +70,12 @@ void FrostRoot::StopIntersectingBranches(shared_ptr<PointCloud> target)
 	{
 		shared_ptr<FrostBranch> branch = *it;
 
-		float min_dist = (branch->GetParent() == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED - 0.01f : Frost::SUB_BRANCH_GROW_SPEED - 0.01f;
-		BoundingSphere check_bounds({ branch->GetBranchEndPos(), min_dist });
+		float min_dist = (branch->HasParent()) ? Frost::SUB_BRANCH_GROW_SPEED - 0.01f : Frost::MAIN_BRANCH_GROW_SPEED - 0.01f;
+		BoundingSphere check_bounds({ branch->GetEndPoint(), min_dist });
 
 		if (target->IntersectsWithPoints(check_bounds))
 		{
-			if ((*it)->GetParent() == nullptr) growing_main_branches.erase(*it);
+			if (!branch->HasParent()) growing_main_branches.erase(*it);
 			it = growing_branches.erase(it);
 		}
 		else
@@ -91,7 +91,7 @@ vector<Vector3> FrostRoot::GetLatestEndPoints()
 
 	for (auto& branch : growing_branches)
 	{
-		latest_end_points.push_back(branch->GetBranchEndPos());
+		latest_end_points.push_back(branch->GetEndPoint());
 	}
 
 	return latest_end_points;

@@ -17,6 +17,8 @@ public:
 
 	FORCEINLINE const vector<Vertex>& GetVertices() const { return vertices; }
 	FORCEINLINE const vector<uint32>& GetIndices() const { return indices; }
+	FORCEINLINE vector<Vertex>& GetVerticesRef() { return vertices; }
+	FORCEINLINE vector<uint32>& GetIndicesRef() { return indices; }
 	FORCEINLINE D3D11_PRIMITIVE_TOPOLOGY GetTopology() { return topology; }
 
 	FORCEINLINE void SetVertices(vector<Vertex>& new_vertices) { vertices = new_vertices; }

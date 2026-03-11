@@ -11,7 +11,10 @@
 
 FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, shared_ptr<FrostBranch> parent)
 {
+	points.push_back(base_point);
+
 	this->parent = parent;
+
 	guide_circle.center = base_point;
 	guide_circle.radius = (parent == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED : Frost::SUB_BRANCH_GROW_SPEED;
 
@@ -23,26 +26,9 @@ FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, sha
 	guide_circle.y_axis.Normalize();
 	guide_circle.normal.Normalize();
 
-	mesh = make_shared<DynamicMesh>();
-
-	branch.push_back({ base_point, normal, Vector2(0, 0), Color(1, 1, 1, 1) });
-	vector<uint32> indices = { 0 };
-
-	mesh->SetVertices(branch);
-	mesh->SetIndices(indices);
-
-	mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	mesh->CreateBuffers();
-	
-	material = Material::GetMaterial<FrostBranch>();
-	if (material == nullptr)
-	{
-		material = Material::CreateMaterial<FrostBranch>();
-		material->CreateVS(L"Shader/Frost.hlsl", "VS", "vs_5_0");
-		material->CreatePS(L"Shader/Frost.hlsl", "PS", "ps_5_0");
-	}
-	
-	mesh->CreateInputLayout(material);
+	CreateGeometry();
+	CreateShader();
+	CreateInputLayout();
 }
 
 FrostBranch::~FrostBranch() {}
@@ -53,63 +39,58 @@ void FrostBranch::Awake()
 	AddComponent(make_shared<Renderer>());
 }
 
-bool FrostBranch::Grow(shared_ptr<MeshCollider> target)
+void FrostBranch::Grow(shared_ptr<MeshCollider> guide_mesh_collider)
 {
-	float theta;
-
-	if (target->Intersects(guide_circle, theta))
+	if (points.size() >= 2)
 	{
-		Vector3 hit_point = guide_circle.center + guide_circle.radius * (cos(theta) * guide_circle.x_axis + sin(theta) * guide_circle.y_axis);
-		
-		Vertex new_vertex({ hit_point, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
-		branch.push_back(new_vertex);
-		
-		vector<Vertex> new_vertices = mesh->GetVertices();
-		new_vertices.push_back(new_vertex);
-		vector<uint32> new_indices = mesh->GetIndices();
-		new_indices.push_back(branch.size() - 1);
-		
-		mesh->SetVertices(new_vertices);
-		mesh->SetIndices(new_indices);
-		mesh->UpdateBuffers();
+		Vector3 prev_point = *(points.end() - 2);
+		Vector3 cur_point = *(points.end() - 1);
 
-		Vector3 new_dir = (branch.end() - 1)->position - (branch.end() - 2)->position;
-		Vector3 new_normal = new_dir.Cross(guide_circle.normal);
+		Vector3 dir = cur_point - prev_point;
+		Vector3 normal = guide_circle.normal.Cross(dir);
 
-		guide_circle.center = hit_point;
-		guide_circle.x_axis = new_normal;
-		guide_circle.y_axis = new_dir;
+		guide_circle.center = cur_point;
+		guide_circle.x_axis = normal;
+		guide_circle.y_axis = dir;
 
 		guide_circle.x_axis.Normalize();
 		guide_circle.y_axis.Normalize();
-
-		return true;
 	}
-	else
+	
+	float theta;
+
+	if (guide_mesh_collider->Intersects(guide_circle, theta))
 	{
-		return false;
+		Vector3 hit_point = guide_circle.center + guide_circle.radius * (cos(theta) * guide_circle.x_axis + sin(theta) * guide_circle.y_axis);
+		points.push_back(hit_point);
+		
+		Vertex new_vertex({ hit_point, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
+		
+		mesh->GetVerticesRef().push_back(new_vertex);
+		mesh->GetIndicesRef().push_back(points.size() - 1);
+		mesh->UpdateBuffers();
 	}
 }
 
-bool FrostBranch::Fork(shared_ptr<MeshCollider> target)
+bool FrostBranch::Fork(shared_ptr<MeshCollider> guide_mesh_collider)
 {
-	if (branch.size() < 3) return false;
+	if (points.size() <= 2) return false;
 
-	Vector3 prev_pos = (branch.end() - 2)->position;
+	Vector3 prev_point = *(points.end() - 2);
 	Vector3 dir = guide_circle.y_axis;
 	Vector3 normal = guide_circle.x_axis;
 
-	constexpr float leftAngle = ::XMConvertToRadians(-60.0f);
-	constexpr float rightAngle = ::XMConvertToRadians(60.0f);
+	constexpr float left_angle = ::XMConvertToRadians(-60.0f);
+	constexpr float right_angle = ::XMConvertToRadians(60.0f);
 
-	Matrix leftRot = Matrix::CreateFromAxisAngle(normal, leftAngle);
-	Matrix rightRot = Matrix::CreateFromAxisAngle(normal, rightAngle);
+	Matrix left_rot = Matrix::CreateFromAxisAngle(normal, left_angle);
+	Matrix right_rot = Matrix::CreateFromAxisAngle(normal, right_angle);
 
-	Vector3 leftDir = Vector3::Transform(dir, leftRot);
-	Vector3 rightDir = Vector3::Transform(dir, rightRot);
+	Vector3 leftDir = Vector3::Transform(dir, left_rot);
+	Vector3 rightDir = Vector3::Transform(dir, right_rot);
 
-	shared_ptr<FrostBranch> leftBranch = make_shared<FrostBranch>(prev_pos, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
-	shared_ptr<FrostBranch> rightBranch = make_shared<FrostBranch>(prev_pos, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
+	shared_ptr<FrostBranch> leftBranch = make_shared<FrostBranch>(prev_point, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
+	shared_ptr<FrostBranch> rightBranch = make_shared<FrostBranch>(prev_point, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
 	leftBranch->Awake();
 	rightBranch->Awake();
 	Engine::Get().GetScene()->AddObject(leftBranch);
@@ -118,8 +99,44 @@ bool FrostBranch::Fork(shared_ptr<MeshCollider> target)
 	children.push_back(leftBranch);
 	children.push_back(rightBranch);
 
-	leftBranch->Grow(target);
-	rightBranch->Grow(target);
+	leftBranch->Grow(guide_mesh_collider);
+	rightBranch->Grow(guide_mesh_collider);
 
 	return true;
+}
+
+void FrostBranch::CreateGeometry()
+{
+	mesh = make_shared<DynamicMesh>();
+
+	vector<Vertex> vertices;
+	vector<uint32> indices;
+
+	for (const Vector3& point : points)
+	{
+		vertices.push_back({ point, Vector3(0, 0, 0), Vector2(0, 0), Vector4(1, 1, 1, 1) });
+		indices.push_back(vertices.size() - 1);
+	}
+	
+	mesh->SetVertices(vertices);
+	mesh->SetIndices(indices);
+
+	mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	mesh->CreateBuffers();
+}
+
+void FrostBranch::CreateShader()
+{
+	material = Material::GetMaterial<FrostBranch>();
+	if (material == nullptr)
+	{
+		material = Material::CreateMaterial<FrostBranch>();
+		material->CreateVS(L"Shader/Frost.hlsl", "VS", "vs_5_0");
+		material->CreatePS(L"Shader/Frost.hlsl", "PS", "ps_5_0");
+	}
+}
+
+void FrostBranch::CreateInputLayout()
+{
+	mesh->CreateInputLayout(material);
 }

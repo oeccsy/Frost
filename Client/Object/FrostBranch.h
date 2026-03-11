@@ -12,19 +12,25 @@ public:
     virtual ~FrostBranch() override;
 
     virtual void Awake() override;
-    bool Grow(shared_ptr<class MeshCollider> target);
-    bool Fork(shared_ptr<class MeshCollider> target);
+    void Grow(shared_ptr<class MeshCollider> guide_mesh_collider);
+    bool Fork(shared_ptr<class MeshCollider> guide_mesh_collider);
 
 public:
-    shared_ptr<FrostBranch>& GetParent() { return parent; }
-    vector<shared_ptr<FrostBranch>>& GetChildren() { return children; }
-    Vector3 GetBranchEndPos() { return branch.back().position; }
+    FORCEINLINE Vector3 GetEndPoint() const { return points.back(); }
+    FORCEINLINE bool HasParent() const { return parent != nullptr; }
+    FORCEINLINE shared_ptr<FrostBranch> GetParent() const { return parent; }
+    FORCEINLINE const vector<shared_ptr<FrostBranch>>& GetChildren() const { return children; }
+
+protected:
+    void CreateGeometry();
+    void CreateShader();
+    void CreateInputLayout();
 
 private:
-    Circle3D guide_circle;
-
-    vector<Vertex> branch;
-
+    vector<Vector3> points;
+    
     shared_ptr<FrostBranch> parent;
     vector<shared_ptr<FrostBranch>> children;
+    
+    Circle3D guide_circle;
 };
