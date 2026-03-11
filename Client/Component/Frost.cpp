@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "SpatialPartitioning/PointCloud.h"
 #include "Object/FrostRoot.h"
+#include "Object/FrostBranch.h"
 #include "Data/Vertex.h"
 #include "Utils/MeshSampler.h"
 #include <random>
@@ -32,8 +33,12 @@ void Frost::Awake()
 
 void Frost::Update()
 {
-	Grow();
+	GrowBranches();
+	ForkBranches();
 	ForkCloseRoots();
+	StopCloseBranches();
+	UpdateFrostPoints();
+	UpdateGrowingBranches();
 }
 
 void Frost::ForkRandomRoots()
@@ -65,19 +70,19 @@ void Frost::ForkRandomRoots()
 	}
 }
 
-void Frost::Grow()
+void Frost::GrowBranches()
 {
 	for (const auto& root : forked_frost_roots)
 	{
-		root->Grow(guide_mesh_collider);
+		root->GrowBranches(guide_mesh_collider);
+	}
+}
 
-		vector<Vector3> end_points = root->GetLatestEndPoints();
-		root->StopIntersectingBranches(frost_points);
-
-		for (const Vector3& point : end_points)
-		{
-			frost_points->Insert(point);
-		}
+void Frost::ForkBranches()
+{
+	for (const auto& root : forked_frost_roots)
+	{
+		root->ForkBranches(guide_mesh_collider);
 	}
 }
 
@@ -97,11 +102,43 @@ void Frost::ForkCloseRoots()
 			unforked_frost_roots.pop_back();
 			forked_frost_roots.push_back(root);
 			
-			frost_points->Insert(root->GetBasePoint());
+			frost_points->Insert(root->GetBasePoint()); // TODO
 		}
 		else
 		{
 			++i;
 		}
+	}
+}
+
+void Frost::StopCloseBranches()
+{
+	for (const auto& root : forked_frost_roots)
+	{
+		root->StopCloseBranches(frost_points);
+	}
+}
+
+void Frost::UpdateFrostPoints()
+{
+	for (const auto& root : forked_frost_roots)
+	{
+		for (const auto& branch : root->GetGrowingBranches())
+		{
+			frost_points->Insert(branch->GetEndPoint());
+		}
+		
+		for (const auto& branch : root->GetNewBranches())
+		{
+			frost_points->Insert(branch->GetEndPoint());
+		}
+	}
+}
+
+void Frost::UpdateGrowingBranches()
+{
+	for (auto root : forked_frost_roots)
+	{
+		root->UpdateGrowingBranches();
 	}
 }

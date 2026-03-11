@@ -9,20 +9,22 @@ class FrostRoot
 public:
     FrostRoot(Vector3 base_point, Vector3 normal);
     virtual ~FrostRoot();
-
+    
     void Fork(shared_ptr<class MeshCollider> target);
-    void Grow(shared_ptr<class MeshCollider> target);
 
-    void StopIntersectingBranches(shared_ptr<class PointCloud> frost_points);
-    vector<Vector3> GetLatestEndPoints();
-
-    Vector3& GetBasePoint() { return base_point; }
-
+    void GrowBranches(shared_ptr<class MeshCollider> guide_mesh_collider);
+    void ForkBranches(shared_ptr<class MeshCollider> guide_mesh_collider);
+    void StopCloseBranches(shared_ptr<class PointCloud> frost_points);
+    void UpdateGrowingBranches();
+    
+    FORCEINLINE Vector3 GetBasePoint() const { return base_point; }
+    FORCEINLINE const unordered_set<shared_ptr<class FrostBranch>>& GetGrowingBranches() const { return growing_branches; }
+    FORCEINLINE const vector<shared_ptr<class FrostBranch>>& GetNewBranches() const { return new_branches; }
+    
 private:
     Vector3 base_point;
     Vector3 normal;
-
-    vector<shared_ptr<class FrostBranch>> branches;
+    
     unordered_set<shared_ptr<class FrostBranch>> growing_branches;
-    unordered_set<shared_ptr<class FrostBranch>> growing_main_branches;
+    vector<shared_ptr<class FrostBranch>> new_branches;
 };

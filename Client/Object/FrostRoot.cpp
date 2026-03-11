@@ -11,27 +11,6 @@ FrostRoot::FrostRoot(Vector3 base_point, Vector3 normal) : base_point(base_point
 
 FrostRoot::~FrostRoot() {}
 
-void FrostRoot::Grow(shared_ptr<MeshCollider> target)
-{
-	for (auto branch : growing_branches)
-	{
-		branch->Grow(target);
-	}
-
-	for (auto main_branch : growing_main_branches)
-	{
-		if (main_branch->Fork(target))
-		{
-			vector<shared_ptr<FrostBranch>> sub_branches = main_branch->GetChildren();
-
-			branches.push_back(*(sub_branches.end() - 1));
-			branches.push_back(*(sub_branches.end() - 2));
-			growing_branches.insert(*(sub_branches.end() - 1));
-			growing_branches.insert(*(sub_branches.end() - 2));
-		}
-	}
-}
-
 void FrostRoot::Fork(shared_ptr<MeshCollider> target)
 {
 	random_device rd;
@@ -58,13 +37,33 @@ void FrostRoot::Fork(shared_ptr<MeshCollider> target)
 		new_branch->Awake();
 		Engine::Get().GetScene()->AddObject(new_branch);
 		
-		branches.push_back(new_branch);
-		growing_branches.insert(new_branch);
-		growing_main_branches.insert(new_branch);
+		new_branches.push_back(new_branch);
 	}
 }
 
-void FrostRoot::StopIntersectingBranches(shared_ptr<PointCloud> target)
+void FrostRoot::GrowBranches(shared_ptr<class MeshCollider> guide_mesh_collider)
+{
+	for (const auto& branch : growing_branches)
+	{
+		branch->Grow(guide_mesh_collider);
+	}
+}
+
+void FrostRoot::ForkBranches(shared_ptr<class MeshCollider> guide_mesh_collider)
+{
+	for (const auto& branch : growing_branches)
+	{
+		if (branch->HasParent()) continue;
+		if (branch->Fork(guide_mesh_collider))
+		{
+			vector<shared_ptr<FrostBranch>> sub_branches = branch->GetChildren();
+			new_branches.push_back(*(sub_branches.end() - 2));
+			new_branches.push_back(*(sub_branches.end() - 1));
+		}
+	}
+}
+
+void FrostRoot::StopCloseBranches(shared_ptr<PointCloud> frost_points)
 {
 	for (auto it = growing_branches.begin(); it != growing_branches.end();)
 	{
@@ -73,26 +72,23 @@ void FrostRoot::StopIntersectingBranches(shared_ptr<PointCloud> target)
 		float min_dist = (branch->HasParent()) ? Frost::SUB_BRANCH_GROW_SPEED - 0.01f : Frost::MAIN_BRANCH_GROW_SPEED - 0.01f;
 		BoundingSphere check_bounds({ branch->GetEndPoint(), min_dist });
 
-		if (target->IntersectsWithPoints(check_bounds))
+		if (frost_points->IntersectsWithPoints(check_bounds))
 		{
-			if (!branch->HasParent()) growing_main_branches.erase(*it);
 			it = growing_branches.erase(it);
 		}
 		else
 		{
-			it++;
+			++it;
 		}
 	}
 }
 
-vector<Vector3> FrostRoot::GetLatestEndPoints()
+void FrostRoot::UpdateGrowingBranches()
 {
-	vector<Vector3> latest_end_points;
-
-	for (auto& branch : growing_branches)
+	for (auto new_branch : new_branches)
 	{
-		latest_end_points.push_back(branch->GetEndPoint());
+		growing_branches.insert(new_branch);
 	}
-
-	return latest_end_points;
+	
+	new_branches.clear();
 }

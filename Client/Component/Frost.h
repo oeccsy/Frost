@@ -17,8 +17,12 @@ public:
 	void ForkRandomRoots();
 
 protected:
-	void Grow();
+	void GrowBranches();
+	void ForkBranches();
 	void ForkCloseRoots();
+	void StopCloseBranches();
+	void UpdateFrostPoints();
+	void UpdateGrowingBranches();
 
 public:
 	static const float MAIN_BRANCH_GROW_SPEED;
