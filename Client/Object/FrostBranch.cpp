@@ -16,7 +16,7 @@ FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, sha
 	this->parent = parent;
 
 	guide_circle.center = base_point;
-	guide_circle.radius = (parent == nullptr) ? Frost::MAIN_BRANCH_GROW_SPEED : Frost::SUB_BRANCH_GROW_SPEED;
+	guide_circle.radius = (HasParent()) ? Frost::SUB_BRANCH_GROW_STEP : Frost::MAIN_BRANCH_GROW_STEP;
 
 	guide_circle.x_axis = normal;
 	guide_circle.y_axis = dir;
@@ -89,18 +89,18 @@ bool FrostBranch::Fork(shared_ptr<MeshCollider> guide_mesh_collider)
 	Vector3 leftDir = Vector3::Transform(dir, left_rot);
 	Vector3 rightDir = Vector3::Transform(dir, right_rot);
 
-	shared_ptr<FrostBranch> leftBranch = make_shared<FrostBranch>(prev_point, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
-	shared_ptr<FrostBranch> rightBranch = make_shared<FrostBranch>(prev_point, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
-	leftBranch->Awake();
-	rightBranch->Awake();
-	Engine::Get().GetScene()->AddObject(leftBranch);
-	Engine::Get().GetScene()->AddObject(rightBranch);
+	shared_ptr<FrostBranch> left_branch = make_shared<FrostBranch>(prev_point, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
+	shared_ptr<FrostBranch> right_branch = make_shared<FrostBranch>(prev_point, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
+	left_branch->Awake();
+	right_branch->Awake();
+	Engine::Get().GetScene()->AddObject(left_branch);
+	Engine::Get().GetScene()->AddObject(right_branch);
 	
-	children.push_back(leftBranch);
-	children.push_back(rightBranch);
+	children.push_back(left_branch);
+	children.push_back(right_branch);
 
-	leftBranch->Grow(guide_mesh_collider);
-	rightBranch->Grow(guide_mesh_collider);
+	left_branch->Grow(guide_mesh_collider);
+	right_branch->Grow(guide_mesh_collider);
 
 	return true;
 }

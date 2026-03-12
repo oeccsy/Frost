@@ -10,10 +10,12 @@
 #include "Utils/MeshSampler.h"
 #include <random>
 
-const float Frost::MAIN_BRANCH_GROW_SPEED = 0.2f;
-const float Frost::SUB_BRANCH_GROW_SPEED = 0.04f;
+const float Frost::MAIN_BRANCH_GROW_STEP = 0.2f;
+const float Frost::SUB_BRANCH_GROW_STEP = 0.04f;
+const float Frost::MAIN_BRANCH_STOP_DIST = 0.19f;
+const float Frost::SUB_BRANCH_STOP_DIST = 0.03f;
 const float Frost::ROOT_FORK_DIST = 0.5f;
-const float Frost::MIN_POINT_DIST = 0.f;
+const int Frost::MAX_BRANCHES_PER_FORK = 6;
 
 Frost::Frost() {}
 
@@ -102,7 +104,7 @@ void Frost::ForkCloseRoots()
 			unforked_frost_roots.pop_back();
 			forked_frost_roots.push_back(root);
 			
-			frost_points->Insert(root->GetBasePoint()); // TODO
+			frost_points->Insert(root->GetBasePoint());
 		}
 		else
 		{

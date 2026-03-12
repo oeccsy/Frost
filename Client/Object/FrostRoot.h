@@ -2,7 +2,7 @@
 
 #include "Core.h"
 #include "Types.h"
-#include <unordered_set>
+#include <vector>
 
 class FrostRoot
 {
@@ -10,7 +10,7 @@ public:
     FrostRoot(Vector3 base_point, Vector3 normal);
     virtual ~FrostRoot();
     
-    void Fork(shared_ptr<class MeshCollider> target);
+    void Fork(shared_ptr<class MeshCollider> guide_mesh_collider);
 
     void GrowBranches(shared_ptr<class MeshCollider> guide_mesh_collider);
     void ForkBranches(shared_ptr<class MeshCollider> guide_mesh_collider);
@@ -18,13 +18,13 @@ public:
     void UpdateGrowingBranches();
     
     FORCEINLINE Vector3 GetBasePoint() const { return base_point; }
-    FORCEINLINE const unordered_set<shared_ptr<class FrostBranch>>& GetGrowingBranches() const { return growing_branches; }
+    FORCEINLINE const vector<shared_ptr<class FrostBranch>>& GetGrowingBranches() const { return growing_branches; }
     FORCEINLINE const vector<shared_ptr<class FrostBranch>>& GetNewBranches() const { return new_branches; }
     
 private:
     Vector3 base_point;
     Vector3 normal;
     
-    unordered_set<shared_ptr<class FrostBranch>> growing_branches;
+    vector<shared_ptr<class FrostBranch>> growing_branches;
     vector<shared_ptr<class FrostBranch>> new_branches;
 };
