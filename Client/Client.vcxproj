@@ -191,6 +191,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClInclude Include="Component\Frost.h" />
     <ClInclude Include="Core\Game.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Object\FrostVisual.h" />
     <ClInclude Include="Object\FrostBranch.h" />
     <ClInclude Include="Object\FrostRoot.h" />
     <ClInclude Include="Object\Sphere.h" />
@@ -209,6 +210,7 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     <ClCompile Include="Component\Frost.cpp" />
     <ClCompile Include="Core\Game.cpp" />
     <ClCompile Include="Object\FrostBranch.cpp" />
+    <ClCompile Include="Object\FrostVisual.cpp" />
     <ClCompile Include="Object\FrostRoot.cpp" />
     <ClCompile Include="Object\Sphere.cpp" />
     <ClCompile Include="Object\Teapot.cpp" />

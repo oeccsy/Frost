@@ -1,13 +1,7 @@
 ﻿#include "pch.h"
 #include "FrostBranch.h"
 #include "Component/Frost.h"
-#include "Render/Mesh.h"
-#include "Render/DynamicMesh.h"
-#include "Render/Material.h"
 #include "Component/Collider/MeshCollider.h"
-#include "Render/Renderer/Renderer.h"
-#include "Engine.h"
-#include "Scene/Scene.h"
 
 FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, shared_ptr<FrostBranch> parent)
 {
@@ -25,19 +19,9 @@ FrostBranch::FrostBranch(Vector3& base_point, Vector3& dir, Vector3& normal, sha
 	guide_circle.x_axis.Normalize();
 	guide_circle.y_axis.Normalize();
 	guide_circle.normal.Normalize();
-
-	CreateGeometry();
-	CreateShader();
-	CreateInputLayout();
 }
 
 FrostBranch::~FrostBranch() {}
-
-void FrostBranch::Awake()
-{
-	Object::Awake();
-	AddComponent(make_shared<Renderer>());
-}
 
 void FrostBranch::Grow(shared_ptr<MeshCollider> guide_mesh_collider)
 {
@@ -63,12 +47,6 @@ void FrostBranch::Grow(shared_ptr<MeshCollider> guide_mesh_collider)
 	{
 		Vector3 hit_point = guide_circle.center + guide_circle.radius * (cos(theta) * guide_circle.x_axis + sin(theta) * guide_circle.y_axis);
 		points.push_back(hit_point);
-		
-		Vertex new_vertex({ hit_point, Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1)});
-		
-		mesh->GetVerticesRef().push_back(new_vertex);
-		mesh->GetIndicesRef().push_back(points.size() - 1);
-		mesh->UpdateBuffers();
 	}
 }
 
@@ -86,15 +64,11 @@ bool FrostBranch::Fork(shared_ptr<MeshCollider> guide_mesh_collider)
 	Matrix left_rot = Matrix::CreateFromAxisAngle(normal, left_angle);
 	Matrix right_rot = Matrix::CreateFromAxisAngle(normal, right_angle);
 
-	Vector3 leftDir = Vector3::Transform(dir, left_rot);
-	Vector3 rightDir = Vector3::Transform(dir, right_rot);
+	Vector3 left_dir = Vector3::Transform(dir, left_rot);
+	Vector3 right_dir = Vector3::Transform(dir, right_rot);
 
-	shared_ptr<FrostBranch> left_branch = make_shared<FrostBranch>(prev_point, leftDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
-	shared_ptr<FrostBranch> right_branch = make_shared<FrostBranch>(prev_point, rightDir, normal, static_pointer_cast<FrostBranch>(shared_from_this()));
-	left_branch->Awake();
-	right_branch->Awake();
-	Engine::Get().GetScene()->AddObject(left_branch);
-	Engine::Get().GetScene()->AddObject(right_branch);
+	shared_ptr<FrostBranch> left_branch = make_shared<FrostBranch>(prev_point, left_dir, normal, shared_from_this());
+	shared_ptr<FrostBranch> right_branch = make_shared<FrostBranch>(prev_point, right_dir, normal, shared_from_this());
 	
 	children.push_back(left_branch);
 	children.push_back(right_branch);
@@ -103,40 +77,4 @@ bool FrostBranch::Fork(shared_ptr<MeshCollider> guide_mesh_collider)
 	right_branch->Grow(guide_mesh_collider);
 
 	return true;
-}
-
-void FrostBranch::CreateGeometry()
-{
-	mesh = make_shared<DynamicMesh>();
-
-	vector<Vertex> vertices;
-	vector<uint32> indices;
-
-	for (const Vector3& point : points)
-	{
-		vertices.push_back({ point, Vector3(0, 0, 0), Vector2(0, 0), Vector4(1, 1, 1, 1) });
-		indices.push_back(vertices.size() - 1);
-	}
-	
-	mesh->SetVertices(vertices);
-	mesh->SetIndices(indices);
-
-	mesh->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-	mesh->CreateBuffers();
-}
-
-void FrostBranch::CreateShader()
-{
-	material = Material::GetMaterial<FrostBranch>();
-	if (material == nullptr)
-	{
-		material = Material::CreateMaterial<FrostBranch>();
-		material->CreateVS(L"Shader/Frost.hlsl", "VS", "vs_5_0");
-		material->CreatePS(L"Shader/Frost.hlsl", "PS", "ps_5_0");
-	}
-}
-
-void FrostBranch::CreateInputLayout()
-{
-	mesh->CreateInputLayout(material);
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component/Component.h"
-#include <unordered_set>
 
 class Frost : public Component
 {
@@ -38,4 +37,6 @@ private:
 
 	vector<shared_ptr<class FrostRoot>> unforked_frost_roots;
 	vector<shared_ptr<class FrostRoot>> forked_frost_roots;
+
+	shared_ptr<class FrostVisual> frost_visual;
 };

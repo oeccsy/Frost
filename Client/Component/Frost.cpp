@@ -2,12 +2,16 @@
 #include "Frost.h"
 #include "Object/Object.h"
 #include "Component/Collider/MeshCollider.h"
+#include "Utils/MeshSampler.h"
+#include "Data/Vertex.h"
 #include "Types.h"
 #include "SpatialPartitioning/PointCloud.h"
+#include "Engine.h"
 #include "Object/FrostRoot.h"
 #include "Object/FrostBranch.h"
-#include "Data/Vertex.h"
-#include "Utils/MeshSampler.h"
+#include "Object/FrostVisual.h"
+#include "Render/Mesh.h"
+#include "Render/Renderer/Renderer.h"
 #include <random>
 
 const float Frost::MAIN_BRANCH_GROW_STEP = 0.2f;
@@ -31,6 +35,9 @@ void Frost::Awake()
 	{
 		unforked_frost_roots.push_back(make_shared<FrostRoot>(base_point.position, base_point.normal));
 	}
+	
+	frost_visual = Engine::Get().GetScene()->SpawnObject<FrostVisual>();
+	frost_visual->AddComponent(make_shared<Renderer>());
 }
 
 void Frost::Update()
@@ -123,11 +130,19 @@ void Frost::StopCloseBranches()
 
 void Frost::UpdateFrostPoints()
 {
+	vector<Vertex>& vertices = frost_visual->GetMesh()->GetVerticesRef();
+	vector<uint32>& indices = frost_visual->GetMesh()->GetIndicesRef();
+	
 	for (const auto& root : forked_frost_roots)
 	{
 		for (const auto& branch : root->GetGrowingBranches())
 		{
 			frost_points->Insert(branch->GetEndPoint());
+			
+			vertices.push_back( { branch->GetPrevEndPoint(), Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1) });
+			vertices.push_back( { branch->GetEndPoint(), Vector3(0, 0, 0), Vector2(0, 0), Color(1, 1, 1, 1) });
+			indices.push_back(vertices.size() - 2);
+			indices.push_back(vertices.size() - 1);
 		}
 		
 		for (const auto& branch : root->GetNewBranches())
@@ -135,6 +150,8 @@ void Frost::UpdateFrostPoints()
 			frost_points->Insert(branch->GetEndPoint());
 		}
 	}
+	
+	frost_visual->GetMesh()->UpdateBuffers();
 }
 
 void Frost::UpdateGrowingBranches()

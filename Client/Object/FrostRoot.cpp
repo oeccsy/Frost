@@ -2,9 +2,7 @@
 #include "FrostRoot.h"
 #include "Component/Frost.h"
 #include "Object/FrostBranch.h"
-#include "SpatialPartitioning//PointCloud.h"
-#include "Engine.h"
-#include "Scene/Scene.h"
+#include "SpatialPartitioning/PointCloud.h"
 #include <random>
 
 FrostRoot::FrostRoot(Vector3 base_point, Vector3 normal) : base_point(base_point), normal(normal) { }
@@ -34,9 +32,6 @@ void FrostRoot::Fork(shared_ptr<MeshCollider> guide_mesh_collider)
 		Vector3 dir = Vector3::Transform(bi_normal, rot);
 
 		shared_ptr<FrostBranch> new_branch = make_shared<FrostBranch>(base_point, dir, fork_normal, nullptr);
-		new_branch->Awake();
-		Engine::Get().GetScene()->AddObject(new_branch);
-		
 		new_branches.push_back(new_branch);
 	}
 }
