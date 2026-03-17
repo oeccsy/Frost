@@ -14,7 +14,7 @@
 #include "Render/Renderer/Renderer.h"
 #include <random>
 
-const float Frost::MAIN_BRANCH_GROW_STEP = 0.2f;
+const float Frost::MAIN_BRANCH_GROW_STEP = 0.20f;
 const float Frost::SUB_BRANCH_GROW_STEP = 0.04f;
 const float Frost::MAIN_BRANCH_STOP_DIST = 0.19f;
 const float Frost::SUB_BRANCH_STOP_DIST = 0.03f;

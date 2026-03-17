@@ -8,6 +8,7 @@
 #include "Utils/Math/Triangle3D.h"
 #include "Utils/Math/Circle3D.h"
 #include "SpatialPartitioning/TriangleOctree.h"
+#include "SpatialPartitioning/BVH.h"
 #include <algorithm>
 #include <stack>
 
@@ -19,15 +20,21 @@ void MeshCollider::Awake()
 {
 	mesh = GetOwner()->GetMesh();
 	triangle_octree = make_shared<TriangleOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
+	triangle_bvh = make_shared<BVH>();
 
 	const vector<Vertex>& vertices = mesh.lock()->GetVertices();
 	const vector<uint32>& indices = mesh.lock()->GetIndices();
+
+	vector<Triangle3D> triangles;
 
 	for (int i = 0; i < indices.size(); i += 3)
 	{
 		Triangle3D triangle{ vertices[indices[i]].position, vertices[indices[i + 1]].position, vertices[indices[i + 2]].position };
 		triangle_octree->Insert(triangle);
+		triangles.push_back(triangle);
 	}
+
+	triangle_bvh->Build(triangles);
 }
 
 bool MeshCollider::Intersects(Ray& ray, OUT float& distance)
@@ -92,6 +99,54 @@ bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
 				shared_ptr<TriangleOctree> child = cur_octree->GetChild(i);
 				if (child->IntersectsWithBounds(check_bounds)) dfs_stack.push(child);
 			}
+		}
+	}
+
+	if (!theta_container.empty())
+	{
+		theta = *min_element(theta_container.begin(), theta_container.end());
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool MeshCollider::IntersectsWithBVH(Circle3D& circle, OUT float& theta)
+{
+	if (mesh.lock() == nullptr) return false;
+	if (mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) false;
+
+	const vector<Vertex>& vertices = mesh.lock()->GetVertices();
+	const vector<uint32>& indices = mesh.lock()->GetIndices();
+
+	vector<float> theta_container;
+
+	stack<shared_ptr<BVHNode>> dfs_stack;
+	dfs_stack.push(triangle_bvh->GetRoot());
+
+	BoundingSphere check_bounds({ circle.center, circle.radius });
+
+	while (!dfs_stack.empty())
+	{
+		shared_ptr<BVHNode> cur_node = dfs_stack.top();
+		dfs_stack.pop();
+
+		if (cur_node->IsLeaf())
+		{
+			const vector<Triangle3D>& triangles = triangle_bvh->GetTriangles();
+			for (int i=cur_node->start_index; i<cur_node->end_index; ++i)
+			{
+				triangles[i].Circlecast(circle, theta_container);
+			}
+		}
+		else
+		{
+			shared_ptr<BVHNode> left_child = cur_node->left_child;
+			shared_ptr<BVHNode> right_child = cur_node->right_child;
+			if (left_child != nullptr && left_child->IntersectsWithBounds(check_bounds)) dfs_stack.push(left_child);
+			if (right_child != nullptr && right_child->IntersectsWithBounds(check_bounds)) dfs_stack.push(right_child);
 		}
 	}
 

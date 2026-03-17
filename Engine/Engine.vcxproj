@@ -189,6 +189,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Core\Graphics.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Data\BVHSplitInfo.h" />
     <ClInclude Include="Data\EngineSettings.h" />
     <ClInclude Include="Data\Frustum.h" />
     <ClInclude Include="Data\TransformData.h" />
@@ -203,6 +204,8 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClInclude Include="Render\Renderer\Renderer.h" />
     <ClInclude Include="Render\Transform.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="SpatialPartitioning\BVH.h" />
+    <ClInclude Include="Data\BVHNode.h" />
     <ClInclude Include="SpatialPartitioning\PointCloud.h" />
     <ClInclude Include="SpatialPartitioning\TriangleOctree.h" />
     <ClInclude Include="Utils\Math\AABB3D.h" />
@@ -236,6 +239,7 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
     <ClCompile Include="Render\Renderer\Renderer.cpp" />
     <ClCompile Include="Render\Transform.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
+    <ClCompile Include="SpatialPartitioning\BVH.cpp" />
     <ClCompile Include="SpatialPartitioning\PointCloud.cpp" />
     <ClCompile Include="SpatialPartitioning\TriangleOctree.cpp" />
     <ClCompile Include="Utils\Math\Plane3D.cpp" />
