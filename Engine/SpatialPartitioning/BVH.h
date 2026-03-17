@@ -14,16 +14,17 @@ public:
 	BVH();
 	virtual ~BVH();
 
-	void Build(vector<Triangle3D>& target_triangles);
+	void Build(const vector<Triangle3D>& target_triangles);
 	FORCEINLINE shared_ptr<BVHNode> GetRoot() const { return root; }
 	FORCEINLINE const vector<Triangle3D>& GetTriangles() const { return triangles; }
 
 private:
 	shared_ptr<BVHNode> BuildRecursive(int start, int end);
 	BoundingBox ComputeBounds(int start, int end) const;
-	BVHSplitInfo FindBestSplitSAH(int start, int end, const BoundingBox& bounds);
-	bool IsBelowSplitThreshold(Vector3 position, BVHSplitInfo info);
-	float EvaluateSplit(int axis, float split_value, int start, int end);
+
+	BVHSplitInfo FindLongestAxisSplit(const BoundingBox& bounds) const;
+	BVHSplitInfo FindBestSAHSplit(int start, int end, const BoundingBox& bounds) const;
+	float EvaluateSplit(int axis, float split_value, int start, int end) const;
 	float EvaluateBoundsCost(const BoundingBox& bounds, int triangle_count) const;
 
 private:

@@ -22,11 +22,9 @@ public:
 	virtual bool Intersects(Ray& ray, OUT float& distance) override;
 	virtual bool Intersects(shared_ptr<Collider>& other) override;
 	bool Intersects(Circle3D& circle, OUT float& theta);
-	bool IntersectsWithBVH(Circle3D& circle, OUT float& theta);
 	Vector3 Snap(Vector3 position);
 
 private:
 	weak_ptr<class Mesh> mesh;
-	shared_ptr<class TriangleOctree> triangle_octree;
 	shared_ptr<class BVH> triangle_bvh;
 };

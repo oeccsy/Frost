@@ -19,7 +19,6 @@ MeshCollider::~MeshCollider() {}
 void MeshCollider::Awake()
 {
 	mesh = GetOwner()->GetMesh();
-	triangle_octree = make_shared<TriangleOctree>(BoundingBox({ Vector3(0, 0, 0), Vector3(6, 6, 6) }));
 	triangle_bvh = make_shared<BVH>();
 
 	const vector<Vertex>& vertices = mesh.lock()->GetVertices();
@@ -30,7 +29,6 @@ void MeshCollider::Awake()
 	for (int i = 0; i < indices.size(); i += 3)
 	{
 		Triangle3D triangle{ vertices[indices[i]].position, vertices[indices[i + 1]].position, vertices[indices[i + 2]].position };
-		triangle_octree->Insert(triangle);
 		triangles.push_back(triangle);
 	}
 
@@ -68,52 +66,6 @@ bool MeshCollider::Intersects(shared_ptr<Collider>& other)
 }
 
 bool MeshCollider::Intersects(Circle3D& circle, OUT float& theta)
-{
-	if (mesh.lock() == nullptr) return false;
-	if (mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) false;
-
-	const vector<Vertex>& vertices = mesh.lock()->GetVertices();
-	const vector<uint32>& indices = mesh.lock()->GetIndices();
-
-	vector<float> theta_container;
-
-	stack<shared_ptr<TriangleOctree>> dfs_stack;
-	dfs_stack.push(triangle_octree);
-
-	BoundingSphere check_bounds({ circle.center, circle.radius });
-
-	while (!dfs_stack.empty())
-	{
-		shared_ptr<TriangleOctree> cur_octree = dfs_stack.top();
-		dfs_stack.pop();
-
-		for (auto& triangle : cur_octree->GetTriangles())
-		{
-			triangle.Circlecast(circle, theta_container);
-		}
-
-		if (!cur_octree->IsLeaf())
-		{
-			for (int i = 0; i < 8; i++)
-			{
-				shared_ptr<TriangleOctree> child = cur_octree->GetChild(i);
-				if (child->IntersectsWithBounds(check_bounds)) dfs_stack.push(child);
-			}
-		}
-	}
-
-	if (!theta_container.empty())
-	{
-		theta = *min_element(theta_container.begin(), theta_container.end());
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool MeshCollider::IntersectsWithBVH(Circle3D& circle, OUT float& theta)
 {
 	if (mesh.lock() == nullptr) return false;
 	if (mesh.lock()->GetTopology() != D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST) false;

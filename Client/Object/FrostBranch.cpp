@@ -43,7 +43,7 @@ void FrostBranch::Grow(shared_ptr<MeshCollider> guide_mesh_collider)
 	
 	float theta;
 
-	if (guide_mesh_collider->IntersectsWithBVH(guide_circle, theta))
+	if (guide_mesh_collider->Intersects(guide_circle, theta))
 	{
 		Vector3 hit_point = guide_circle.center + guide_circle.radius * (cos(theta) * guide_circle.x_axis + sin(theta) * guide_circle.y_axis);
 		points.push_back(hit_point);
