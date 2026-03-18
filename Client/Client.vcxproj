@@ -108,6 +108,9 @@
 xcopy $(SolutionDir)\Assets $(OutDir)..\Assets\ /y
 xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)\Lib\Engine\Engine.lib $(SolutionDir)\Client\ /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -135,6 +138,9 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
 xcopy $(SolutionDir)\Assets $(OutDir)..\Assets\ /y
 xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)\Lib\Engine\Engine.lib $(SolutionDir)\Client\ /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -158,6 +164,9 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
 xcopy $(SolutionDir)\Assets $(OutDir)..\Assets\ /y
 xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)\Lib\Engine\Engine.lib $(SolutionDir)\Client\ /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -185,6 +194,9 @@ xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
 xcopy $(SolutionDir)\Assets $(OutDir)..\Assets\ /y
 xcopy $(SolutionDir)\Settings $(OutDir)..\Settings\ /y</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>xcopy $(SolutionDir)\Lib\Engine\Engine.lib $(SolutionDir)\Client\ /y</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />

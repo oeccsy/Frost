@@ -100,7 +100,8 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy *.h ..\Includes /y /e</Command>
+      <Command>xcopy *.h ..\Includes /y /e
+xcopy *.inl ..\Includes /y /e</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy $(OutDir)\Engine.lib ..\Lib\Engine\ /y
@@ -123,7 +124,8 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy *.h ..\Includes /y /e</Command>
+      <Command>xcopy *.h ..\Includes /y /e
+xcopy *.inl ..\Includes /y /e</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy $(OutDir)\Engine.lib ..\Lib\Engine\ /y
@@ -168,7 +170,8 @@ xcopy $(OutDir)\Engine.dll ..\Lib\Engine\ /y</Command>
       <AdditionalLibraryDirectories>$(SolutionDir)Lib\</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy *.h ..\Includes /y /e</Command>
+      <Command>xcopy *.h ..\Includes /y /e
+xcopy *.inl ..\Includes /y /e</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy $(OutDir)\Engine.lib ..\Lib\Engine\ /y
