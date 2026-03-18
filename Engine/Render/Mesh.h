@@ -1,0 +1,42 @@
+#pragma once
+
+#include "Core.h"
+#include "RTTI.h"
+#include "Data/Vertex.h"
+#include "Types.h"
+#include <vector>
+#include <memory>
+
+class ENGINE_API Mesh : public RTTI
+{
+	RTTI_DECLARATIONS(Mesh, RTTI)
+	
+public:
+	Mesh();
+	virtual ~Mesh();
+
+	FORCEINLINE const vector<Vertex>& GetVertices() const { return vertices; }
+	FORCEINLINE const vector<uint32>& GetIndices() const { return indices; }
+	FORCEINLINE vector<Vertex>& GetVerticesRef() { return vertices; }
+	FORCEINLINE vector<uint32>& GetIndicesRef() { return indices; }
+	FORCEINLINE D3D11_PRIMITIVE_TOPOLOGY GetTopology() { return topology; }
+
+	FORCEINLINE void SetVertices(vector<Vertex>& new_vertices) { vertices = new_vertices; }
+	FORCEINLINE void SetIndices(vector<uint32>& new_indices) { indices = new_indices; }
+	FORCEINLINE void SetTopology(D3D11_PRIMITIVE_TOPOLOGY new_topology) { topology = new_topology; }
+
+	virtual void CreateBuffers();
+	virtual void UpdateBuffers();
+	void CreateInputLayout(shared_ptr<class Material> material);
+
+protected:
+	friend class Renderer;
+	
+	// IA
+	vector<Vertex> vertices;
+	vector<uint32> indices;
+	ComPtr<ID3D11Buffer> vertex_buffer;
+	ComPtr<ID3D11Buffer> index_buffer;
+	ComPtr<ID3D11InputLayout> input_layout;
+	D3D11_PRIMITIVE_TOPOLOGY topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+};
