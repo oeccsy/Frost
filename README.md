@@ -47,9 +47,9 @@
 <div align="center">
   <table>
     <tr>
-      <td align="center" width="360px"> 1. Mesh 표면에 서리 핵을 여러개 배치한다. </td>
-      <td align="center" width="360px"> 2. 임의의 서리 핵에서 성장을 시작한다. </td>
-      <td align="center" width="360px"> 3. 서리는 Mesh 표면을 따라 성장한다. </td>
+      <td align="center" width="360px"> 1. Mesh 표면에 서리 핵을 여러개 배치 </td>
+      <td align="center" width="360px"> 2. 임의의 서리 핵에서 성장을 시작 </td>
+      <td align="center" width="360px"> 3. 서리는 Mesh 표면을 따라 성장 </td>
     </tr>  
     <tr>
       <td align="center"> <img src="https://github.com/user-attachments/assets/231f45f1-4f57-45e7-a9a2-03fb0d73124a" width="300px" height="150px"/> </td>
@@ -57,9 +57,9 @@
       <td align="center"> <img src="https://github.com/user-attachments/assets/0fbcd2c2-1b6e-4134-871c-167730ca4d0d" width="300px" height="150px"/> </td>
     </tr>
     <tr>
-      <td align="center"> 4. 성장하는 가지에서 Sub 가지가 생성된다. </td>
-      <td align="center"> 5. 핵이 서리와 가까워지면 그 핵에서 <br> 성장을 시작한다. </td>
-      <td align="center"> 6. 서리 가지가 다른 가지와 가까워지면 <br> 성장을 멈춘다. </td>
+      <td align="center"> 4. 성장하는 가지에서 Sub 가지가 생성 </td>
+      <td align="center"> 5. 핵이 서리와 가까워지면 그 핵에서 <br> 성장을 시작 </td>
+      <td align="center"> 6. 서리 가지가 다른 가지와 <br> 가까워지면 성장을 멈춤 </td>
     </tr>
     <tr>
       <td align="center"> <img src="https://github.com/user-attachments/assets/b48fbca0-1583-45c9-9a6e-7ca60b7e17c9" width="300px" height="150px"/> </td>
